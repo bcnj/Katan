@@ -5,7 +5,7 @@ import { Button } from 'semantic-ui-react';
 const DevCardBtn = (props) => {
 
     return (
-        <Button style={{width: '48%', height: '85%'}}>
+        <Button style={{width: '49%', height: '75%'}}>
             Dev Card
         </Button>
     );

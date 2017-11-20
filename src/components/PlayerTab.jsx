@@ -5,7 +5,7 @@ import { Segment } from 'semantic-ui-react';
 const PlayerTab = (props) => {
 
     return (
-        <Segment style={{ height: '90%', color: 'black' }}>
+        <Segment style={{ height: '90%' }}>
             <h1>This is PlayerTab</h1>
         </Segment>
     );
