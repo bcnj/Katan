@@ -7,6 +7,8 @@ import Lobby from './Lobby'
 import Room from './Room'
 import GamePage from './GamePage'
 
+import Background from '../images/catan1.jpg'
+
 // import firebase from 'APP/fire'
 // const auth = firebase.auth()
 // import WhoAmI from './WhoAmI'
@@ -16,8 +18,17 @@ import GamePage from './GamePage'
 // auth.onAuthStateChanged(user => user || auth.signInAnonymously())
 
 export default () => (
+
   <Router>
-    <div>
+    <div style={{
+      width: '100vw',
+      backgroundImage: 'url(' + Background + ')',
+      backgroundSize: 'cover',
+      overflow: 'hidden',
+      position: 'absolute',
+      zIndex: '0'
+    }}
+    >
       <nav>
         {/* <WhoAmI auth={auth} /> */}
       </nav>

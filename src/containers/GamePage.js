@@ -14,6 +14,8 @@ import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
 
+import PlayerTable from '../components/PlayerTable'
+
 class GamePage extends Component {
 
     constructor(props) {
@@ -77,17 +79,17 @@ class GamePage extends Component {
                     {/* Konva map column */}
                     <Grid.Column
                         textAlign={'center'}
-                        color={'red'}
+                        // color={'red'}
                         width={11}
                     >
                         {/*do not abtract stage as separate component due to zoom and panning functions */}
-                       <Board />
+                        <Board />
                     </Grid.Column>
 
                     {/* right-side panel column */}
                     <Grid.Column
                         textAlign={'center'}
-                        color={'blue'}
+                        // color={'blue'}
                         width={5}
                     >
                         {/* do not abtract due to local state (unless we transition to using redux store) */}
@@ -109,27 +111,28 @@ class GamePage extends Component {
                 {/* contains the players table and action buttons */}
                 <Grid.Row
                     style={{ height: '20vh' }}
-                    color={'yellow'}
+                // color={'yellow'}
                 >
                     {/* players table column */}
-                    <Grid.Column width={11} color={'black'}>
+                    <Grid.Column width={11} >
+                        <PlayerTable />
                     </Grid.Column>
 
-                    {/* action buttons column */}
-                    <Grid.Column width={5} color={'grey'}>
-                        <Grid.Row style={{ height: '50%' }}>
-                            <BuildBtn />
-                            <TradeBtn />
-                        </Grid.Row>
+                        {/* action buttons column */}
+                        <Grid.Column width={5} >
+                            <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
+                                <BuildBtn />
+                                <TradeBtn />
+                            </Grid.Row>
 
-                        <Grid.Row style={{ height: '50%' }}>
-                            <DevCardBtn />
-                            <EndTurnBtn />
-                        </Grid.Row>
-                    </Grid.Column>
+                            <Grid.Row style={{ height: '50%' }}>
+                                <DevCardBtn />
+                                <EndTurnBtn />
+                            </Grid.Row>
+                        </Grid.Column>
                 </Grid.Row>
             </Grid>
-        )
+                )
     }
 }
 
