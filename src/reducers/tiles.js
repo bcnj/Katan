@@ -1,6 +1,4 @@
 // import firebase from
-import _ from 'lodash';
-
 const GET_TILES = 'GET_TILES'
 const SET_ROBBER = 'SET_ROBBER'
 const ADD_CHILD = 'ADD_CHILD'
