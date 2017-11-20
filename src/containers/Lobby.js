@@ -8,6 +8,9 @@ import {connect} from 'react-redux'
 
 class Lobby extends Component {
 
+  componentDidMount(){
+    // console.log(firebase.collection('katan').doc('tileNodes').document(tileId))
+  }
 
   render() {
       console.log(this.props.allGames)
