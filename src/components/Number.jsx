@@ -1,18 +1,25 @@
 import React, { Component } from "react";
 import { Layer, Circle, Image } from "react-konva";
 
-// import one from "../images/field.png";
-// import two from '../images/desert.png';
-// import three from '../images/forest.png';
-// import four from '../images/hill.png';
-// import five from '../images/mountain.png';
-// import six from '../images/pasture.png';
-// import seven from "../images/field.png";
-// import eight from '../images/desert.png';
-// import nine from '../images/forest.png';
-// import ten from '../images/hill.png';
-// import eleven from '../images/mountain.png';
-// import twelve from '../images/pasture.png';
+// import A from '../images/field.png';
+// import B from '../images/desert.png';
+// import C from '../images/forest.png';
+// import D from '../images/hill.png';
+// import E from '../images/mountain.png';
+// import F from '../images/pasture.png';
+// import G from '../images/field.png';
+// import H from '../images/desert.png';
+// import I from '../images/forest.png';
+// import J from '../images/hill.png';
+// import K from '../images/mountain.png';
+// import L from '../images/pasture.png';
+// import M from '../images/pasture.png';
+// import N from '../images/field.png';
+// import O from '../images/desert.png';
+// import P from '../images/forest.png';
+// import Q from '../images/hill.png';
+// import R from '../images/mountain.png';
+// import S from '../images/pasture.png';
 
 class Number extends Component {
   constructor(props) {
@@ -20,116 +27,166 @@ class Number extends Component {
     this.state = {};
   }
 
-  // componentDidMount() {
-  //   const one = new window.Image();
-  //   const two = new window.Image();
-  //   const three = new window.Image();
-  //   const ten = new window.Image();
-  //   const five = new window.Image();
-  //   const six = new window.Image();
-  //   const seven = new window.Image();
-  //   const eight = new window.Image();
-  //   const nine = new window.Image();
-  //   const ten = new window.Image();
-  //   const eleven = new window.Image();
-  //   const twelve = new window.Image();
+  componentDidMount() {
+    const A = new window.Image();
+    const B = new window.Image();
+    const C = new window.Image();
+    const D = new window.Image();
+    const E = new window.Image();
+    const F = new window.Image();
+    const G = new window.Image();
+    const H = new window.Image();
+    const I = new window.Image();
+    const J = new window.Image();
+    const K = new window.Image();
+    const L = new window.Image();
+    const M = new window.Image();
+    const N = new window.Image();
+    const O = new window.Image();
+    const P = new window.Image();
+    const Q = new window.Image();
+    const R = new window.Image();
+    const S = new window.Image();
 
-  //   one.src = one;
-  //   two.src = two;
-  //   three.src = three;
-  //   four.src = Brick;
-  //   five.src = five;
-  //   six.src = six;
-  //   seven.src = seven;
-  //   eight.src = eight;
-  //   nine.src = nine;
-  //   ten.src = Brick;
-  //   eleven.src = eleven;
-  //   twelve.src = twelve;
+    A.src = A;
+    B.src = B;
+    C.src = C;
+    D.src = D;
+    E.src = E;
+    F.src = F;
+    G.src = G;
+    H.src = H;
+    I.src = I;
+    J.src = J;
+    K.src = K;
+    L.src = L;
+    M.src = M;
+    N.src = N;
+    O.src = O;
+    P.src = P;
+    Q.src = Q;
+    R.src = R;
+    S.src = S;
 
-  //   wheat.onload = () => {
-  //     this.setState({
-  //       one,
-  //       two,
-  //       three,
-  //       four,
-  //       five,
-  //       six,
-  //       seven,
-  //       eight,
-  //       nine,
-  //       ten,
-  //       eleven,
-  //       twelve
-  //     });
-  //   };
-  // }
+
+    A.onload = () => {
+      this.setState({
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        G,
+        H,
+        I,
+        J,
+        K,
+        L,
+        M,
+        N,
+        O,
+        P,
+        Q,
+        R,
+        S,
+      });
+    };
+  }
 
   render() {
 
-    // const resources = {
-    //   one: {
-    //     img: this.state.one,
-    //     stroke: '#ffde66'
-    //   },
-    //   two: {
-    //     img: this.state.two,
-    //     stroke: '#672d25'
-    //   },
-    //   three: {
-    //     img: this.state.three,
-    //     stroke: '#062916'
-    //   },
-    //   four: {
-    //     img: this.state.four,
-    //     stroke: '#4d0a01'
-    //   },
-    //   five: {
-    //     img: this.state.five,
-    //     stroke: '#534f4b'
-    //   },
-    //   six: {
-    //     img: this.state.six,
-    //     stroke: '#a9d751'
-    //   },
-    //   seven: {
-    //     img: this.state.seven,
-    //     stroke: '#ffde66'
-    //   },
-    //   eight: {
-    //     img: this.state.eight,
-    //     stroke: '#672d25'
-    //   },
-    //   nine: {
-    //     img: this.state.nine,
-    //     stroke: '#062916'
-    //   },
-    //   ten: {
-    //     img: this.state.ten,
-    //     stroke: '#4d0a01'
-    //   },
-    //   eleven: {
-    //     img: this.state.eleven,
-    //     stroke: '#534f4b'
-    //   },
-    //   twelve: {
-    //     img: this.state.twelve,
-    //     stroke: '#a9d751'
-    //   }
-    // }
+    const ids = {
+      A: {
+        img: this.state.A,
+        // stroke: '#ffde66'
+      },
+      B: {
+        img: this.state.B,
+        // stroke: '#672d25'
+      },
+      C: {
+        img: this.state.C,
+        // stroke: '#062916'
+      },
+      D: {
+        img: this.state.D,
+        // stroke: '#4d0a01'
+      },
+      E: {
+        img: this.state.E,
+        // stroke: '#534f4b'
+      },
+      F: {
+        img: this.state.F,
+        // stroke: '#a9d751'
+      },
+      G: {
+        img: this.state.G,
+        // stroke: '#ffde66'
+      },
+      H: {
+        img: this.state.H,
+        // stroke: '#672d25'
+      },
+      I: {
+        img: this.state.I,
+        // stroke: '#062916'
+      },
+      J: {
+        img: this.state.J,
+        // stroke: '#4d0a01'
+      },
+      K: {
+        img: this.state.K,
+        // stroke: '#534f4b'
+      },
+      L: {
+        img: this.state.L,
+        // stroke: '#a9d751'
+      },
+      M: {
+        img: this.state.M,
+        // stroke: '#a9d751'
+      },
+      N: {
+        img: this.state.N,
+        // stroke: '#a9d751'
+      },
+      O: {
+        img: this.state.O,
+        // stroke: '#a9d751'
+      },
+      P: {
+        img: this.state.P,
+        // stroke: '#a9d751'
+      },
+      Q: {
+        img: this.state.Q,
+        // stroke: '#a9d751'
+      },
+      R: {
+        img: this.state.R,
+        // stroke: '#a9d751'
+      },
+      S: {
+        img: this.state.S,
+        // stroke: '#a9d751'
+      }
+    }
 
-    const { x, y } = this.props;
+    const { id, x, y } = this.props;
 
     return (
       <Circle
         x={x}
         y={y}
         radius={20}
-        fill={"black"}
+        // fill={"black"}
         shadowBlur={5}
-        // fillPatternImage={resources[resourceType]['img']}
-        // fillPatternScale={{ x: 0.07, y: 0.07 }}
-        // fillPatternOffset={{ x: -1020, y: -820 }}
+        fillPatternImage={ids[id].img}
+      // fillPatternScale={{ x: 0.07, y: 0.07 }}
+      // fillPatternOffset={{ x: -1020, y: -820 }}
       />
     );
   }
