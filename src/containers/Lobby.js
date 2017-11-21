@@ -1,52 +1,56 @@
 import React, { Component } from 'react'
 import IndividualRoom from '../components/IndividualRoom'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { db } from '../firebase'
 import { Container } from 'semantic-ui-react'
 import { fetchGames } from '../actions'
 
 class Lobby extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
   }
 
   componentWillMount() {
     this.props.fetchGames()
-    // db.collection('games')
-    // .get().then(doc => console.log(doc.exists))
   }
 
   render() {
-    const { allGames, handleJoin, user, playerNum } = this.props
-
-
+    const { allGames, handleJoin, user } = this.props
+    console.log('this.props', this.props)
     return (
-    <Container style={{marginTop: '10vh'}}>
-      <IndividualRoom allGames={allGames} handleJoin={handleJoin} user={user} playerNum={playerNum}/>
-    </Container>
+      <Container style={{ marginTop: '10vh' }}>
+        <IndividualRoom
+          allGames={allGames}
+          handleJoin={handleJoin}
+          user={user}
+        />
+      </Container>
     )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     allGames: state.games,
-    user: state.user,
+    user: state.user
   }
 }
-
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchGames: () => dispatch(fetchGames()),
-    // handleJoin: (gameId) => {
-    //   db.collection('games').doc(`${gameId}`).collection('players').doc('player1')
-    //     .update({player1: { name: 'claire' }})
-    //   ownProps.history.push(`/room/wait/${gameId}`)
-    // }
+    handleJoin: (gameId, playerCount) => {
+      console.log('gameId', gameId)
+      let playerUpdate = {}
+      playerUpdate[`players.player${playerCount + 1}.name`] = 'guest'
+      playerUpdate['game.playerCount'] = playerCount + 1
+      db
+        .collection('games')
+        .doc(`${gameId}`)
+        .update(playerUpdate)
+      ownProps.history.push(`/room/wait/${gameId}`)
+    }
   }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lobby)
-
-
