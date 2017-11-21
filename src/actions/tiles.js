@@ -1,8 +1,8 @@
 import { db } from '../firebase'
+import { GET_TILES, SET_ROBBER } from './types'
 
-const GET_TILES = 'GET_TILES'
-const SET_ROBBER = 'SET_ROBBER'
-const ADD_CHILD = 'ADD_CHILD'
+//need to figure how to pass this, etc., otherwise functions work
+const currentGame = "whatever the current game is"
 
 const getTiles = tiles => ({
   type: GET_TILES,
@@ -14,43 +14,46 @@ const setRobber = tile => ({
   tile
 })
 
-const addChild = tile => ({
-  type: ADD_CHILD,
-  tile
-})
-
 export const getTilesThunk = () => {
   return dispatch => {
-    console.log(db)
-    let tiles = db
+    db
       .collection('testGames')
-      .document('X59pZQsmXTNxoXNiTEke')
+      .doc(currentGame)
       .get()
-      .then(doc => console.log(doc.data().tileNodes))
-    // const action = getTiles(tile)
-    // dispatch(action)
+      .then(doc => {
+        let tiles = doc.data().tileNodes
+        const action = getTiles(tiles)
+        dispatch(action)
+      })
   }
 }
 
-// export const addChildThunk = (tileId,child) => {
-//   //aim to get the exact tile and add the child to the children array
-//   return dispatch => {
-//     const tile = firebase.collection('katan/tileNodes').doc(tileid).doc('children').add({
-//       child
-//     };
-//     const action = addChild(child);
-//     dispatch(action);
-//     })
-//   }
-// }
+export const setRobberThunk = (tileId, tF) => {
+  if (tF === true) {
+    return dispatch => {
+      let robberUpdate = {}
+      robberUpdate[`tileNodes.${tileId}.robber`] = false
+      db
+        .collection('testGames')
+        .doc(currentGame)
+        .update(robberUpdate)
+    }
+  } else {
+    return dispatch => {
+      let robberUpdate = {}
+      robberUpdate[`tileNodes.${tileId}.robber`] = true
+      db
+        .collection('testGames')
+        .doc('X59pZQsmXTNxoXNiTEke')
+        .update(robberUpdate)
+    }
+  }
+}
 
 const tilesReducer = function(tiles = [], action) {
   switch (action.type) {
     case GET_TILES:
       return action.tiles
-    case ADD_CHILD:
-      var otherTiles = tiles.filter(tile => tile.id !== action.tile.id)
-      return [...otherTiles, action.tile]
     case SET_ROBBER:
       var otherTiles = tiles.filter(tile => tile.id !== action.tile.id)
       return [...otherTiles, action.tile]

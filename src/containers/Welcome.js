@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import { db } from '../firebase'
 import dummyData from '../dummyData'
 // import * as actions from '../actions'
-import { getTilesThunk, setRobberThunk, addChildThunk } from '../actions/tiles'
 
 class Welcome extends Component {
   constructor(props){
@@ -15,7 +14,6 @@ class Welcome extends Component {
   }
 
   render(){
-    this.props.getTiles();
     return(
     <div style={{ textAlign: 'center', marginTop: '40vh' }}>
         <h1> Settlers of Catan </h1>
@@ -44,9 +42,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     handleCreate: ()=> {
       db.collection('testGames').add(dummyData)
       ownProps.history.push('/lobby')
-    },
-    getTiles: () => {
-      dispatch(getTilesThunk())
     }
   }
 }

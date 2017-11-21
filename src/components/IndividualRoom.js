@@ -14,12 +14,12 @@ export default ({allGames, handleJoin, playerNum, user}) => {
               Game {game.id.slice(0,2)}
             </Card.Header>
             <Card.Description>
-              <strong>{game.game.players.length}</strong> /4 Players
+              <strong>{game.game.playerCount}</strong> /4 Players
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
             <div>
-              <Button basic color='green'>Join</Button>
+              <Button onClick={e => handleJoin(game.id, game.game.playerCount)} basic color='green'>Join</Button>
               <Button basic color='red'>Watch</Button>
             </div>
           </Card.Content>
