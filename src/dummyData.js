@@ -13,7 +13,8 @@ let dummyData = {
       "brick": 0,
       "wheat": 0,
       "sheep": 0,
-      "ore": 0
+      "ore": 0,
+      "color": 'red',
     },
     "player2": {
       "id": 2,
