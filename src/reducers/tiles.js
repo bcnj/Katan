@@ -1,4 +1,4 @@
-import { GET_TILES, SET_ROBBER } from './types'
+import { GET_TILES, SET_ROBBER } from '../actions/types'
 
 const tilesReducer = function(tiles = [], action) {
   switch (action.type) {
@@ -12,4 +12,4 @@ const tilesReducer = function(tiles = [], action) {
   }
 }
 
-export const tilesReducer
+export default tilesReducer
