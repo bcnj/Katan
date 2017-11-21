@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Stage } from 'react-konva'
 import { Container, Grid, Button, Menu, Segment } from 'semantic-ui-react'
+import { fetchSingleGame } from '../actions'
 
 import Board from '../components/Board';
 
@@ -15,6 +16,8 @@ import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
 
 import PlayerTable from '../components/PlayerTable'
+import { connect } from 'react-redux'
+
 
 class GamePage extends Component {
 
@@ -30,6 +33,10 @@ class GamePage extends Component {
         this.setState({ activeItem: name })
     }
 
+    // componentWillMount() {
+    //     this.props.fetchSingleGame(this.props.gameId)
+    // }
+
     render() {
 
         //controls which panel tab appears based on menu selection
@@ -40,6 +47,7 @@ class GamePage extends Component {
 
         //local state governing current panel selection
         const { activeItem } = this.state
+        const { username, OreCount, WheatCount, SheepCount, WoodCount, BrickCount } = this.props
 
         return (
 
@@ -86,7 +94,7 @@ class GamePage extends Component {
                 >
                     {/* players table column */}
                     <Grid.Column width={11} >
-                        <PlayerTable />
+                        <PlayerTable playerName={username} OreCount={OreCount} WheatCount={WheatCount} SheepCount={SheepCount} WoodCount={WoodCount} BrickCount={BrickCount}/>
                     </Grid.Column>
 
                     {/* action buttons column */}
@@ -107,4 +115,22 @@ class GamePage extends Component {
     }
 }
 
-export default GamePage;
+const mapStateToProps = (state) => {
+    return {
+        username: state.user.name,
+        // currentGame: state.currentGame,
+        OreCount: state.currentGame.players.player1.ore,
+        WheatCount: state.currentGame.players.player1.wheat,
+        SheepCount: state.currentGame.players.player1.sheep,
+        WoodCount: state.currentGame.players.player1.wood,
+        BrickCount: state.currentGame.players.player1.brick,
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+      fetchSingleGame: (gameId) => dispatch(fetchSingleGame(gameId)),
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(GamePage);
