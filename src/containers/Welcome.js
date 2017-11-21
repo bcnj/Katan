@@ -46,7 +46,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       ownProps.history.push('/lobby')
     },
     getTiles: () => {
-      dispatch(getTiles())
+      dispatch(getTilesThunk())
     }
   }
 }

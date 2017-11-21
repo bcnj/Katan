@@ -127,7 +127,7 @@ let dummyData = {
     },
     "T12": {
       "id": "T12",
-      "children": [26,20,27,32,33,38],
+      "children": [26,21,27,32,33,38],
       "resource": "ORE",
       "robber": false,
       "rollNumber": 8
