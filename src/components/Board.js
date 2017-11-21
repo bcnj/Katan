@@ -19,13 +19,13 @@ class Board extends Component {
           id: 2,
           x: 350,
           y: 150,
-          resourceType: "wood"
+          resourceType: "sheep"
         },
         {
           id: 3,
           x: 450,
           y: 150,
-          resourceType: "brick"
+          resourceType: "wood"
         },
         {
           id: 4,
@@ -38,31 +38,31 @@ class Board extends Component {
           id: 5,
           x: 300,
           y: 235,
-          resourceType: "wood"
+          resourceType: "brick"
         },
         {
           id: 6,
           x: 400,
           y: 235,
-          resourceType: "ore"
+          resourceType: "sheep"
         },
         {
           id: 7,
           x: 500,
           y: 235,
-          resourceType: "sheep"
+          resourceType: "brick"
         },
         {
           id: 8,
           x: 150,
           y: 320,
-          resourceType: "ore"
+          resourceType: "wheat"
         },
         {
           id: 9,
           x: 250,
           y: 320,
-          resourceType: "sheep"
+          resourceType: "wood"
         },
 
         {
@@ -75,32 +75,32 @@ class Board extends Component {
           id: 11,
           x: 450,
           y: 320,
-          resourceType: "wheat"
+          resourceType: "wood"
         },
         {
           id: 12,
           x: 550,
           y: 320,
-          resourceType: "wheat"
+          resourceType: "ore"
         },
         {
           id: 13,
           x: 200,
           y: 405,
-          resourceType: "wheat"
+          resourceType: "wood"
         },
         {
           id: 14,
           x: 300,
           y: 405,
-          resourceType: "wood"
+          resourceType: "ore"
         },
 
         {
           id: 15,
           x: 400,
           y: 405,
-          resourceType: "brick"
+          resourceType: "wheat"
         },
         {
           id: 16,
@@ -112,19 +112,19 @@ class Board extends Component {
           id: 17,
           x: 250,
           y: 490,
-          resourceType: "sheep"
+          resourceType: "brick"
         },
         {
           id: 18,
           x: 350,
           y: 490,
-          resourceType: "brick"
+          resourceType: "wheat"
         },
         {
           id: 19,
           x: 450,
           y: 490,
-          resourceType: "wood"
+          resourceType: "sheep"
         }
       ],
       intersections: [

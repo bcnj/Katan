@@ -53,99 +53,99 @@
         "children": {
           "1": ""
         },
-        "resource": "DESERT",
+        "resource": "ORE",
         "robber": false,
-        "rollNumber": 0
+        "rollNumber": 10
       },
       "T2": {
         "id": "T2",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "SHEEP",
         "robber": false,
-        "rollNumber": 1
+        "rollNumber": 2
       },
       "T3": {
         "id": "T3",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WOOD",
         "robber": false,
-        "rollNumber": 2
+        "rollNumber": 9
       },
       "T4": {
         "id": "T4",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WHEAT",
         "robber": false,
-        "rollNumber": 3
+        "rollNumber": 12
       },
       "T5": {
         "id": "T5",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "BRICK",
         "robber": false,
-        "rollNumber": 4
+        "rollNumber": 6
       },
       "T6": {
         "id": "T6",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "SHEEP",
         "robber": false,
-        "rollNumber": 5
+        "rollNumber": 4
       },
       "T7": {
         "id": "T7",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "BRICK",
         "robber": false,
-        "rollNumber": 6
+        "rollNumber": 10
       },
       "T8": {
         "id": "T8",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WHEAT",
         "robber": false,
-        "rollNumber": 7
+        "rollNumber": 9
       },
       "T9": {
         "id": "T9",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WOOD",
         "robber": false,
-        "rollNumber": 8
+        "rollNumber": 11
       },
       "T10": {
         "id": "T10",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "DESERT",
         "robber": false,
-        "rollNumber": 9
+        "rollNumber": 0
       },
       "T11": {
         "id": "T11",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WOOD",
         "robber": false,
-        "rollNumber": 10
+        "rollNumber": 3
       },
       "T12": {
         "id": "T12",
@@ -154,16 +154,16 @@
         },
         "resource": "ORE",
         "robber": false,
-        "rollNumber": 11
+        "rollNumber": 8
       },
       "T13": {
         "id": "T13",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WOOD",
         "robber": false,
-        "rollNumber": 12
+        "rollNumber": 8
       },
       "T14": {
         "id": "T14",
@@ -172,14 +172,14 @@
         },
         "resource": "ORE",
         "robber": false,
-        "rollNumber": 1
+        "rollNumber": 3
       },
       "T15": {
         "id": "T15",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WHEAT",
         "robber": false,
         "rollNumber": 4
       },
@@ -188,7 +188,7 @@
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "SHEEP",
         "robber": false,
         "rollNumber": 5
       },
@@ -197,27 +197,27 @@
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "BRICK",
         "robber": false,
-        "rollNumber": 6
+        "rollNumber": 5
       },
       "T18": {
         "id": "T18",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "WHEAT",
         "robber": false,
-        "rollNumber": 7
+        "rollNumber": 6
       },
       "T19": {
         "id": "T19",
         "children": {
           "1": ""
         },
-        "resource": "ORE",
+        "resource": "SHEEP",
         "robber": false,
-        "rollNumber": 8
+        "rollNumber": 11
       }
     },
     "roadNodes": {
