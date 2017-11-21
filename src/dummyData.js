@@ -466,7 +466,7 @@ const dummyData = {
   },
   "intersectionNodes": {
     1: {
-      "neighbors": [4, 5]
+      "neighbors": [4, 5],
       "player": 0,
       "city": false,
       "settlement": false
