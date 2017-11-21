@@ -2,7 +2,8 @@ let dummyData = {
   "game": {
     "diceRoll": 2,
     "currentPlayer": "",
-    "active": false
+    "active": false,
+    "playerCount": 0,
   },
   "players": {
     "player1": {
