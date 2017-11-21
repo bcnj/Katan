@@ -10,6 +10,108 @@
         "3": ""
       }
     },
+    "devCards": {
+      "C1": {
+        "id": 1,
+        "name": "Knight"
+      },
+      "C2": {
+        "id": 2,
+        "name": "Knight"
+      },
+      "C3": {
+        "id": 3,
+        "name": "Knight"
+      },
+      "C4": {
+        "id": 4,
+        "name": "Knight"
+      },
+      "C5": {
+        "id": 5,
+        "name": "Knight"
+      },
+      "C6": {
+        "id": 6,
+        "name": "Knight"
+      },
+      "C7": {
+        "id": 7,
+        "name": "Knight"
+      },
+      "C8": {
+        "id": 8,
+        "name": "Knight"
+      },
+      "C9": {
+        "id": 9,
+        "name": "Knight"
+      },
+      "C10": {
+        "id": 10,
+        "name": "Knight"
+      },
+      "C11": {
+        "id": 11,
+        "name": "Knight"
+      },
+      "C12": {
+        "id": 12,
+        "name": "Knight"
+      },
+      "C13": {
+        "id": 13,
+        "name": "Knight"
+      },
+      "C14": {
+        "id": 14,
+        "name": "Knight"
+      },
+      "C15": {
+        "id": 15,
+        "name": "Victory Point"
+      },
+      "C16": {
+        "id": 16,
+        "name": "Victory Point"
+      },
+      "C17": {
+        "id": 17,
+        "name": "Victory Point"
+      },
+      "C18": {
+        "id": 18,
+        "name": "Victory Point"
+      },
+      "C19": {
+        "id": 19,
+        "name": "Victory Point"
+      },
+      "C20": {
+        "id": 20,
+        "name": "Year of Plenty"
+      },
+      "C21": {
+        "id": 21,
+        "name": "Year of Plenty"
+      },
+      "C22": {
+        "id": 22,
+        "name": "Monopoly"
+      },
+      "C23": {
+        "id": 23,
+        "name": "Monopoly"
+      },
+      "C24": {
+        "id": 24,
+        "name": "Road Building"
+      },
+      "C25": {
+        "id": 25,
+        "name": "Road Building"
+      }
+    },
     "players": {
       "player1": {
         "id": 1,

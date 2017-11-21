@@ -10,8 +10,6 @@ class Lobby extends Component {
 
 
   render() {
-      console.log(this.props.allGames)
-
     return (
     <div>
       <div>Hello</div>
