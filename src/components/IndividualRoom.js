@@ -19,7 +19,7 @@ export default ({allGames, handleJoin, playerNum, user}) => {
           </Card.Content>
           <Card.Content extra>
             <div>
-              <Button onClick={() => {handleJoin(game.id)}} basic color='green'>Join</Button>
+              <Button basic color='green'>Join</Button>
               <Button basic color='red'>Watch</Button>
             </div>
           </Card.Content>
