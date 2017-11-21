@@ -46,7 +46,7 @@ class Tile extends Component {
   isOccupied() {} // Returns BOOL
 
   handleClick() {
-    console.log("Clicked on tile", this.props.id);
+    // console.log("Clicked on tile", this.props.id);
   }
 
   render() {
@@ -77,10 +77,7 @@ class Tile extends Component {
         stroke: '#a9d751'
       }
     }
-    console.log("Intersection");
     const { x, y, resourceType } = this.props;
-    console.log("this.state", this.state);
-    console.log(this.props)
     return (
       <RegularPolygon
         stroke={resources[resourceType]['stroke']}

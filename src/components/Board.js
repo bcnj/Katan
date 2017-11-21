@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Tile from "./Tile";
 import Intersection from "./Intersection";
 import Road from "./Road";
+import Number from "./Number";
 import { Layer, Rect, Stage, Group, RegularPolygon, Circle } from "react-konva";
 
 class Board extends Component {
@@ -745,6 +746,106 @@ class Board extends Component {
           rotation: 60
         }
       ],
+      numbers: [
+        {
+          id: 'A',
+          x: 250,
+          y: 150,
+        },
+        {
+          id: 'B',
+          x: 350,
+          y: 150,
+        },
+        {
+          id: 'C',
+          x: 450,
+          y: 150,
+        },
+        {
+          id: 'D',
+          x: 200,
+          y: 235,
+        },
+
+        {
+          id: 'E',
+          x: 300,
+          y: 235,
+        },
+        {
+          id: 'F',
+          x: 400,
+          y: 235,
+        },
+        {
+          id: 'G',
+          x: 500,
+          y: 235,
+        },
+        {
+          id: 'H',
+          x: 150,
+          y: 320,
+        },
+        {
+          id: 'I',
+          x: 250,
+          y: 320,
+        },
+        // this is the desert tile
+        // {
+        //   id: 'J',
+        //   x: 350,
+        //   y: 320,
+
+        // },
+        {
+          id: 'J',
+          x: 450,
+          y: 320,
+        },
+        {
+          id: 'K',
+          x: 550,
+          y: 320,
+        },
+        {
+          id: 'L',
+          x: 200,
+          y: 405,
+        },
+        {
+          id: 'M',
+          x: 300,
+          y: 405,
+        },
+
+        {
+          id: 'N',
+          x: 400,
+          y: 405,
+        },
+        {
+          id: 'O',
+          x: 500,
+          y: 405,
+        },
+        {
+          id: 'P',
+          x: 250,
+          y: 490,
+        },
+        {
+          id: 'Q',
+          x: 350,
+          y: 490,
+        },
+        {
+          id: 'R',
+          x: 450,
+          y: 490,
+        }],
       currentPlayer: null,
       players: [],
       active: true,
@@ -789,16 +890,21 @@ class Board extends Component {
   }
   renderIntersections() {
     return this.state.intersections.map(function (intersection, idx) {
-      console.log("intersection", intersection);
       const { x, y } = intersection;
       return <Intersection x={x} y={y} id={idx} />;
     });
   }
   renderRoads() {
-    return this.state.roads.map(function(roads, idx) {
+    return this.state.roads.map(function (roads, idx) {
       const { x, y } = roads;
       const rotation = roads.rotation || "";
       return <Road x={x} y={y} rotation={rotation} id={idx} />;
+    });
+  }
+  renderNumbers() {
+    return this.state.numbers.map(function (number) {
+      const { id, x, y } = number;
+      return <Number id={id} x={x} y={y} />;
     });
   }
 
@@ -819,6 +925,7 @@ class Board extends Component {
           {this.renderTiles()}
           {this.renderRoads()}
           {this.renderIntersections()}
+          {this.renderNumbers()}
         </Layer>
       </Stage>
     );
