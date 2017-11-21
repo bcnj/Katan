@@ -752,10 +752,10 @@ class Board extends Component {
     };
   }
 
-  endGame() {}
-  rollDice() {}
-  setCurrentPlayer() {}
-  getAllPlayers() {}
+  endGame() { }
+  rollDice() { }
+  setCurrentPlayer() { }
+  getAllPlayers() { }
 
   handleWheel(thisEvent, thisStage) {
     let e = thisEvent.evt;
@@ -786,13 +786,13 @@ class Board extends Component {
   }
 
   renderTiles() {
-    return this.state.tiles.map(function(tile) {
+    return this.state.tiles.map(function (tile) {
       const { id, x, y, resourceType } = tile;
       return <Tile id={id} x={x} y={y} resourceType={resourceType} />;
     });
   }
   renderIntersections() {
-    return this.state.intersections.map(function(intersection, idx) {
+    return this.state.intersections.map(function (intersection, idx) {
       console.log("intersection", intersection);
       const { x, y } = intersection;
       return <Intersection x={x} y={y} id={idx} />;
@@ -816,14 +816,13 @@ class Board extends Component {
           this.handleWheel(e, this.stage);
         }}
         width={700}
-		height={700}
-		draggable={true}
+        height={700}
+        draggable={true}
       >
         <Layer>
-          <Road />
           {this.renderTiles()}
-          {/* {this.renderRoads()}
-          {this.renderIntersections()} */}
+          {this.renderRoads()}
+          {this.renderIntersections()}
         </Layer>
       </Stage>
     );
