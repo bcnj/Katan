@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Tile from "./Tile";
 import Intersection from "./Intersection";
 import Road from "./Road";
+import Number from "./Number";
 import { Layer, Rect, Stage, Group, RegularPolygon, Circle } from "react-konva";
 
 class Board extends Component {
@@ -745,6 +746,106 @@ class Board extends Component {
           rotation: 60
         }
       ],
+      numbers: [
+        {
+          id: 1,
+          x: 250,
+          y: 150,
+        },
+        {
+          id: 2,
+          x: 350,
+          y: 150,
+        },
+        {
+          id: 3,
+          x: 450,
+          y: 150,
+        },
+        {
+          id: 4,
+          x: 200,
+          y: 235,
+        },
+
+        {
+          id: 5,
+          x: 300,
+          y: 235,
+        },
+        {
+          id: 6,
+          x: 400,
+          y: 235,
+        },
+        {
+          id: 7,
+          x: 500,
+          y: 235,
+        },
+        {
+          id: 8,
+          x: 150,
+          y: 320,
+        },
+        {
+          id: 9,
+          x: 250,
+          y: 320,
+        },
+
+        {
+          id: 10,
+          x: 350,
+          y: 320,
+
+        },
+        {
+          id: 11,
+          x: 450,
+          y: 320,
+        },
+        {
+          id: 12,
+          x: 550,
+          y: 320,
+        },
+        {
+          id: 13,
+          x: 200,
+          y: 405,
+        },
+        {
+          id: 14,
+          x: 300,
+          y: 405,
+        },
+
+        {
+          id: 15,
+          x: 400,
+          y: 405,
+        },
+        {
+          id: 16,
+          x: 500,
+          y: 405,
+        },
+        {
+          id: 17,
+          x: 250,
+          y: 490,
+        },
+        {
+          id: 18,
+          x: 350,
+          y: 490,
+        },
+        {
+          id: 19,
+          x: 450,
+          y: 490,
+        }],
       currentPlayer: null,
       players: [],
       active: true,
@@ -799,10 +900,16 @@ class Board extends Component {
     });
   }
   renderRoads() {
-    return this.state.roads.map(function(roads, idx) {
+    return this.state.roads.map(function (roads, idx) {
       const { x, y } = roads;
       const rotation = roads.rotation || "";
       return <Road x={x} y={y} rotation={rotation} id={idx} />;
+    });
+  }
+  renderNumbers() {
+    return this.state.numbers.map(function (number) {
+      const { id, x, y } = number;
+      return <Number id={id} x={x} y={y} />;
     });
   }
 
@@ -823,6 +930,7 @@ class Board extends Component {
           {this.renderTiles()}
           {this.renderRoads()}
           {this.renderIntersections()}
+          {this.renderNumbers()}
         </Layer>
       </Stage>
     );
