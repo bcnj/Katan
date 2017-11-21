@@ -3,12 +3,7 @@
       "diceRoll": 2,
       "currentPlayer": "",
       "active": false,
-      "players": {
-        "0": "",
-        "1": "",
-        "2": "",
-        "3": ""
-      }
+      "players": []
     },
     "devCards": {
       "C1": {
@@ -121,7 +116,10 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "devCards": {
+          "1": ""
+        }
       },
       "player2": {
         "id": 2,
@@ -131,7 +129,10 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "devCards": {
+          "1": ""
+        }
       },
       "player3": {
         "id": 3,
@@ -141,7 +142,10 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "devCards": {
+          "1": ""
+        }
       },
       "player4": {
         "id": 4,
@@ -151,7 +155,10 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "devCards": {
+          "1": ""
+        }
       }
     },
     "tileNodes": {

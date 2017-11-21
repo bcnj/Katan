@@ -2,70 +2,53 @@ import React, { Component } from 'react'
 import { Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { createGame, fetchGames } from '../reducers/game'
-import dummyData from './dummyData'
+// import { createGame } from '../actions'
+// import dummyData from './dummyData'
 import { db } from '../firebase'
+import dummyData from '../dummyData'
+// import * as actions from '../actions'
+import { getTilesThunk, setRobberThunk, addChildThunk } from '../actions/tiles'
 
 class Welcome extends Component {
-  componentDidMount() {
-    // db.collection('games').add(dummyData)
-    // db.collection('user').doc('something').add({rand: 'e3'})
-    fetchGames()
+  constructor(props){
+    super(props)
   }
 
-  render() {
-    var gameUpdate = {};
-    gameUpdate[`game.currentPlayer`] = 'Claire';
-
-    let ref = db.collection('games').doc('Rl197rMEsQZkcoK1Qaws')
-    ref
-      .update(gameUpdate)
-      .then(data => {
-        if (!data.exists) {
-          console.log('No such dataument!')
-        } else {
-          console.log('dataument data:', data.data().game)
-        }
-      })
-      .catch(err => {
-        console.log('Error getting document', err)
-      })
-    return (
-      <div>
-        <div className="landing">
-          <div className="mx-auto">
-            <div className="display-4 pb-3"> Settlers of Catan </div>
-            <div>
-              <div style={{ textAlign: 'around' }}>
-                <Link to="/lobby">
-                  <Button secondary> Join Game </Button>
-                </Link>
-                <Link to="/lobby">
-                  <Button secondary onClick={createGame}>
-                    {' '}
-                    Create Game{' '}
-                  </Button>
-                </Link>
-              </div>
-            </div>
+  render(){
+    this.props.getTiles();
+    return(
+    <div style={{ textAlign: 'center', marginTop: '40vh' }}>
+        <h1> Settlers of Catan </h1>
+        <div>
+          <div style={{ textAlign: 'around' }}>
+            <Link to={'/lobby'}>
+              <Button secondary> Join Game </Button>
+            </Link>
+              <Button secondary onClick={this.props.handleCreate}> Create Game </Button>
           </div>
         </div>
-        <div className="background-overlay" />
-      </div>
-    )
+  </div>
+)
+}
+}
+
+const mapStateToProps = (state) => {
+  return {
+    allGames: state.game,
+    tiles: state.tiles
   }
 }
 
-// const mapState = (state) => ({
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    handleCreate: ()=> {
+      db.collection('testGames').add(dummyData)
+      ownProps.history.push('/lobby')
+    },
+    getTiles: () => {
+      dispatch(getTiles())
+    }
+  }
+}
 
-// })
-
-// const mapDispatch = (dispatch, ownProps) => {
-//   return {
-//     handleCreate: ()=> {
-//       createGame(dummyData)
-//     }
-//   }
-// }
-
-export default connect()(Welcome)
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome)
