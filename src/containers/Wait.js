@@ -16,8 +16,7 @@ class Wait extends Component {
   }
 
   render() {
-    console.log(this.props)
-    const { currentGame, handleStart } = this.props
+    const { currentGame, handleStart, gameId } = this.props
 
     return (
       <Container style={{marginTop: '10vh'}}>
@@ -34,7 +33,7 @@ class Wait extends Component {
 
           <div>
             <Button> Leave Game </Button>
-            <Button disabled={currentGame.game.playerCount < 4} onClick={(e) => handleStart(e, currentGame.game.playerCount)}> Start </Button>
+            <Button disabled={currentGame.game.playerCount < 4} onClick={(e) => handleStart(e, gameId)}> Start </Button>
           </div>
         </div> }
       </Container>
@@ -43,15 +42,15 @@ class Wait extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  gameId: ownProps.match.params.roomId,
+  gameId: ownProps.match.params.gameId,
   currentGame: state.currentGame
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchSingleGame: (gameId) => dispatch(fetchSingleGame(gameId)),
-    handleStart: (e, playerCount) => {
-      ownProps.history.push('/game')
+    handleStart: (e, gameId) => {
+      ownProps.history.push(`/game/${gameId}`)
     }
   }
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Grid, Container, Card, Segment, Icon, Image } from 'semantic-ui-react';
 
 const PlayerTable = (props) => {
+    const { playerName, OreCount, WheatCount, SheepCount, WoodCount, BrickCount }  = props
 
     return (
         // overall row wrapper
@@ -17,7 +18,7 @@ const PlayerTable = (props) => {
                     <Image src='//insert image url' />
                     <Card.Content>
                         <Card.Header>
-                            Player Name
+                            { playerName }
                  </Card.Header>
                         <Card.Description>
                             VP Points: 0
@@ -32,23 +33,23 @@ const PlayerTable = (props) => {
                     <Grid columns={5}>
                         <Grid.Row>
                             <Grid.Column>
-                                Brick: 0
+                                Brick: { BrickCount }
                             </Grid.Column>
 
                             <Grid.Column>
-                                Wood: 0
+                                Wood: { WoodCount }
                             </Grid.Column>
 
                             <Grid.Column>
-                                Sheep: 0
+                                Sheep: { SheepCount }
                             </Grid.Column>
 
                             <Grid.Column>
-                                Wheat: 0
+                                Wheat: { WheatCount }
                             </Grid.Column>
 
                             <Grid.Column>
-                                Ore: 0
+                                Ore: { OreCount }
                             </Grid.Column>
                         </Grid.Row>
                         </Grid>

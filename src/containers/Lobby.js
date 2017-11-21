@@ -42,10 +42,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       playerUpdate['game.playerCount'] = playerCount+1
       db.collection('games').doc(`${gameId}`)
         .update(playerUpdate)
-      ownProps.history.push(`/room/wait/${gameId}`)
+      ownProps.history.push(`/game/wait/${gameId}`)
     },
     handleWatch: (gameId) => {
-      ownProps.history.push(`/game`)
+      ownProps.history.push(`/game/${gameId}`)
     },
   }
 }

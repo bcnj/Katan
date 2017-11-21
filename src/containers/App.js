@@ -4,7 +4,6 @@ import { Container } from 'semantic-ui-react'
 
 import Welcome from './Welcome'
 import Lobby from './Lobby'
-import Room from './Room'
 import Wait from './Wait'
 import GamePage from './GamePage'
 
@@ -34,9 +33,9 @@ export default () => (
       </nav>
       <Switch>
         <Route exact path='/' component={Welcome} />
-        <Route exact path='/game' component={GamePage} />
         <Route path='/lobby' component={Lobby} />
-        <Route path='/room/wait/:roomId' component={Wait} />
+        <Route path='/game/wait/:gameId' component={Wait} />
+        <Route path='/game/:gameId' component={GamePage} />
       </Switch>
     </div>
   </Router>
