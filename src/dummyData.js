@@ -3,12 +3,7 @@
       "diceRoll": 2,
       "currentPlayer": "",
       "active": false,
-      "players": {
-        "0": "",
-        "1": "",
-        "2": "",
-        "3": ""
-      }
+      "players": []
     },
     "players": {
       "player1": {
