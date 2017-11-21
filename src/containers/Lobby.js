@@ -12,17 +12,14 @@ class Lobby extends Component {
 
   componentWillMount() {
     this.props.fetchGames()
-    // db.collection('games')
-    // .get().then(doc => console.log(doc.exists))
   }
 
   render() {
-    const { allGames, handleJoin, user, playerNum } = this.props
-
+    const { allGames, handleJoin, user } = this.props
 
     return (
     <Container style={{marginTop: '10vh'}}>
-      <IndividualRoom allGames={allGames} handleJoin={handleJoin} user={user} playerNum={playerNum}/>
+      <IndividualRoom allGames={allGames} handleJoin={handleJoin} user={user}/>
     </Container>
     )
   }
@@ -39,11 +36,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchGames: () => dispatch(fetchGames()),
-    // handleJoin: (gameId) => {
-    //   db.collection('games').doc(`${gameId}`).collection('players').doc('player1')
-    //     .update({player1: { name: 'claire' }})
-    //   ownProps.history.push(`/room/wait/${gameId}`)
-    // }
+    handleJoin: (gameId, playerCount) => {
+      let playerUpdate = {}
+      playerUpdate[`players.player${playerCount+1}.name`] = 'guest'
+      playerUpdate['game.playerCount'] = playerCount+1
+      db.collection('games').doc(`${gameId}`)
+        .update(playerUpdate)
+      ownProps.history.push(`/room/wait/${gameId}`)
+    }
   }
   }
 

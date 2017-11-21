@@ -3,7 +3,7 @@
       "diceRoll": 2,
       "currentPlayer": "",
       "active": false,
-      "players": []
+      "playerCount": 0,
     },
     "players": {
       "player1": {
@@ -14,7 +14,8 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "color": 'red'
       },
       "player2": {
         "id": 2,
@@ -24,7 +25,8 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "color": 'white'
       },
       "player3": {
         "id": 3,
@@ -34,7 +36,8 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "color": "green"
       },
       "player4": {
         "id": 4,
@@ -44,7 +47,8 @@
         "brick": 0,
         "wheat": 0,
         "sheep": 0,
-        "ore": 0
+        "ore": 0,
+        "color": "blue"
       }
     },
     "tileNodes": {
