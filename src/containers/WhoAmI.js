@@ -24,7 +24,7 @@ class Auth extends Component {
   componentDidMount() {
     const {auth} = this.props
     this.unsubscribe = auth.onAuthStateChanged(user => {
-      this.props.setCurrentUser(user)
+      this.props.setCurrentUser({name: user.displayName || 'guest'})
       this.setState({user})
     })
   }
