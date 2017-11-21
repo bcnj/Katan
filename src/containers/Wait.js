@@ -23,8 +23,12 @@ class Wait extends Component {
       { currentGame && currentGame.game &&
         <div>
 
+<<<<<<< HEAD
+        {/* { this.props.currentGame. } */}
+=======
           <Header as='h1'> Lobby </Header>
           <Header as='h1'> Players ({currentGame.game.playerCount}/4) </Header>
+>>>>>>> master
 
             <div> { currentGame.players.player1.name.length ?  currentGame.players.player1.name + ` has joined as ${currentGame.players.player1.color} player` : 'waiting for player1'} </div>
             <div> { currentGame.players.player2.name.length ?  currentGame.players.player2.name + ` has joined as ${currentGame.players.player2.color} player` : 'waiting for player2'} </div>
