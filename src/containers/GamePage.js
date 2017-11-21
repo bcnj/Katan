@@ -23,40 +23,12 @@ class GamePage extends Component {
         this.state = {
             activeItem: 'players'
         }
-        this.handelWheel = this.handleWheel.bind(this)
         this.handlePanelClick = this.handlePanelClick.bind(this)
     }
 
-    // function for board zooming
-    handleWheel(thisEvent, thisStage) {
-        let e = thisEvent.evt;
-        let stage = thisStage._stage;
-        var scaleBy = 1.03;
-        e.preventDefault();
-
-        var oldScale = stage.scaleX();
-
-        var mousePointTo = {
-            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
-            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
-        };
-
-        var newScale = e.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-        stage.scale({ x: newScale, y: newScale });
-
-        var newPos = {
-            x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
-            y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
-        };
-        stage.position(newPos);
-        stage.batchDraw();
-    }
-
-    // function for panel menu selection
     handlePanelClick(e, { name }) {
         this.setState({ activeItem: name })
     }
-
 
     render() {
 
@@ -82,7 +54,6 @@ class GamePage extends Component {
                         // color={'red'}
                         width={11}
                     >
-                        {/*do not abtract stage as separate component due to zoom and panning functions */}
                         <Board />
                     </Grid.Column>
 
@@ -118,21 +89,21 @@ class GamePage extends Component {
                         <PlayerTable />
                     </Grid.Column>
 
-                        {/* action buttons column */}
-                        <Grid.Column width={5} >
-                            <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
-                                <BuildBtn />
-                                <TradeBtn />
-                            </Grid.Row>
+                    {/* action buttons column */}
+                    <Grid.Column width={5} >
+                        <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
+                            <BuildBtn />
+                            <TradeBtn />
+                        </Grid.Row>
 
-                            <Grid.Row style={{ height: '50%' }}>
-                                <DevCardBtn />
-                                <EndTurnBtn />
-                            </Grid.Row>
-                        </Grid.Column>
+                        <Grid.Row style={{ height: '50%' }}>
+                            <DevCardBtn />
+                            <EndTurnBtn />
+                        </Grid.Row>
+                    </Grid.Column>
                 </Grid.Row>
             </Grid>
-                )
+        )
     }
 }
 
