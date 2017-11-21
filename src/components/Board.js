@@ -864,10 +864,6 @@ class Board extends Component {
     var scaleBy = 1.03;
     e.preventDefault();
 
-    console.log("hello");
-    console.log(e);
-    // console.log(stage);
-
     var oldScale = stage.scaleX();
 
     var mousePointTo = {

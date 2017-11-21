@@ -3,43 +3,36 @@ import React, {Component} from 'react'
 import 'firebase/firestore'
 import { connect } from 'react-redux'
 import { Header, Button, Dropdown, Menu } from 'semantic-ui-react'
-
+import { fetchSingleGame } from '../actions'
 
 const colorOption = [{text: 'red', value: 'red'}, {text: 'white', value: 'white'}, {text: 'blue', value: 'blue'}, {text: 'yellow', value: 'yellow'}]
 
 class Wait extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      players: [],
-      user: {},
-      currentPlayer: '',
-      start: false
-    }
   }
 
-  // componentDidMount() {
-  //   db.doc(`games/${this.props.match.params.roomId}`)
-  //     .onSnapshot(snap => {
-  //       console.log('!!!!', snap.data())
-  //       this.setState({players: snap.data().players})
-  //     })
-  // }
+  componentWillMount() {
+    this.props.fetchSingleGame(this.props.gameId)
+  }
 
   render() {
+    console.log(this.props)
 
     return (
       <div>
         <Header as='h1'> Lobby </Header>
         <Header as='h1'> Players ({}/4) </Header>
 
-        <div>
-          { this.state.players.player1 ?
-          <div> {this.state.players.player1.name} </div> :
+        { this.props.currentGame. }
+
+        {/* <div>
+          { this.props.players.player1 ?
+          <div> {this.props.players.player1.name} </div> :
           <div> Player 1 </div>
           }
           <Dropdown placeholder='Color' search selection options={colorOption}></Dropdown>
-        </div>
+        </div> */}
 
         <div>
           <Button> Leave Game </Button>
@@ -50,8 +43,15 @@ class Wait extends Component {
   }
 }
 
-// const mapState = (state, ownProps) => ({
-//   allGames: state.firestore.games
-// })
+const mapStateToProps = (state, ownProps) => ({
+  gameId: ownProps.match.params.roomId,
+  currentGame: state.currentGame
+})
 
-export default connect()(Wait)
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    fetchSingleGame: (gameId) => dispatch(fetchSingleGame(gameId)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wait)
