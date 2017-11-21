@@ -13,6 +13,8 @@ import firebase from '../firebase'
 import WhoAmI from './WhoAmI'
 const auth = firebase.auth()
 
+
+
 // Ensure that we have (almost) always have a user ID, by creating
 // an anonymous user if nobody is signed in.
 auth.onAuthStateChanged(user => user || auth.signInAnonymously())

@@ -7,7 +7,6 @@ import { connect } from 'react-redux'
 import { db } from '../firebase'
 import dummyData from '../dummyData'
 // import * as actions from '../actions'
-import {addPlayerThunk} from '../actions/intersections'
 
 class Welcome extends Component {
   constructor(props){
@@ -41,7 +40,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleCreate: ()=> {
-      db.collection('testGames').add(dummyData)
+      db.collection('games').add(dummyData)
       ownProps.history.push('/lobby')
     }
   }
