@@ -4,8 +4,7 @@ import 'firebase/firestore'
 import { connect } from 'react-redux'
 import { Header, Button, Dropdown, Menu } from 'semantic-ui-react'
 import { fetchSingleGame } from '../actions'
-
-const colorOption = [{text: 'red', value: 'red'}, {text: 'white', value: 'white'}, {text: 'blue', value: 'blue'}, {text: 'yellow', value: 'yellow'}]
+import { Container } from 'semantic-ui-react'
 
 class Wait extends Component {
   constructor(props) {
@@ -18,27 +17,31 @@ class Wait extends Component {
 
   render() {
     console.log(this.props)
+    const { currentGame, handleStart } = this.props
 
     return (
-      <div>
-        <Header as='h1'> Lobby </Header>
-        <Header as='h1'> Players ({}/4) </Header>
-
-        {/* { this.props.currentGame. } */}
-
-        {/* <div>
-          { this.props.players.player1 ?
-          <div> {this.props.players.player1.name} </div> :
-          <div> Player 1 </div>
-          }
-          <Dropdown placeholder='Color' search selection options={colorOption}></Dropdown>
-        </div> */}
-
+      <Container style={{marginTop: '10vh'}}>
+      { currentGame && currentGame.game &&
         <div>
-          <Button> Leave Game </Button>
-          <Button> Start </Button>
-        </div>
-      </div>
+
+<<<<<<< HEAD
+        {/* { this.props.currentGame. } */}
+=======
+          <Header as='h1'> Lobby </Header>
+          <Header as='h1'> Players ({currentGame.game.playerCount}/4) </Header>
+>>>>>>> master
+
+            <div> { currentGame.players.player1.name.length ?  currentGame.players.player1.name + ` has joined as ${currentGame.players.player1.color} player` : 'waiting for player1'} </div>
+            <div> { currentGame.players.player2.name.length ?  currentGame.players.player2.name + ` has joined as ${currentGame.players.player2.color} player` : 'waiting for player2'} </div>
+            <div> { currentGame.players.player3.name.length ?  currentGame.players.player3.name + ` has joined as ${currentGame.players.player3.color} player` : 'waiting for player3'} </div>
+            <div> { currentGame.players.player4.name.length ?  currentGame.players.player4.name + ` has joined as ${currentGame.players.player4.color} player` : 'waiting for player3'} </div>
+
+          <div>
+            <Button> Leave Game </Button>
+            <Button disabled={currentGame.game.playerCount < 4} onClick={(e) => handleStart(e, currentGame.game.playerCount)}> Start </Button>
+          </div>
+        </div> }
+      </Container>
     )
   }
 }
@@ -51,6 +54,9 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchSingleGame: (gameId) => dispatch(fetchSingleGame(gameId)),
+    handleStart: (e, playerCount) => {
+      ownProps.history.push('/game')
+    }
   }
 }
 
