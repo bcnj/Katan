@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-export default ({allGames, handleJoin, playerNum, user}) => {
+export default ({allGames, handleJoin, handleWatch, user}) => {
 
   return(
     <Card.Group>
@@ -19,8 +19,8 @@ export default ({allGames, handleJoin, playerNum, user}) => {
           </Card.Content>
           <Card.Content extra>
             <div>
-              <Button onClick={e => handleJoin(game.id, game.game.playerCount)} basic color='green'>Join</Button>
-              <Button basic color='red'>Watch</Button>
+              <Button disabled={game.game.playerCount > 3} onClick={e => handleJoin(game.id, game.game.playerCount, user.name)} basic color='green'>Join</Button>
+              <Button onClick={e => handleWatch(game.id)} basic color='red'>Watch</Button>
             </div>
           </Card.Content>
         </Card>

@@ -15,11 +15,11 @@ class Lobby extends Component {
   }
 
   render() {
-    const { allGames, handleJoin, user } = this.props
+    const { allGames, handleJoin, user, handleWatch } = this.props
 
     return (
     <Container style={{marginTop: '10vh'}}>
-      <IndividualRoom allGames={allGames} handleJoin={handleJoin} user={user}/>
+      <IndividualRoom allGames={allGames} handleWatch={handleWatch} handleJoin={handleJoin} user={user}/>
     </Container>
     )
   }
@@ -36,16 +36,19 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchGames: () => dispatch(fetchGames()),
-    handleJoin: (gameId, playerCount) => {
+    handleJoin: (gameId, playerCount, username) => {
       let playerUpdate = {}
-      playerUpdate[`players.player${playerCount+1}.name`] = 'guest'
+      playerUpdate[`players.player${playerCount+1}.name`] = username
       playerUpdate['game.playerCount'] = playerCount+1
       db.collection('games').doc(`${gameId}`)
         .update(playerUpdate)
       ownProps.history.push(`/room/wait/${gameId}`)
-    }
+    },
+    handleWatch: (gameId) => {
+      ownProps.history.push(`/game`)
+    },
   }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lobby)
 
