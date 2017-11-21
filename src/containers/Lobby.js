@@ -12,13 +12,17 @@ class Lobby extends Component {
 
   componentWillMount() {
     this.props.fetchGames()
+    // db.collection('games')
+    // .get().then(doc => console.log(doc.exists))
   }
 
   render() {
-    console.log(this.props)
+    const { allGames, handleJoin, user, playerNum } = this.props
+
+
     return (
     <Container style={{marginTop: '10vh'}}>
-      <IndividualRoom allGames={this.props.allGames} />
+      <IndividualRoom allGames={allGames} handleJoin={handleJoin} user={user} playerNum={playerNum}/>
     </Container>
     )
   }
@@ -26,10 +30,23 @@ class Lobby extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    allGames: state.games
+    allGames: state.games,
+    user: state.user,
   }
 }
 
-const mapDispatchToProps = { fetchGames }
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    fetchGames: () => dispatch(fetchGames()),
+    // handleJoin: (gameId) => {
+    //   db.collection('games').doc(`${gameId}`).collection('players').doc('player1')
+    //     .update({player1: { name: 'claire' }})
+    //   ownProps.history.push(`/room/wait/${gameId}`)
+    // }
+  }
+  }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lobby)
+
+

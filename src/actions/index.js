@@ -1,4 +1,4 @@
-import { BUILD_CITY, BUILD_SETTLEMENT, FETCH_ALL_GAMES, CREATE_GAME, END_GAME, SET_PLAYER } from './types'
+import { BUILD_CITY, BUILD_SETTLEMENT, FETCH_ALL_GAMES, CREATE_GAME, END_GAME, SET_PLAYER, SET_USER } from './types'
 import {db} from '../firebase'
 import dummyData from '../dummyData'
 
@@ -15,13 +15,15 @@ export const fetchGames = () =>
   .onSnapshot(snap => {
     dispatch({
       type: FETCH_ALL_GAMES,
-      payload: snap.docs.map(doc => doc.data())
+      payload: snap.docs.map(doc => ({id: doc.id, ...doc.data()}))
     })
   })
 
-// export const setPlayer = (gameId) =>
-//   dispatch =>
-//   db.doc(`games/${gameId}`)
-//   .onSnapshot(snap => {
+export const setUser = payload => ({
+  type: SET_USER,
+  payload
+})
 
-//   })
+export const setPlayer = payload => ({
+
+})

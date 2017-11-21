@@ -1,8 +1,9 @@
-import React from 'react'
-import firebase from 'APP/fire'
-const auth = firebase.auth()
-
+import React, {Component} from 'react'
+import firebase from '../firebase'
+import { setUser } from '../actions'
 import Login from './Login'
+import { connect } from 'react-redux'
+const auth = firebase.auth()
 
 export const name = user => {
   if (!user) return 'Nobody'
@@ -13,18 +14,19 @@ export const name = user => {
 export const WhoAmI = ({user, auth}) =>
   <div className="whoami">
     <span className="whoami-user-name"> Hello, {name(user)}</span>
-    { // If nobody is logged in, or the current user is anonymous,
+    {
       (!user || user.isAnonymous)?
-      // ...then show signin links...
       <Login auth={auth}/>
-      /// ...otherwise, show a logout button.
       : <button className='logout' onClick={() => auth.signOut()}>logout</button> }
   </div>
 
-export default class extends React.Component {
+class Auth extends Component {
   componentDidMount() {
     const {auth} = this.props
-    this.unsubscribe = auth.onAuthStateChanged(user => this.setState({user}))
+    this.unsubscribe = auth.onAuthStateChanged(user => {
+      this.props.setCurrentUser(user)
+      this.setState({user})
+    })
   }
 
   componentWillUnmount() {
@@ -36,3 +38,17 @@ export default class extends React.Component {
     return <WhoAmI user={user} auth={auth}/>
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return { setCurrentUser: user => {
+    dispatch(setUser(user))
+  }}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)
