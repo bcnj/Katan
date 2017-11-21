@@ -6,3 +6,6 @@ export const CREATE_GAME = 'CREATE_GAME'
 export const END_GAME = 'END_GAME'
 export const SET_PLAYER = 'SET_PLAYER'
 export const SET_USER = 'SET_USER'
+
+export const GET_TILES = 'GET_TILES'
+export const SET_ROBBER = 'SET_ROBBER'

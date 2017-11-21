@@ -32,7 +32,8 @@ class Welcome extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    allGames: state.game
+    allGames: state.game,
+    tiles: state.tiles
   }
 }
 
