@@ -1,28 +1,35 @@
 import React, { Component } from 'react'
 import IndividualRoom from '../components/IndividualRoom'
 import {connect} from 'react-redux'
-// import firebase from 'APP/fire'
-// import 'firebase/firestore'
-
-// const db = firebase.firestore()
+import { db } from '../firebase'
+import { Container } from 'semantic-ui-react'
+import { fetchGames } from '../actions'
 
 class Lobby extends Component {
+  constructor(props){
+    super(props)
+  }
 
+  componentWillMount() {
+    this.props.fetchGames()
+  }
 
   render() {
-      console.log(this.props.allGames)
-
+    console.log(this.props)
     return (
-    <div>
-      <div>Hello</div>
+    <Container style={{marginTop: '10vh'}}>
       <IndividualRoom allGames={this.props.allGames} />
-    </div>
+    </Container>
     )
   }
 }
 
-const mapState = (state) => ({
-  allGames: state.allGames
-})
+const mapStateToProps = (state) => {
+  return {
+    allGames: state.games
+  }
+}
 
-export default connect(mapState)(Lobby)
+const mapDispatchToProps = { fetchGames }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lobby)
