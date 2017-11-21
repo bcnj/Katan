@@ -9,6 +9,7 @@ import Wait from './Wait'
 import GamePage from './GamePage'
 
 import Background from '../images/catan1.jpg'
+import Test from './Test';
 
 import firebase from '../firebase'
 import WhoAmI from './WhoAmI'
@@ -37,6 +38,7 @@ export default () => (
         <Route exact path='/game' component={GamePage} />
         <Route path='/lobby' component={Lobby} />
         <Route path='/room/wait/:roomId' component={Wait} />
+        <Route path='/test' component={Test} />
       </Switch>
     </div>
   </Router>

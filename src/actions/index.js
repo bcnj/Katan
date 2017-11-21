@@ -2,7 +2,8 @@ import { BUILD_CITY, BUILD_SETTLEMENT, FETCH_ALL_GAMES, CREATE_GAME, END_GAME, S
 import {db} from '../firebase'
 import dummyData from '../dummyData'
 
-const gamesRef = db.collection('games')
+// const gamesRef = db.collection('games')
+const gamesRef = db.collection('testGames')
 
 // build
 export const buildSettlement = () => ({ type: BUILD_SETTLEMENT, p1_settlement: true })
@@ -13,6 +14,7 @@ export const fetchGames = () =>
   dispatch =>
   db.collection('games')
   .onSnapshot(snap => {
+    console.log('snap', snap)
     dispatch({
       type: FETCH_ALL_GAMES,
       payload: snap.docs.map(doc => ({id: doc.id, ...doc.data()}))

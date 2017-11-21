@@ -14,7 +14,7 @@ export default ({allGames, handleJoin, playerNum, user}) => {
               Game {game.id.slice(0,2)}
             </Card.Header>
             <Card.Description>
-              <strong>{game.game.players.length}</strong> /4 Players
+              <strong>4</strong> /4 Players
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
