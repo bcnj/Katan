@@ -134,7 +134,7 @@
         "children": {
           "1": ""
         },
-        "resource": "DESSERT",
+        "resource": "DESERT",
         "robber": false,
         "rollNumber": 0
       },
