@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { GET_TILES, SET_ROBBER } from './types'
+import { GET_TILES, SET_ROBBER } from './actions/types'
 
 //need to figure how to pass this, etc., otherwise functions work
 const currentGame = "whatever the current game is"

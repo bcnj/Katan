@@ -9,6 +9,9 @@ export const SET_USER = 'SET_USER'
 
 export const GET_TILES = 'GET_TILES'
 export const SET_ROBBER = 'SET_ROBBER'
+<<<<<<< HEAD
 
 export const GET_INTERSECTIONS = 'GET_INTERSECTIONS'
 export const SET_INTERSECTION = 'SET_INTERSECTION'
+=======
+>>>>>>> master
