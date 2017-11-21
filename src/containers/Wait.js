@@ -24,7 +24,7 @@ class Wait extends Component {
         <Header as='h1'> Lobby </Header>
         <Header as='h1'> Players ({}/4) </Header>
 
-        { this.props.currentGame. }
+        {/* { this.props.currentGame. } */}
 
         {/* <div>
           { this.props.players.player1 ?

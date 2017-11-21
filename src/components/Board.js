@@ -793,56 +793,56 @@ class Board extends Component {
           x: 250,
           y: 320,
         },
+        // this is the desert tile
+        // {
+        //   id: 'J',
+        //   x: 350,
+        //   y: 320,
 
+        // },
         {
           id: 'J',
-          x: 350,
-          y: 320,
-
-        },
-        {
-          id: 'K',
           x: 450,
           y: 320,
         },
         {
-          id: 'L',
+          id: 'K',
           x: 550,
           y: 320,
         },
         {
-          id: 'M',
+          id: 'L',
           x: 200,
           y: 405,
         },
         {
-          id: 'N',
+          id: 'M',
           x: 300,
           y: 405,
         },
 
         {
-          id: 'O',
+          id: 'N',
           x: 400,
           y: 405,
         },
         {
-          id: 'P',
+          id: 'O',
           x: 500,
           y: 405,
         },
         {
-          id: 'Q',
+          id: 'P',
           x: 250,
           y: 490,
         },
         {
-          id: 'R',
+          id: 'Q',
           x: 350,
           y: 490,
         },
         {
-          id: 'S',
+          id: 'R',
           x: 450,
           y: 490,
         }],
@@ -890,7 +890,6 @@ class Board extends Component {
   }
   renderIntersections() {
     return this.state.intersections.map(function (intersection, idx) {
-      console.log("intersection", intersection);
       const { x, y } = intersection;
       return <Intersection x={x} y={y} id={idx} />;
     });

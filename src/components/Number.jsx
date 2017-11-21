@@ -1,25 +1,24 @@
 import React, { Component } from "react";
 import { Layer, Circle, Image } from "react-konva";
 
-// import A from '../images/field.png';
-// import B from '../images/desert.png';
-// import C from '../images/forest.png';
-// import D from '../images/hill.png';
-// import E from '../images/mountain.png';
-// import F from '../images/pasture.png';
-// import G from '../images/field.png';
-// import H from '../images/desert.png';
-// import I from '../images/forest.png';
-// import J from '../images/hill.png';
-// import K from '../images/mountain.png';
-// import L from '../images/pasture.png';
-// import M from '../images/pasture.png';
-// import N from '../images/field.png';
-// import O from '../images/desert.png';
-// import P from '../images/forest.png';
-// import Q from '../images/hill.png';
-// import R from '../images/mountain.png';
-// import S from '../images/pasture.png';
+import Aimg from '../images/A.png';
+import Bimg from '../images/B.png';
+import Cimg from '../images/C.png';
+import Dimg from '../images/D.png';
+import Eimg from '../images/E.png';
+import Fimg from '../images/F.png';
+import Gimg from '../images/G.png';
+import Himg from '../images/H.png';
+import Iimg from '../images/I.png';
+import Jimg from '../images/J.png';
+import Kimg from '../images/K.png';
+import Limg from '../images/L.png';
+import Mimg from '../images/M.png';
+import Nimg from '../images/N.png';
+import Oimg from '../images/O.png';
+import Pimg from '../images/P.png';
+import Qimg from '../images/Q.png';
+import Rimg from '../images/R.png';
 
 class Number extends Component {
   constructor(props) {
@@ -46,28 +45,25 @@ class Number extends Component {
     const P = new window.Image();
     const Q = new window.Image();
     const R = new window.Image();
-    const S = new window.Image();
 
-    A.src = A;
-    B.src = B;
-    C.src = C;
-    D.src = D;
-    E.src = E;
-    F.src = F;
-    G.src = G;
-    H.src = H;
-    I.src = I;
-    J.src = J;
-    K.src = K;
-    L.src = L;
-    M.src = M;
-    N.src = N;
-    O.src = O;
-    P.src = P;
-    Q.src = Q;
-    R.src = R;
-    S.src = S;
-
+    A.src = Aimg;
+    B.src = Bimg;
+    C.src = Cimg;
+    D.src = Dimg;
+    E.src = Eimg;
+    F.src = Fimg;
+    G.src = Gimg;
+    H.src = Himg;
+    I.src = Iimg;
+    J.src = Jimg;
+    K.src = Kimg;
+    L.src = Limg;
+    M.src = Mimg;
+    N.src = Nimg;
+    O.src = Oimg;
+    P.src = Pimg;
+    Q.src = Qimg;
+    R.src = Rimg;
 
     A.onload = () => {
       this.setState({
@@ -88,8 +84,7 @@ class Number extends Component {
         O,
         P,
         Q,
-        R,
-        S,
+        R
       });
     };
   }
@@ -99,80 +94,58 @@ class Number extends Component {
     const ids = {
       A: {
         img: this.state.A,
-        // stroke: '#ffde66'
       },
       B: {
         img: this.state.B,
-        // stroke: '#672d25'
       },
       C: {
         img: this.state.C,
-        // stroke: '#062916'
       },
       D: {
         img: this.state.D,
-        // stroke: '#4d0a01'
       },
       E: {
         img: this.state.E,
-        // stroke: '#534f4b'
       },
       F: {
         img: this.state.F,
-        // stroke: '#a9d751'
       },
       G: {
         img: this.state.G,
-        // stroke: '#ffde66'
       },
       H: {
         img: this.state.H,
-        // stroke: '#672d25'
       },
       I: {
         img: this.state.I,
-        // stroke: '#062916'
       },
       J: {
         img: this.state.J,
-        // stroke: '#4d0a01'
       },
       K: {
         img: this.state.K,
-        // stroke: '#534f4b'
       },
       L: {
         img: this.state.L,
-        // stroke: '#a9d751'
       },
       M: {
         img: this.state.M,
-        // stroke: '#a9d751'
       },
       N: {
         img: this.state.N,
-        // stroke: '#a9d751'
       },
       O: {
         img: this.state.O,
-        // stroke: '#a9d751'
       },
       P: {
         img: this.state.P,
-        // stroke: '#a9d751'
       },
       Q: {
         img: this.state.Q,
-        // stroke: '#a9d751'
       },
       R: {
         img: this.state.R,
-        // stroke: '#a9d751'
       },
-      S: {
-        img: this.state.S,
-        // stroke: '#a9d751'
-      }
     }
 
     const { id, x, y } = this.props;
@@ -182,11 +155,10 @@ class Number extends Component {
         x={x}
         y={y}
         radius={20}
-        // fill={"black"}
         shadowBlur={5}
-        fillPatternImage={ids[id].img}
-      // fillPatternScale={{ x: 0.07, y: 0.07 }}
-      // fillPatternOffset={{ x: -1020, y: -820 }}
+        fillPatternImage={ids[id]['img']}
+        fillPatternScale={{ x: .15, y: .15 }}
+        fillPatternOffset={{ x: -1110, y: -805 }}
       />
     );
   }

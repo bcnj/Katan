@@ -8,12 +8,11 @@ class Road extends Component {
   }
 
   handleClick() {
-      console.log('Clicked on road', this.props.id)
+      // console.log('Clicked on road', this.props.id)
   }
 
   render() {
     const { x, y, rotation, id } = this.props;
-    console.log('id', id)
     return (
       <Ellipse
         x={x}
