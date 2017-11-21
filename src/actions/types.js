@@ -12,3 +12,6 @@ export const SET_ROBBER = 'SET_ROBBER'
 
 export const GET_INTERSECTIONS = 'GET_INTERSECTIONS'
 export const SET_INTERSECTION = 'SET_INTERSECTION'
+
+export const GET_ROADS = 'GET_ROADS'
+export const SET_ROAD = 'SET_ROAD'
