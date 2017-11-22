@@ -49,10 +49,7 @@ class GamePage extends Component {
         const { activeItem } = this.state
 
         const { username, OreCount, WheatCount, SheepCount, WoodCount, BrickCount } = this.props
-
-        //road and intersections will render what reduxStore currentGame dictates
-        const { currentGame } = this.props
-
+        
         return (
 
             <Grid padded>
