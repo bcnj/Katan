@@ -6,6 +6,18 @@ import Wood from '../images/forest.png';
 import Brick from '../images/hill.png';
 import Ore from '../images/mountain.png';
 import Sheep from '../images/pasture.png';
+import { db } from '../firebase'
+
+import setRobberBuild from './Robber.jsx'
+
+export const setRobberOnTile = (tileId) => {
+  let setRobberOnTileUpdate = {}
+  setRobberOnTileUpdate[`game.robber`] = tileId
+  db
+  .collection('testGames')
+  .doc('3q3FiQ9yuZQVwsg7FaqT')
+  .update(setRobberOnTile)
+}
 
 class Tile extends Component {
   constructor(props) {
@@ -46,6 +58,11 @@ class Tile extends Component {
   isOccupied() {} // Returns BOOL
 
   handleClick() {
+    //this.props.id is tile
+    //this.props.currentGame.game
+    console.log(this.props)
+      setRobberOnTile(this.props.id)
+      setRobberBuild('nothing', false)
   }
 
   render() {

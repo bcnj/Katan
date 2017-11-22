@@ -7,7 +7,7 @@ import { db } from '../firebase'
 //currentGame is to be passed in
 
 export const setRobberBuild = (currentGame, setTrueFalse) => {
-  console.log(setTrueFalse)
+  console.log(window.location)
   if(setTrueFalse === true) {
     let robberBuildUpdate = {}
     robberBuildUpdate[`game.robberBuild`] = true

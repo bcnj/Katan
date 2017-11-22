@@ -11,7 +11,7 @@ export const buildCity = () => ({ type: BUILD_CITY, p1_city: true })
 // game
 export const fetchGames = () =>
   dispatch =>
-  db.collection('games')
+  db.collection('testGames')
   .onSnapshot(snap => {
     dispatch({
       type: FETCH_ALL_GAMES,
@@ -21,7 +21,7 @@ export const fetchGames = () =>
 
 export const fetchSingleGame = (id) =>
   dispatch =>
-  db.collection('games').doc(`${id}`)
+  db.collection('testGames').doc(`${id}`)
     .onSnapshot(snap => {
       dispatch({
         type: FETCH_ONE_GAME,

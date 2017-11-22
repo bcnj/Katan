@@ -18,6 +18,8 @@ import TradeBtn from '../components/TradeBtn'
 import PlayerTable from '../components/PlayerTable'
 import { connect } from 'react-redux'
 
+import Robber from '../components/Robber.jsx'
+
 class GamePage extends Component {
 
     constructor(props) {
@@ -47,7 +49,6 @@ class GamePage extends Component {
         //local state governing current panel selection
         const { activeItem } = this.state
         const { username, OreCount, WheatCount, SheepCount, WoodCount, BrickCount } = this.props
-
         return (
 
             <Grid padded>
@@ -106,6 +107,7 @@ class GamePage extends Component {
                         <Grid.Row style={{ height: '50%' }}>
                             <DevCardBtn />
                             <EndTurnBtn />
+                            <Robber />
                         </Grid.Row>
                     </Grid.Column>
                 </Grid.Row>
