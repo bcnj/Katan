@@ -968,7 +968,7 @@ class Board extends Component {
       return <Intersection key={x+y} x={x} y={y} />;
     });
   }
-  renderRoads(roadNodes) {
+  renderRoads(roadNodes, currentGame, gameId) {
 
     return this.state.roads.map(function (roads) {
 
@@ -982,7 +982,7 @@ class Board extends Component {
       if (roadNodes[idx].player === 'player4') { color = 'blue' };
 
       const rotation = roads.rotation || "";
-      return <Road key={idx} x={x} y={y} rotation={rotation} id={idx} color={color} />;
+      return <Road key={idx} x={x} y={y} rotation={rotation} id={idx} color={color} gameId={gameId} currentGame={currentGame}/>;
     });
   }
   renderNumbers() {
@@ -1009,7 +1009,7 @@ class Board extends Component {
         {this.props.currentGame.game &&
           <Layer>
             {this.renderTiles()}
-            {this.renderRoads(this.props.currentGame.roadNodes)}
+            {this.renderRoads(this.props.currentGame.roadNodes, this.props.currentGame, this.props.gameId)}
             {this.renderIntersections()}
             {this.renderNumbers()}
           </Layer>

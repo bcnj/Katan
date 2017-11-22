@@ -26,7 +26,7 @@ const mapDispatch = (dispatch) => {
       let endTurn = {}
       let playerNum = +currentPlayer[6]
       endTurn[`game.turn`] = currentTurn+1
-      if(currentTurn > 7 || currentTurn < 2){
+      if(currentTurn > 7 || currentTurn < 3){
         endTurn[`game.currentPlayer`] = ((playerNum < 4) ? `player${playerNum+1}` : `player${playerNum-3}`)
       } else if (currentTurn === 3 ){
         endTurn[`game.currentPlayer`] = 'player4'
