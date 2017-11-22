@@ -48,7 +48,7 @@ class GamePage extends Component {
         //local state governing current panel selection
         const { activeItem } = this.state
         const { user, currentGame, gameId } = this.props
-
+        
         return (
 
             <Grid padded>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 import Tile from "./Tile";
 import Intersection from "./Intersection";
 import Road from "./Road";
@@ -358,389 +359,461 @@ class Board extends Component {
       ],
       roads: [
         {
+          idx: 1,
           x: 225,
           y: 107.5,
           rotation: 60
         },
 
         {
+          idx: 2,
           x: 275,
           y: 107.5,
           rotation: -60
         },
 
         {
+          idx: 3,
           x: 325,
           y: 107.5,
           rotation: 60
         },
 
         {
+          idx: 4,
           x: 375,
           y: 107.5,
           rotation: -60
         },
 
         {
+          idx: 5,
           x: 425,
           y: 107.5,
           rotation: 60
         },
 
         {
+          idx: 6,
           x: 475,
           y: 107.5,
           rotation: -60
         },
 
         {
+          idx: 7,
           x: 200,
           y: 150
         },
         {
+          idx: 8,
           x: 300,
           y: 150
         },
         {
+          idx: 9,
           x: 400,
           y: 150
         },
         {
+          idx: 10,
           x: 500,
           y: 150
         },
 
         {
+          idx: 11,
+          x: 175,
+          y: 192.5,
+          rotation: 60
+        },
+        {
+          idx: 12,
           x: 225,
           y: 192.5,
           rotation: -60
         },
 
         {
-          x: 175,
-          y: 192.5,
-          rotation: 60
-        },
-
-        {
-          x: 325,
-          y: 192.5,
-          rotation: -60
-        },
-
-        {
+          idx: 13,
           x: 275,
           y: 192.5,
           rotation: 60
         },
 
         {
-          x: 425,
+          idx: 14,
+          x: 325,
           y: 192.5,
           rotation: -60
         },
 
         {
+          idx: 15,
           x: 375,
           y: 192.5,
           rotation: 60
         },
 
         {
-          x: 525,
+          idx: 16,
+          x: 425,
           y: 192.5,
           rotation: -60
         },
 
         {
+          idx: 17,
           x: 475,
           y: 192.5,
           rotation: 60
         },
 
         {
+          idx: 18,
+          x: 525,
+          y: 192.5,
+          rotation: -60
+        },
+
+
+        {
+          idx: 19,
           x: 150,
           y: 235
         },
         {
+          idx: 20,
           x: 250,
           y: 235
         },
         {
+          idx: 21,
           x: 350,
           y: 235
         },
         {
+          idx: 22,
           x: 450,
           y: 235
         },
         {
+          idx: 23,
           x: 550,
           y: 235
         },
 
         {
+          idx: 24,
           x: 125,
           y: 277.5,
           rotation: 60
         },
 
         {
+          idx: 25,
           x: 175,
           y: 277.5,
           rotation: -60
         },
 
         {
+          idx: 26,
           x: 225,
           y: 277.5,
           rotation: 60
         },
 
         {
+          idx: 27,
           x: 275,
           y: 277.5,
           rotation: -60
         },
 
         {
+          idx: 28,
           x: 325,
           y: 277.5,
           rotation: 60
         },
 
         {
+          idx: 29,
           x: 375,
           y: 277.5,
           rotation: -60
         },
 
         {
+          idx: 30,
           x: 425,
           y: 277.5,
           rotation: 60
         },
 
         {
+          idx: 31,
           x: 475,
           y: 277.5,
           rotation: -60
         },
 
         {
+          idx: 32,
           x: 525,
           y: 277.5,
           rotation: 60
         },
 
         {
+          idx: 33,
           x: 575,
           y: 277.5,
           rotation: -60
         },
 
         {
+          idx: 34,
           x: 100,
           y: 320
         },
         {
+          idx: 35,
           x: 200,
           y: 320
         },
         {
+          idx: 36,
           x: 300,
           y: 320
         },
         {
+          idx: 37,
           x: 400,
           y: 320
         },
         {
+          idx: 38,
           x: 500,
           y: 320
         },
         {
+          idx: 39,
           x: 600,
           y: 320
         },
 
         {
+          idx: 40,
           x: 125,
           y: 362.5,
           rotation: -60
         },
 
         {
+          idx: 41,
           x: 175,
           y: 362.5,
           rotation: 60
         },
 
         {
+          idx: 42,
           x: 225,
           y: 362.5,
           rotation: -60
         },
 
         {
+          idx: 43,
           x: 275,
           y: 362.5,
           rotation: 60
         },
 
         {
+          idx: 44,
           x: 325,
           y: 362.5,
           rotation: -60
         },
 
         {
+          idx: 45,
           x: 375,
           y: 362.5,
           rotation: 60
         },
 
         {
+          idx: 46,
           x: 425,
           y: 362.5,
           rotation: -60
         },
 
         {
+          idx: 47,
           x: 475,
           y: 362.5,
           rotation: 60
         },
 
         {
+          idx: 48,
           x: 525,
           y: 362.5,
           rotation: -60
         },
 
         {
+          idx: 49,
           x: 575,
           y: 362.5,
           rotation: 60
         },
 
         {
+          idx: 50,
           x: 150,
           y: 405
         },
         {
+          idx: 51,
           x: 250,
           y: 405
         },
         {
+          idx: 52,
           x: 350,
           y: 405
         },
         {
+          idx: 53,
           x: 450,
           y: 405
         },
         {
+          idx: 54,
           x: 550,
           y: 405
         },
 
         {
+          idx: 55,
           x: 175,
           y: 447.5,
           rotation: -60
         },
 
         {
+          idx: 56,
           x: 225,
           y: 447.5,
           rotation: 60
         },
 
         {
+          idx: 57,
           x: 275,
           y: 447.5,
           rotation: -60
         },
 
         {
+          idx: 58,
           x: 325,
           y: 447.5,
           rotation: 60
         },
 
         {
+          idx: 59,
           x: 375,
           y: 447.5,
           rotation: -60
         },
 
         {
+          idx: 60,
           x: 425,
           y: 447.5,
           rotation: 60
         },
 
         {
+          idx: 61,
           x: 475,
           y: 447.5,
           rotation: -60
         },
 
         {
+          idx: 62,
           x: 525,
           y: 447.5,
           rotation: 60
         },
 
         {
+          idx: 63,
           x: 200,
           y: 490
         },
         {
+          idx: 64,
           x: 300,
           y: 490
         },
         {
+          idx: 65,
           x: 400,
           y: 490
         },
         {
+          idx: 66,
           x: 500,
           y: 490
         },
 
         {
+          idx: 67,
           x: 225,
           y: 532.5,
           rotation: -60
         },
 
         {
+          idx: 68,
           x: 275,
           y: 532.5,
           rotation: 60
         },
 
         {
+          idx: 69,
           x: 325,
           y: 532.5,
           rotation: -60
         },
 
         {
+          idx: 70,
           x: 375,
           y: 532.5,
           rotation: 60
         },
 
         {
+          idx: 71,
           x: 425,
           y: 532.5,
           rotation: -60
         },
 
         {
+          idx: 72,
           x: 475,
           y: 532.5,
           rotation: 60
@@ -885,30 +958,42 @@ class Board extends Component {
   renderTiles() {
     return this.state.tiles.map(function (tile) {
       const { id, x, y, resourceType } = tile;
-      return <Tile id={id} x={x} y={y} resourceType={resourceType} />;
+      return <Tile key={id} id={id} x={x} y={y} resourceType={resourceType} />;
     });
   }
   renderIntersections() {
-    return this.state.intersections.map(function (intersection, idx) {
+    //idx is not being passed in, why is it used below?
+    return this.state.intersections.map(function (intersection) {
       const { x, y } = intersection;
-      return <Intersection x={x} y={y} id={idx} />;
+      return <Intersection key={x+y} x={x} y={y} />;
     });
   }
-  renderRoads() {
-    return this.state.roads.map(function (roads, idx) {
-      const { x, y } = roads;
+  renderRoads(roadNodes) {
+
+    return this.state.roads.map(function (roads) {
+
+      const { x, y, idx } = roads;
+      let color;
+
+      if (roadNodes[idx].player === '0') { color = 'transparent' };
+      if (roadNodes[idx].player === 'player1') { color = 'red' };
+      if (roadNodes[idx].player === 'player2') { color = 'white' };
+      if (roadNodes[idx].player === 'player3') { color = 'green' };
+      if (roadNodes[idx].player === 'player4') { color = 'blue' };
+
       const rotation = roads.rotation || "";
-      return <Road x={x} y={y} rotation={rotation} id={idx} />;
+      return <Road key={idx} x={x} y={y} rotation={rotation} id={idx} color={color} />;
     });
   }
   renderNumbers() {
     return this.state.numbers.map(function (number) {
       const { id, x, y } = number;
-      return <Number id={id} x={x} y={y} />;
+      return <Number key={id} id={id} x={x} y={y} />;
     });
   }
 
   render() {
+
     return (
       <Stage
         ref={thisStage => {
@@ -921,15 +1006,32 @@ class Board extends Component {
         height={700}
         draggable={true}
       >
-        <Layer>
-          {this.renderTiles()}
-          {this.renderRoads()}
-          {this.renderIntersections()}
-          {this.renderNumbers()}
-        </Layer>
+        {this.props.currentGame.game &&
+          <Layer>
+            {this.renderTiles()}
+            {this.renderRoads(this.props.currentGame.roadNodes)}
+            {this.renderIntersections()}
+            {this.renderNumbers()}
+          </Layer>
+        }
+
       </Stage>
     );
   }
 }
 
-export default Board;
+const mapStateToProps = (state) => {
+  return {
+    currentGame: state.currentGame
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    //
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);
+
+// {!Object.is(this.props.currentGame, {}) &&
