@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { db } from '../firebase'
 import dummyData from '../dummyData'
 // import * as actions from '../actions'
-import {addPlayerThunk} from '../actions/intersections'
+import {setRobberThunk} from '../actions/tiles'
 
 class Welcome extends Component {
   constructor(props){
@@ -15,6 +15,7 @@ class Welcome extends Component {
   }
 
   render(){
+    this.props.setRobber(1, true)
     return(
     <div style={{ textAlign: 'center', marginTop: '40vh' }}>
         <h1> Settlers of Catan </h1>
@@ -43,6 +44,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     handleCreate: ()=> {
       db.collection('testGames').add(dummyData)
       ownProps.history.push('/lobby')
+    },
+    setRobber: (id, tF) {
+      dispatch(setRobberThunk(id, tF))
     }
   }
 }
