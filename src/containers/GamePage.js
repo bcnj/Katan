@@ -33,15 +33,15 @@ class GamePage extends Component {
         this.setState({ activeItem: name })
     }
 
-    // componentWillMount() {
-    //     this.props.fetchSingleGame(this.props.gameId)
-    // }
+    componentWillMount() {
+        this.props.fetchSingleGame(this.props.gameId)
+    }
 
     render() {
 
         //controls which panel tab appears based on menu selection
         let section;
-        if (this.state.activeItem === 'players') { section = <PlayerTab />; }
+        if (this.state.activeItem === 'players') { section = <PlayerTab currentGame={this.props.currentGame}/>; }
         if (this.state.activeItem === 'messages') { section = <MessageTab />; }
         if (this.state.activeItem === 'log') { section = <LogTab />; }
 
@@ -119,15 +119,16 @@ class GamePage extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
         username: state.user.name,
+        gameId: ownProps.match.params.gameId,
         currentGame: state.currentGame,
-        OreCount: state.currentGame.players.player1.ore,
-        WheatCount: state.currentGame.players.player1.wheat,
-        SheepCount: state.currentGame.players.player1.sheep,
-        WoodCount: state.currentGame.players.player1.wood,
-        BrickCount: state.currentGame.players.player1.brick,
+        // OreCount: state.currentGame.players.player1.ore,
+        // WheatCount: state.currentGame.players.player1.wheat,
+        // SheepCount: state.currentGame.players.player1.sheep,
+        // WoodCount: state.currentGame.players.player1.wood,
+        // BrickCount: state.currentGame.players.player1.brick,
     }
 }
 

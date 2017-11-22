@@ -35,5 +35,6 @@ export const setUser = payload => ({
 })
 
 export const setPlayer = payload => ({
-
+  type: SET_PLAYER,
+  payload
 })

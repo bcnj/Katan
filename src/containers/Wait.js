@@ -26,14 +26,16 @@ class Wait extends Component {
           <Header as='h1'> Lobby </Header>
           <Header as='h1'> Players ({currentGame.game.playerCount}/4) </Header>
 
-            <div> { currentGame.players.player1.name.length ?  currentGame.players.player1.name + ` has joined as ${currentGame.players.player1.color} player` : 'waiting for player1'} </div>
-            <div> { currentGame.players.player2.name.length ?  currentGame.players.player2.name + ` has joined as ${currentGame.players.player2.color} player` : 'waiting for player2'} </div>
-            <div> { currentGame.players.player3.name.length ?  currentGame.players.player3.name + ` has joined as ${currentGame.players.player3.color} player` : 'waiting for player3'} </div>
-            <div> { currentGame.players.player4.name.length ?  currentGame.players.player4.name + ` has joined as ${currentGame.players.player4.color} player` : 'waiting for player3'} </div>
+            { [1,2,3,4].map(num => (
+              <div key={num}>
+              { currentGame.players[`player${num}`].name.length ?  currentGame.players[`player${num}`].name + ` has joined as ${currentGame.players[`player${num}`].color} player` : `waiting for player${num}`}
+              </div>
+            )) }
 
           <div>
             <Button> Leave Game </Button>
-            <Button disabled={currentGame.game.playerCount < 4} onClick={(e) => handleStart(e, gameId)}> Start </Button>
+            <Button onClick={(e) => handleStart(e, gameId)}> Start </Button>
+             {/* disabled={currentGame.game.playerCount < 4} */}
           </div>
         </div> }
       </Container>
