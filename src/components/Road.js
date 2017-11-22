@@ -12,7 +12,7 @@ class Road extends Component {
   }
 
   render() {
-    const { x, y, rotation, id } = this.props;
+    const { x, y, rotation, id, color } = this.props;
     return (
       <Ellipse
         x={x}
@@ -20,7 +20,7 @@ class Road extends Component {
         width={10}
         height={35}
         rotation={rotation}
-        fill={"red"} // Pull in color depending on game current player
+        fill={color} // Pull in color depending on game current player
         shadowBlur={5}
         onClick={this.handleClick}
       />
