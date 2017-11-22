@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'
+import { turnRoadsOn } from '../utils'
 
-const BuildBtn = ({handleSettlement, handleCity, handleRoad}) => {
+const BuildBtn = (props) => {
+  const {gameId, handleSettlement, handleCity, handleRoad, currentGame} = props
 
   return (
     <Modal trigger={<Button style={{width: '49%', height: '75%'}}>Build</Button>}>
     <Modal.Actions>
-        <Button color='blue' inverted onClick={this.handleRoad}>
+      { console.log(props)}
+        { currentGame && currentGame.game &&
+        <Button color='blue' inverted onClick={turnRoadsOn(currentGame.game.currentPlayer, gameId, currentGame.roadNodes)}>
           Build Road
-        </Button>
+        </Button>}
         <Button color='blue' inverted onClick={this.handleSettlement}>
           Build Settlement
         </Button>
@@ -26,23 +30,23 @@ const BuildBtn = ({handleSettlement, handleCity, handleRoad}) => {
 }
 
 
-const mapStateToProps = (state)=>{
+// const mapStateToProps = (state)=>{
+//   currentGame: state.currentGame
+// }
 
-}
+// const mapDispatchToProps = (dispatch)=>{
+//   return{
+//     // handleRoad: (e)=> {
+//     //   turnRoadsOn(currentPlayer, gameId, roadNodes)
+//     // },
+//     handleCity: ()=> {
 
-const mapDispatchToProps  =(dispatch)=>{
-  return{
-    handleRoad: ()=> {
+//     },
+//     handleSettlement: ()=> {
 
-    },
-    handleCity: ()=> {
+//     },
+//   }
+// }
 
-    },
-    handleSettlement: ()=> {
-
-    },
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(BuildBtn);
+export default connect()(BuildBtn);
 

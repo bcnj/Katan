@@ -100,7 +100,7 @@ class GamePage extends Component {
                     {/* action buttons column */}
                     <Grid.Column width={5} >
                         <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
-                            <BuildBtn />
+                            <BuildBtn gameId={gameId} currentGame={currentGame}/>
                             <TradeBtn />
                         </Grid.Row>
 
