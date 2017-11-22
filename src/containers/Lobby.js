@@ -3,7 +3,7 @@ import IndividualRoom from '../components/IndividualRoom'
 import {connect} from 'react-redux'
 import { db } from '../firebase'
 import { Container } from 'semantic-ui-react'
-import { fetchGames } from '../actions'
+import { fetchGames, setPlayer } from '../actions'
 
 class Lobby extends Component {
   constructor(props){
@@ -12,7 +12,7 @@ class Lobby extends Component {
 
   componentWillMount() {
     this.props.fetchGames()
-  }
+    }
 
   render() {
     const { allGames, handleJoin, user, handleWatch } = this.props
@@ -38,10 +38,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchGames: () => dispatch(fetchGames()),
     handleJoin: (gameId, playerCount, username) => {
       let playerUpdate = {}
-      playerUpdate[`players.player${playerCount+1}.name`] = username
+      playerUpdate[`players.player${playerCount+1}.name`] = 'claire'
       playerUpdate['game.playerCount'] = playerCount+1
       db.collection('games').doc(`${gameId}`)
         .update(playerUpdate)
+      dispatch(setPlayer({gameId: gameId, playerNum: `${playerCount+1}`}))
       ownProps.history.push(`/game/wait/${gameId}`)
     },
     handleWatch: (gameId) => {
