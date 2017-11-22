@@ -47,7 +47,11 @@ class GamePage extends Component {
 
         //local state governing current panel selection
         const { activeItem } = this.state
+
         const { username, OreCount, WheatCount, SheepCount, WoodCount, BrickCount } = this.props
+
+        //road and intersections will render what reduxStore currentGame dictates
+        const { currentGame } = this.props
 
         return (
 
@@ -118,7 +122,7 @@ class GamePage extends Component {
 const mapStateToProps = (state) => {
     return {
         username: state.user.name,
-        // currentGame: state.currentGame,
+        currentGame: state.currentGame,
         OreCount: state.currentGame.players.player1.ore,
         WheatCount: state.currentGame.players.player1.wheat,
         SheepCount: state.currentGame.players.player1.sheep,
