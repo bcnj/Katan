@@ -18,10 +18,6 @@ import TradeBtn from '../components/TradeBtn'
 import PlayerTable from '../components/PlayerTable'
 import { connect } from 'react-redux'
 
-
-import Robber from '../components/RobberBtn.jsx'
-
-
 class GamePage extends Component {
 
     constructor(props) {
@@ -110,7 +106,6 @@ class GamePage extends Component {
                         <Grid.Row style={{ height: '50%' }}>
                             <DevCardBtn />
                             <EndTurnBtn />
-                            <Robber />
                         </Grid.Row>
                     </Grid.Column>
                 </Grid.Row>
