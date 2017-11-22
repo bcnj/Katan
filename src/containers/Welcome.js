@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleCreate: ()=> {
-      db.collection('games').add(dummyData)
+      db.collection('testGames').add(dummyData)
       ownProps.history.push('/lobby')
     }
   }

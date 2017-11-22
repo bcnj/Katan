@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
+import { db } from '../firebase'
 
 const DevCardBtn = (props) => {
 
@@ -11,16 +12,7 @@ const DevCardBtn = (props) => {
     );
 };
 
-// const mapState = (state) => {
-//     return {
-//     };
-// };
 
-// const mapDispatch = (dispatch) => {
-//     return {
-//     };
-// };
-
-// export default connect(mapState, mapDispatch)(DevCardBtn);
-export default DevCardBtn;
+export default connect()(DevCardBtn);
+// export default DevCardBtn;
 

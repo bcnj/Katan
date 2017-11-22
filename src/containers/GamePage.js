@@ -61,7 +61,9 @@ class GamePage extends Component {
                         // color={'red'}
                         width={11}
                     >
-                        <Board props={this.props}/>
+                    { currentGame && currentGame.game &&
+                        <Board game={currentGame.game} currentPlayer={currentGame.game.currentPlayer} gameId={gameId}/>
+                    }
                     </Grid.Column>
 
                     {/* right-side panel column */}
@@ -99,7 +101,7 @@ class GamePage extends Component {
                     {/* action buttons column */}
                     <Grid.Column width={5} >
                         <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
-                            <BuildBtn />
+                            <BuildBtn gameId={gameId} currentGame={currentGame}/>
                             <TradeBtn />
                         </Grid.Row>
 
