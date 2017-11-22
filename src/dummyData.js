@@ -238,220 +238,364 @@ const dummyData = {
   },
   "roadNodes": {
    '1': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '2': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '3': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '4': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '5': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '6': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '7': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '8': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
    '9': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '10': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '11': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '12': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '13': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '14': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '15': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '16': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '17': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '18': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '19': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '20': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '21': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '22': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '23': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '24': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '25': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '26': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '27': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '28': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '29': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '30': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '31': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '32': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '33': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '34': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '35': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '36': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '37': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '38': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '39': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '40': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '41': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '42': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '43': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '44': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '45': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '46': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '47': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '48': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '49': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '50': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '51': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '52': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '53': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '54': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '55': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '56': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '57': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '58': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '59': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '60': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '61': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '62': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '63': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '64': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '65': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '66': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '67': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '68': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '69': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '70': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '71': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     },
     '72': {
-      "player": '0'
+      "player": '0',
+      "roadNeighbors": [],
+      "active": false
     }
   },
   "intersectionNodes": {

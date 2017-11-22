@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Ellipse } from "react-konva";
+import { Ellipse, Text } from "react-konva";
 
 class Road extends Component {
   constructor(props) {
@@ -14,16 +14,28 @@ class Road extends Component {
   render() {
     const { x, y, rotation, id, color } = this.props;
     return (
-      <Ellipse
-        x={x}
-        y={y}
-        width={10}
-        height={35}
-        rotation={rotation}
-        fill={color} // Pull in color depending on game current player
-        shadowBlur={5}
-        onClick={this.handleClick}
-      />
+      // <Ellipse
+      //   x={x}
+      //   y={y}
+      //   width={10}
+      //   height={35}
+      //   rotation={rotation}
+      //   fill={color} // Pull in color depending on game current player
+      //   shadowBlur={5}
+      //   onClick={this.handleClick}
+      // />
+      <Text
+      x={x}
+      y={y}
+      width={15}
+      height={35}
+      fontSize={10}
+      text={id}
+      // rotation={rotation}
+      // fill={color} // Pull in color depending on game current player
+      // shadowBlur={5}
+      // onClick={this.handleClick}
+    />
     );
   }
 }
