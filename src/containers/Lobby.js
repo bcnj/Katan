@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchGames: () => dispatch(fetchGames()),
     handleJoin: (gameId, playerCount, username) => {
       let playerUpdate = {}
-      playerUpdate[`players.player${playerCount+1}.name`] = 'claire'
+      playerUpdate[`players.player${playerCount+1}.name`] = username
       playerUpdate['game.playerCount'] = playerCount+1
       db.collection('games').doc(`${gameId}`)
         .update(playerUpdate)
