@@ -423,59 +423,59 @@ class Board extends Component {
 
         {
           idx: 11,
+          x: 175,
+          y: 192.5,
+          rotation: 60
+        },
+        {
+          idx: 12,
           x: 225,
           y: 192.5,
           rotation: -60
         },
 
         {
-          idx: 12,
-          x: 175,
-          y: 192.5,
-          rotation: 60
-        },
-
-        {
           idx: 13,
-          x: 325,
-          y: 192.5,
-          rotation: -60
-        },
-
-        {
-          idx: 14,
           x: 275,
           y: 192.5,
           rotation: 60
         },
 
         {
-          idx: 15,
-          x: 425,
+          idx: 14,
+          x: 325,
           y: 192.5,
           rotation: -60
         },
 
         {
-          idx: 16,
+          idx: 15,
           x: 375,
           y: 192.5,
           rotation: 60
         },
 
         {
-          idx: 17,
-          x: 525,
+          idx: 16,
+          x: 425,
           y: 192.5,
           rotation: -60
         },
 
         {
-          idx: 18,
+          idx: 17,
           x: 475,
           y: 192.5,
           rotation: 60
         },
+
+        {
+          idx: 18,
+          x: 525,
+          y: 192.5,
+          rotation: -60
+        },
+
 
         {
           idx: 19,
