@@ -14,28 +14,30 @@ class Road extends Component {
   render() {
     const { x, y, rotation, id, color } = this.props;
     return (
-      // <Ellipse
-      //   x={x}
-      //   y={y}
-      //   width={10}
-      //   height={35}
-      //   rotation={rotation}
-      //   fill={color} // Pull in color depending on game current player
-      //   shadowBlur={5}
-      //   onClick={this.handleClick}
-      // />
-      <Text
-      x={x}
-      y={y}
-      width={15}
-      height={35}
-      fontSize={10}
-      text={id}
-      // rotation={rotation}
-      // fill={color} // Pull in color depending on game current player
-      // shadowBlur={5}
-      // onClick={this.handleClick}
-    />
+      <Ellipse
+        x={x}
+        y={y}
+        width={10}
+        height={35}
+        rotation={rotation}
+        fill={color} // Pull in color depending on game current player
+        shadowBlur={5}
+        onClick={this.handleClick}
+      />
+    //   <Text
+    //   x={x}
+    //   y={y}
+    //   width={20}
+    //   height={35}
+    //   fontSize={13}
+    //   fontStyle={'bold'}
+    //   fill={'red'}
+    //   text={id}
+    //   // rotation={rotation}
+    //   // fill={color} // Pull in color depending on game current player
+    //   // shadowBlur={5}
+    //   // onClick={this.handleClick}
+    // />
     );
   }
 }
