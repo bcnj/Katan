@@ -51,11 +51,17 @@ export const setUser = payload => ({
 
 export const setPlayer = payload => ({})
 
-/* REFACTOR */
+/* 
+  FUNCTIONS BEGIN HERE
+*/
 
+/* Firebase collection and document current points to testing database */
 const testCollection = 'testGames'
 const testDoc = 'bryan-test'
-/* Executes on next turn */
+
+/* DICE ROLLING
+  Generates a random dice roll using 2 pairs of random numbers from 1 to 6
+*/
 export const rollDice = () => {
   console.log('Rolling dice...')
   let dice1 = Math.floor(Math.random() * 6) + 1
@@ -73,11 +79,12 @@ export const rollDice = () => {
   }
 }
 
-/* Player ends turn, switches to next player
+/* END TURN
+
+  Player ends turn, switches to next player
   Notes: Change dummyData.game.currentPlayer equal to a number 1 to indicate player1
-  endTurn accepts a player as a number and manipulates Firebase store. No 
+  endTurn accepts a player as a number and manipulates Firebase store.
 */
-// Accepts player as a number at the moment, change later to accomodate P1, P2, P3, P4
 export const endTurn = player => {
   console.log('end turn ')
   console.log(`game.currentPlayer`)
@@ -96,14 +103,14 @@ export const endTurn = player => {
       .update(currentPlayer)
   }
 }
-
+/* TODO */
 export const distributeCards = function() {
   var ref = db.ref('testGames').child('bryan-test')
 }
 
 /* ENABLE BUILD AND TRADE
   enableBuildAndTrade will enable the build and trade button on the player who is indicated by
-  currentPlayer value in Firebase
+  'currentPlayer' value in Firebase
 */
 export const enableBuildAndTrade = currentPlayerNumber => {
   var key = 'player' + currentPlayerNumber
@@ -121,6 +128,7 @@ export const enableBuildAndTrade = currentPlayerNumber => {
 }
 
 /* ENABLE ONLY BUILD
+  Similar to enableBuildAndTrade
   enableBuild is ONLY valid for the setup phase where all players will only build settlements
 */
 export const enableBuild = currentPlayerNumber => {
@@ -136,7 +144,13 @@ export const enableBuild = currentPlayerNumber => {
   }
 }
 
-/* BUILD ROAD FROM BUY PAGE */
+/* BUILDING FUNCTIONS FOR ROADS, SETTLEMENTS, AND CITIES */
+
+/* BUILD ROAD FROM BUY PAGE 
+  Deducts resources required to build road
+  No validation to check if player has enough resources
+  currentPlayerNumber can be any value from 1 to 4, to indicate player1 to player4
+*/
 export const buildRoad = currentPlayerNumber => {
   var player = 'player' + currentPlayerNumber
   let playerData
@@ -159,7 +173,9 @@ export const buildRoad = currentPlayerNumber => {
   }
 }
 
-/* BUILD SETTLEMENT FROM BUY PAGE */
+/* BUILD SETTLEMENT FROM BUY PAGE 
+
+*/
 export const buildSettlement = currentPlayerNumber => {
   var player = 'player' + currentPlayerNumber
   let playerData
@@ -217,67 +233,36 @@ export const buildCity = currentPlayerNumber => {
 export const initiateTrade = (initiator, receiver, offer, exchange) => {
   let initiatorPlayer = 'player' + initiator
   let receiverPlayer = 'player' + receiver
-  let initiatorData, receiverData, updatedInitiatorData = {}, updatedReceiverData = {}
+  let initiatorData,
+    receiverData,
+    updatedInitiatorData = {},
+    updatedReceiverData = {}
   const game = db.collection(testCollection).doc(testDoc)
   return function() {
-    console.log('offer', offer)
-    console.log('exchange', exchange)
     game
       .get()
       .then(function(doc) {
-          initiatorData = doc.data().players[initiatorPlayer]
-          receiverData = doc.data().players[receiverPlayer]
-        })
+        initiatorData = doc.data().players[initiatorPlayer]
+        receiverData = doc.data().players[receiverPlayer]
+      })
       .then(() => {
         console.log('initiatorData', initiatorData)
         console.log('receiverData', receiverData)
       })
       .then(() => {
-        let offerKey = Object.keys(offer);
+        let offerKey = Object.keys(offer)
         offerKey.forEach(function(type) {
-          updatedInitiatorData[`players.${initiatorPlayer}.${type}`] = initiatorData[type] - offer[type] + exchange[type]
-          updatedReceiverData[`players.${receiverPlayer}.${type}`] = receiverData[type] + offer[type] - exchange[type]
-
-          // updatedInitiatorData[`players.${initiatorPlayer}.${type}`] = initiatorData[type] + exchange[type]
-          // updatedReceiverData[`players.${receiverPlayer}.${type}`] = receiverData[type] - exchange[type]          
+          updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
+            initiatorData[type] - offer[type] + exchange[type]
+          updatedReceiverData[`players.${receiverPlayer}.${type}`] =
+            receiverData[type] + offer[type] - exchange[type]
         })
-       
-        // console.log('updatedInitiatorData', updatedInitiatorData)
-        // Promise.all([game.update(updatedInitiatorData), game.update(updatedReceiverData)])
-        // console.log('updatedReceiverData', updatedReceiverData)
-        // // game.update(updatedReceiverData)
-        // console.log('offerKey', offerKey)
       })
-      // .then(() => {
-      //   console.log('updatedInitiatorData', updatedInitiatorData)
-      //   let exchangeKey = Object.keys(exchange);
-      //   exchangeKey.forEach(function(type) {
-      //     // updatedInitiatorData[`players.${initiatorPlayer}.${type}`] = initiatorData[type] - offer[type]
-      //     // updatedReceiverData[`players.${receiverPlayer}.${type}`] = receiverData[type] + offer[type]
-
-      //     updatedInitiatorData[`players.${initiatorPlayer}.${type}`] = initiatorData[type] + exchange[type]
-      //     updatedReceiverData[`players.${receiverPlayer}.${type}`] = receiverData[type] - exchange[type]          
-      //   })
-      // })
-      .then(() => Promise.all([game.update(updatedInitiatorData), game.update(updatedReceiverData)])
-    )
+      .then(() =>
+        Promise.all([
+          game.update(updatedInitiatorData),
+          game.update(updatedReceiverData)
+        ])
+      )
   }
 }
-
-// export const upgradeSettlement = player => {
-//   var cityCost = {
-//     wheat: 2,
-//     ore: 3
-//   }
-//   let playerResources = db.collection('testGames').doc('cur')
-//   // Reduce player resources
-//   // Add points
-//   return function() {
-
-//   }
-// }
-
-// Costs
-// Road
-// Settlement: 1 brick, 1 wood, 1 wheat, 1 sheep
-// City: 2 wheat, 3 ore
