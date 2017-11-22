@@ -11,7 +11,7 @@ class Wait extends Component {
     super(props)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchSingleGame(this.props.gameId)
   }
 

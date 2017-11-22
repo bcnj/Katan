@@ -10,7 +10,7 @@ class Lobby extends Component {
     super(props)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchGames()
     }
 
@@ -42,7 +42,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       playerUpdate['game.playerCount'] = playerCount+1
       db.collection('games').doc(`${gameId}`)
         .update(playerUpdate)
-      dispatch(setPlayer({gameId: gameId, playerNum: `${playerCount+1}`}))
+      // dispatch(setPlayer({gameId: gameId, playerNum: `${playerCount+1}`}))
+      localStorage.setItem(`${gameId}`, `player${playerCount+1}`)
       ownProps.history.push(`/game/wait/${gameId}`)
     },
     handleWatch: (gameId) => {
