@@ -851,6 +851,7 @@ class Board extends Component {
       active: true,
       diceRoll: null
     };
+    this.renderTiles = this.renderTiles.bind(this)
   }
 
   endGame() { }
@@ -885,7 +886,7 @@ class Board extends Component {
   renderTiles() {
     return this.state.tiles.map(function (tile) {
       const { id, x, y, resourceType } = tile;
-      return <Tile id={id} x={x} y={y} resourceType={resourceType} />;
+      return <Tile game={this.props} id={id} x={x} y={y} resourceType={resourceType} />;
     });
   }
   renderIntersections() {

@@ -58,11 +58,12 @@ class Tile extends Component {
   isOccupied() {} // Returns BOOL
 
   handleClick() {
+    console.log(this.props)
     //this.props.id is tile
     //this.props.currentGame.game
-    console.log(this.props)
-      setRobberOnTile(this.props.id)
-      setRobberBuild('nothing', false)
+
+      // setRobberOnTile(this.props)
+      // setRobberBuild('nothing', false)
   }
 
   render() {

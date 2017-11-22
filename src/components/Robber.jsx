@@ -7,14 +7,12 @@ import { db } from '../firebase'
 //currentGame is to be passed in
 
 export const setRobberBuild = (currentGame, setTrueFalse) => {
-  console.log(window.location)
   if(setTrueFalse === true) {
     let robberBuildUpdate = {}
     robberBuildUpdate[`game.robberBuild`] = true
-    console.log(robberBuildUpdate)
     db
       .collection('testGames')
-      .doc('3q3FiQ9yuZQVwsg7FaqT')
+      .doc(currentGame)
       .update(robberBuildUpdate)
   } else {
     let robberBuildUpdate = {}
@@ -22,7 +20,7 @@ export const setRobberBuild = (currentGame, setTrueFalse) => {
     console.log(robberBuildUpdate)
     db
       .collection('testGames')
-      .doc('3q3FiQ9yuZQVwsg7FaqT')
+      .doc(currentGame)
       .update(robberBuildUpdate)
   }
 }
@@ -37,7 +35,9 @@ class Robber extends Component {
   }
 
   setBuildRobber(event) {
-    setRobberBuild('what current game is', true)
+    console.log(this.props)
+    let currentGame = window.location.href.slice(27)
+    setRobberBuild(currentGame, true)
   }
 
   render() {
