@@ -12,9 +12,11 @@ export const turnRoadsOff = (gameId) => {
 export const turnRoadsOn = (currentPlayer, gameId, roadNodes) =>{
   const roadUpdate = {}
   for (let i = 1; i<= 72; i++){
-    if(roadNodes[i].player === currentPlayer[6]){
+    if(roadNodes[i].player === currentPlayer){
       roadNodes[i].roadNeighbors.forEach( int => {
-        roadUpdate[`roadNodes.${int}.active`] = true
+        if(roadNodes[i].player === '0'){
+          roadUpdate[`roadNodes.${int}.active`] = true
+        }
       })
     }
   }

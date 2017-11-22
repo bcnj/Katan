@@ -48,7 +48,7 @@ class GamePage extends Component {
         //local state governing current panel selection
         const { activeItem } = this.state
         const { user, currentGame, gameId } = this.props
-        
+
         return (
 
             <Grid padded>
@@ -62,7 +62,9 @@ class GamePage extends Component {
                         // color={'red'}
                         width={11}
                     >
-                        <Board />
+                    { currentGame && currentGame.game &&
+                        <Board currentPlayer={currentGame.game.currentPlayer} gameId={gameId}/>
+                    }
                     </Grid.Column>
 
                     {/* right-side panel column */}
