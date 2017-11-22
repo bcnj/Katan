@@ -33,7 +33,7 @@ class GamePage extends Component {
         this.setState({ activeItem: name })
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.fetchSingleGame(this.props.gameId)
     }
 
@@ -47,7 +47,7 @@ class GamePage extends Component {
 
         //local state governing current panel selection
         const { activeItem } = this.state
-        const { username, OreCount, WheatCount, SheepCount, WoodCount, BrickCount } = this.props
+        const { user, currentGame, gameId } = this.props
 
         return (
 
@@ -94,7 +94,7 @@ class GamePage extends Component {
                 >
                     {/* players table column */}
                     <Grid.Column width={11} >
-                        <PlayerTable playerName={username} OreCount={OreCount} WheatCount={WheatCount} SheepCount={SheepCount} WoodCount={WoodCount} BrickCount={BrickCount}/>
+                        <PlayerTable user={user} currentGame={currentGame} gameId={gameId}/>
                     </Grid.Column>
 
                     {/* action buttons column */}
@@ -106,7 +106,7 @@ class GamePage extends Component {
 
                         <Grid.Row style={{ height: '50%' }}>
                             <DevCardBtn />
-                            <EndTurnBtn />
+                            <EndTurnBtn gameId={gameId}/>
                         </Grid.Row>
                     </Grid.Column>
                 </Grid.Row>
@@ -117,14 +117,10 @@ class GamePage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        username: state.user.name,
+        user: state.user,
+        // playerNum: state.user.playerNum,
         gameId: ownProps.match.params.gameId,
         currentGame: state.currentGame,
-        // OreCount: state.currentGame.players.player1.ore,
-        // WheatCount: state.currentGame.players.player1.wheat,
-        // SheepCount: state.currentGame.players.player1.sheep,
-        // WoodCount: state.currentGame.players.player1.wood,
-        // BrickCount: state.currentGame.players.player1.brick,
     }
 }
 

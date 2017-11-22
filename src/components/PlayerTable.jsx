@@ -2,54 +2,44 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Container, Card, Segment, Icon, Image } from 'semantic-ui-react';
 
-const PlayerTable = (props) => {
-  const { playerName, OreCount, WheatCount, SheepCount, WoodCount, BrickCount }  = props
+const PlayerTable = ({user, currentGame, gameId}) => {
+let player
+if(currentGame && gameId){
+  player = localStorage.getItem(`${gameId}`)}
 
-  return (
-      // overall row wrapper
+return (
+    <div>
+      { user && currentGame && currentGame.players && player &&
       <Grid container={true} style={{ height: '106%' }}>
           <Grid.Column width={3}>
               <Card style={{ height: '100%', width: '100%' }}>
                   <Image src='//insert image url' />
                   <Card.Content>
                       <Card.Header>
-                          { playerName }
+                          { user.name }
                 </Card.Header>
                       <Card.Description>
-                          VP Points: 0
+                          VP Points: { currentGame.players[player].score }
               </Card.Description>
                   </Card.Content>
               </Card>
           </Grid.Column>
-          {/* player resource cards */}
           <Grid.Column width={13} >
-              <Segment style={{ height: '100%', width: '100%' }} >
-                  <Grid columns={5}>
-                      <Grid.Row>
-                          <Grid.Column>
-                              Brick: { BrickCount }
-                          </Grid.Column>
-
-                          <Grid.Column>
-                              Wood: { WoodCount }
-                          </Grid.Column>
-
-                          <Grid.Column>
-                              Sheep: { SheepCount }
-                          </Grid.Column>
-
-                          <Grid.Column>
-                              Wheat: { WheatCount }
-                          </Grid.Column>
-
-                          <Grid.Column>
-                              Ore: { OreCount }
-                          </Grid.Column>
-                      </Grid.Row>
-                      </Grid>
-              </Segment>
+            <Segment style={{ height: '100%', width: '100%' }} >
+              <Grid columns={5}>
+                <Grid.Row>
+                  <Grid.Column> Brick: { currentGame.players[player].brick } </Grid.Column>
+                  <Grid.Column> Wood: { currentGame.players[player].wood } </Grid.Column>
+                  <Grid.Column> Sheep: { currentGame.players[player].sheep } </Grid.Column>
+                  <Grid.Column> Wheat: { currentGame.players[player].wheat } </Grid.Column>
+                  <Grid.Column> Ore: { currentGame.players[player].ore } </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Segment>
           </Grid.Column>
       </Grid>
+  }
+  </div>
   );
 };
 
