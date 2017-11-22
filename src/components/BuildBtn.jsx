@@ -10,7 +10,7 @@ const BuildBtn = (props) => {
   return (
     <Modal trigger={<Button style={{width: '49%', height: '75%'}}>Build</Button>}>
     <Modal.Actions>
-        { currentGame && currentGame.game &&
+        { currentGame && currentGame.game && currentGame.roadNodes &&
 
         <Button color='blue' inverted onClick={(e) => turnRoadsOn(currentGame.game.currentPlayer, gameId, currentGame.roadNodes)}>
           Build Road
