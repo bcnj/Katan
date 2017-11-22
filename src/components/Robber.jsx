@@ -7,7 +7,8 @@ import { db } from '../firebase'
 //currentGame is to be passed in
 
 export const setRobberBuild = (currentGame, setTrueFalse) => {
-  if(setTrueFalse === true) {
+  console.log(currentGame, setTrueFalse)
+  if (setTrueFalse === true) {
     let robberBuildUpdate = {}
     robberBuildUpdate[`game.robberBuild`] = true
     db
@@ -17,7 +18,6 @@ export const setRobberBuild = (currentGame, setTrueFalse) => {
   } else {
     let robberBuildUpdate = {}
     robberBuildUpdate[`game.robberBuild`] = false
-    console.log(robberBuildUpdate)
     db
       .collection('testGames')
       .doc(currentGame)
@@ -35,17 +35,17 @@ class Robber extends Component {
   }
 
   setBuildRobber(event) {
-    console.log(this.props)
     let currentGame = window.location.href.slice(27)
     setRobberBuild(currentGame, true)
   }
 
   render() {
+
     return (
       <div>
         <Modal
           //this should not be a button but something which occurs when a player rolls a 7.
-          style={{ width: '40%' }}
+          style={{ width: '60%' }}
           trigger={
             <Button style={{ width: '30%', height: '100%' }}>
               Relocate Robber
@@ -53,8 +53,12 @@ class Robber extends Component {
           }
         >
           <br />
-          <h1 style={{ textAlign: 'center', fontSize: '3em' }}>
-            The Robber has Appeared!
+          <h1 style={{ textAlign: 'center', fontSize: '2em' }}>
+            Every player with over 7 cards must discard down to half their cards
+          </h1>
+          <br />
+          <h1 style={{ textAlign: 'center', fontSize: '2em' }}>
+            You have X cards, discard down to
           </h1>
           <Modal.Content>
             <img
