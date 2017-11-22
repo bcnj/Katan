@@ -6,7 +6,7 @@ const dummyData = {
     "playerCount": 0,
   },
   "players": {
-    1: {
+    'player1': {
       "name": "",
       "score": 0,
       "wood": 0,
@@ -16,7 +16,7 @@ const dummyData = {
       "ore": 0,
       "color": "red",
     },
-    2: {
+    'player2': {
       "name": "",
       "score": 0,
       "wood": 0,
@@ -26,7 +26,7 @@ const dummyData = {
       "ore": 0,
       "color": 'white'
     },
-    3: {
+    'player3': {
       "name": "",
       "score": 0,
       "wood": 0,
@@ -36,7 +36,7 @@ const dummyData = {
       "ore": 0,
       "color": "green"
     },
-    4: {
+    'player4': {
       "name": "",
       "score": 0,
       "wood": 0,
