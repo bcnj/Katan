@@ -14,17 +14,27 @@ class Test extends Component {
   }
 
   componentWillMount() {
-    //   db.collection('testGames').doc('bryan-test').set(dummyData) // Seed Firebase with dummyData
+      // db.collection('testGames').doc('bryan-test').set(dummyData) // Seed Firebase with dummyData
     this.props.fetchSingleGame('bryan-test');
   }
 
   render() {
       console.log('currentGame', this.props)
+
+      const testOffer = {brick: 1, ore: 0, sheep: 0, wheat: 0, wood: 0}
+      const testExchange = {brick: 0, ore: 1, sheep: 0, wheat: 0, wood: 0}
     if (this.props.currentGame.game) {
         return (
             <div>
               <Button onClick={this.props.rollDice}>Roll dice</Button>
               <Button onClick={() => this.props.endTurn(this.props.currentGame.game.currentPlayer)}>Next player</Button>
+              <Button onClick={this.props.distributeCards}>Distribute Cards</Button>
+              <Button onClick={() => this.props.enableBuildAndTrade(2)}>enableBuildAndTrade</Button>
+              <Button onClick={() => this.props.enableBuild(1)}>enableBuild</Button>
+              <Button onClick={() => this.props.buildRoad(1)}>buildRoad</Button>
+              <Button onClick={() => this.props.buildSettlement(1)}>buildSettlement</Button>
+              <Button onClick={() => this.props.buildCity(1)}>buildCity</Button>
+              <Button onClick={() => this.props.initiateTrade(1, 2, testOffer, testExchange)}>initiateTrade</Button>
               <h1>Latest dice roll: {this.props.currentGame.game.diceRoll}</h1>
             </div>
           )

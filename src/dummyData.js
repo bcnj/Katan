@@ -1,1105 +1,791 @@
- let dummyData = {
-    "game": {
-      "diceRoll": 2,
-      "currentPlayer": 1,
-      "active": false,
-      "playerCount": 0,
+const dummyData = {
+  "game": {
+    "diceRoll": 2,
+    "currentPlayer": "player1",
+    "active": false,
+    "playerCount": 0,
+    "setup": true, // Setup will remain true until turn > totalPlayerCount * 2
+    "turn": 0, // Add for each turn
+    "robber": '10'
+  },
+  "players": {
+    "player1": {
+      "id": 1,
+      "name": "",
+      "score": 0,
+      "wood": 0,
+      "brick": 0,
+      "wheat": 0,
+      "sheep": 0,
+      "ore": 0,
+      "color": 'red',
+      "build": true,
+      "trade": false
     },
-    "players": {
-      "player1": {
-        "id": 1,
-        "name": "",
-        "score": 0,
-        "wood": 0,
-        "brick": 0,
-        "wheat": 0,
-        "sheep": 0,
-        "ore": 0,
-        "color": 'red'
-      },
-      "player2": {
-        "id": 2,
-        "name": "",
-        "score": 0,
-        "wood": 0,
-        "brick": 0,
-        "wheat": 0,
-        "sheep": 0,
-        "ore": 0,
-        "color": 'white'
-      },
-      "player3": {
-        "id": 3,
-        "name": "",
-        "score": 0,
-        "wood": 0,
-        "brick": 0,
-        "wheat": 0,
-        "sheep": 0,
-        "ore": 0,
-        "color": "green"
-      },
-      "player4": {
-        "id": 4,
-        "name": "",
-        "score": 0,
-        "wood": 0,
-        "brick": 0,
-        "wheat": 0,
-        "sheep": 0,
-        "ore": 0,
-        "color": "blue"
-      }
+    "player2": {
+      "id": 2,
+      "name": "",
+      "score": 0,
+      "wood": 0,
+      "brick": 0,
+      "wheat": 0,
+      "sheep": 0,
+      "ore": 0,
+      "color": 'white',
+      "build": true,
+      "trade": false
     },
-    "tileNodes": {
-      "T1": {
-        "id": "T1",
-        "children": {
-          "1": ""
-        },
-        "resource": "ORE",
-        "robber": false,
-        "rollNumber": 10
-      },
-      "T2": {
-        "id": "T2",
-        "children": {
-          "1": ""
-        },
-        "resource": "SHEEP",
-        "robber": false,
-        "rollNumber": 2
-      },
-      "T3": {
-        "id": "T3",
-        "children": {
-          "1": ""
-        },
-        "resource": "WOOD",
-        "robber": false,
-        "rollNumber": 9
-      },
-      "T4": {
-        "id": "T4",
-        "children": {
-          "1": ""
-        },
-        "resource": "WHEAT",
-        "robber": false,
-        "rollNumber": 12
-      },
-      "T5": {
-        "id": "T5",
-        "children": {
-          "1": ""
-        },
-        "resource": "BRICK",
-        "robber": false,
-        "rollNumber": 6
-      },
-      "T6": {
-        "id": "T6",
-        "children": {
-          "1": ""
-        },
-        "resource": "SHEEP",
-        "robber": false,
-        "rollNumber": 4
-      },
-      "T7": {
-        "id": "T7",
-        "children": {
-          "1": ""
-        },
-        "resource": "BRICK",
-        "robber": false,
-        "rollNumber": 10
-      },
-      "T8": {
-        "id": "T8",
-        "children": {
-          "1": ""
-        },
-        "resource": "WHEAT",
-        "robber": false,
-        "rollNumber": 9
-      },
-      "T9": {
-        "id": "T9",
-        "children": {
-          "1": ""
-        },
-        "resource": "WOOD",
-        "robber": false,
-        "rollNumber": 11
-      },
-      "T10": {
-        "id": "T10",
-        "children": {
-          "1": ""
-        },
-        "resource": "DESERT",
-        "robber": false,
-        "rollNumber": 0
-      },
-      "T11": {
-        "id": "T11",
-        "children": {
-          "1": ""
-        },
-        "resource": "WOOD",
-        "robber": false,
-        "rollNumber": 3
-      },
-      "T12": {
-        "id": "T12",
-        "children": {
-          "1": ""
-        },
-        "resource": "ORE",
-        "robber": false,
-        "rollNumber": 8
-      },
-      "T13": {
-        "id": "T13",
-        "children": {
-          "1": ""
-        },
-        "resource": "WOOD",
-        "robber": false,
-        "rollNumber": 8
-      },
-      "T14": {
-        "id": "T14",
-        "children": {
-          "1": ""
-        },
-        "resource": "ORE",
-        "robber": false,
-        "rollNumber": 3
-      },
-      "T15": {
-        "id": "T15",
-        "children": {
-          "1": ""
-        },
-        "resource": "WHEAT",
-        "robber": false,
-        "rollNumber": 4
-      },
-      "T16": {
-        "id": "T16",
-        "children": {
-          "1": ""
-        },
-        "resource": "SHEEP",
-        "robber": false,
-        "rollNumber": 5
-      },
-      "T17": {
-        "id": "T17",
-        "children": {
-          "1": ""
-        },
-        "resource": "BRICK",
-        "robber": false,
-        "rollNumber": 5
-      },
-      "T18": {
-        "id": "T18",
-        "children": {
-          "1": ""
-        },
-        "resource": "WHEAT",
-        "robber": false,
-        "rollNumber": 6
-      },
-      "T19": {
-        "id": "T19",
-        "children": {
-          "1": ""
-        },
-        "resource": "SHEEP",
-        "robber": false,
-        "rollNumber": 11
-      }
+    "player3": {
+      "id": 3,
+      "name": "",
+      "score": 0,
+      "wood": 0,
+      "brick": 0,
+      "wheat": 0,
+      "sheep": 0,
+      "ore": 0,
+      "color": "green",
+      "build": true,
+      "trade": false
     },
-    "roadNodes": {
-      "R1": {
-        "id": "R1",
-        "player": ""
-      },
-      "R2": {
-        "id": "R2",
-        "player": ""
-      },
-      "R3": {
-        "id": "R3",
-        "player": ""
-      },
-      "R4": {
-        "id": "R4",
-        "player": ""
-      },
-      "R5": {
-        "id": "R5",
-        "player": ""
-      },
-      "R6": {
-        "id": "R6",
-        "player": ""
-      },
-      "R7": {
-        "id": "R7",
-        "player": ""
-      },
-      "R8": {
-        "id": "R8",
-        "player": ""
-      },
-      "R9": {
-        "id": "R9",
-        "player": ""
-      },
-      "R10": {
-        "id": "R10",
-        "player": ""
-      },
-      "R11": {
-        "id": "R11",
-        "player": ""
-      },
-      "R12": {
-        "id": "R12",
-        "player": ""
-      },
-      "R13": {
-        "id": "R13",
-        "player": ""
-      },
-      "R14": {
-        "id": "R14",
-        "player": ""
-      },
-      "R15": {
-        "id": "R15",
-        "player": ""
-      },
-      "R16": {
-        "id": "R16",
-        "player": ""
-      },
-      "R17": {
-        "id": "R17",
-        "player": ""
-      },
-      "R18": {
-        "id": "R18",
-        "player": ""
-      },
-      "R19": {
-        "id": "R19",
-        "player": ""
-      },
-      "R20": {
-        "id": "R20",
-        "player": ""
-      },
-      "R21": {
-        "id": "R21",
-        "player": ""
-      },
-      "R22": {
-        "id": "R22",
-        "player": ""
-      },
-      "R23": {
-        "id": "R23",
-        "player": ""
-      },
-      "R24": {
-        "id": "R24",
-        "player": ""
-      },
-      "R25": {
-        "id": "R25",
-        "player": ""
-      },
-      "R26": {
-        "id": "R26",
-        "player": ""
-      },
-      "R27": {
-        "id": "R27",
-        "player": ""
-      },
-      "R28": {
-        "id": "R28",
-        "player": ""
-      },
-      "R29": {
-        "id": "R29",
-        "player": ""
-      },
-      "R30": {
-        "id": "R30",
-        "player": ""
-      },
-      "R31": {
-        "id": "R31",
-        "player": ""
-      },
-      "R32": {
-        "id": "R32",
-        "player": ""
-      },
-      "R33": {
-        "id": "R33",
-        "player": ""
-      },
-      "R34": {
-        "id": "R34",
-        "player": ""
-      },
-      "R35": {
-        "id": "R35",
-        "player": ""
-      },
-      "R36": {
-        "id": "R36",
-        "player": ""
-      },
-      "R37": {
-        "id": "R37",
-        "player": ""
-      },
-      "R38": {
-        "id": "R38",
-        "player": ""
-      },
-      "R39": {
-        "id": "R39",
-        "player": ""
-      },
-      "R40": {
-        "id": "R40",
-        "player": ""
-      },
-      "R41": {
-        "id": "R41",
-        "player": ""
-      },
-      "R42": {
-        "id": "R42",
-        "player": ""
-      },
-      "R43": {
-        "id": "R43",
-        "player": ""
-      },
-      "R44": {
-        "id": "R44",
-        "player": ""
-      },
-      "R45": {
-        "id": "R45",
-        "player": ""
-      },
-      "R46": {
-        "id": "R46",
-        "player": ""
-      },
-      "R47": {
-        "id": "R47",
-        "player": ""
-      },
-      "R48": {
-        "id": "R48",
-        "player": ""
-      },
-      "R49": {
-        "id": "R49",
-        "player": ""
-      },
-      "R50": {
-        "id": "R50",
-        "player": ""
-      },
-      "R51": {
-        "id": "R51",
-        "player": ""
-      },
-      "R52": {
-        "id": "R52",
-        "player": ""
-      },
-      "R53": {
-        "id": "R53",
-        "player": ""
-      },
-      "R54": {
-        "id": "R54",
-        "player": ""
-      },
-      "R55": {
-        "id": "R55",
-        "player": ""
-      },
-      "R56": {
-        "id": "R56",
-        "player": ""
-      },
-      "R57": {
-        "id": "R57",
-        "player": ""
-      },
-      "R58": {
-        "id": "R58",
-        "player": ""
-      },
-      "R59": {
-        "id": "R59",
-        "player": ""
-      },
-      "R60": {
-        "id": "R60",
-        "player": ""
-      },
-      "R61": {
-        "id": "R61",
-        "player": ""
-      },
-      "R62": {
-        "id": "R62",
-        "player": ""
-      },
-      "R63": {
-        "id": "R63",
-        "player": ""
-      },
-      "R64": {
-        "id": "R64",
-        "player": ""
-      },
-      "R65": {
-        "id": "R65",
-        "player": ""
-      },
-      "R66": {
-        "id": "R66",
-        "player": ""
-      },
-      "R67": {
-        "id": "R67",
-        "player": ""
-      },
-      "R68": {
-        "id": "R68",
-        "player": ""
-      },
-      "R69": {
-        "id": "R69",
-        "player": ""
-      },
-      "R70": {
-        "id": "R70",
-        "player": ""
-      },
-      "R71": {
-        "id": "R71",
-        "player": ""
-      },
-      "R72": {
-        "id": "R72",
-        "player": ""
-      },
-      "R73": {
-        "id": "R73",
-        "player": ""
-      },
-      "R74": {
-        "id": "R74",
-        "player": ""
-      }
+    "player4": {
+      "id": 4,
+      "name": "",
+      "score": 0,
+      "wood": 0,
+      "brick": 0,
+      "wheat": 0,
+      "sheep": 0,
+      "ore": 0,
+      "color": "blue",
+      "build": true,
+      "trade": false
+    }
+  },
+  "devCards": {
+    '1': {
+      "name": "Knight"
     },
-    "intersectionNodes": {
-      "P1": {
-        "id": "P1",
-        "neighbors": {
-          "P4": true,
-          "P5": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P2": {
-        "id": "P2",
-        "neighbors": {
-          "P5": true,
-          "P6": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P3": {
-        "id": "P3",
-        "neighbors": {
-          "P6": true,
-          "P7": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P4": {
-        "id": "P4",
-        "neighbors": {
-          "P1": true,
-          "P8": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P5": {
-        "id": "P5",
-        "neighbors": {
-          "P1": true,
-          "P2": true,
-          "P9": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P6": {
-        "id": "P6",
-        "neighbors": {
-          "P2": true,
-          "P3": true,
-          "P10": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P7": {
-        "id": "P7",
-        "neighbors": {
-          "P3": true,
-          "P11": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P8": {
-        "id": "P8",
-        "neighbors": {
-          "P4": true,
-          "P12": true,
-          "P13": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P9": {
-        "id": "P9",
-        "neighbors": {
-          "P5": true,
-          "P13": true,
-          "P14": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P10": {
-        "id": "P10",
-        "neighbors": {
-          "P6": true,
-          "P14": true,
-          "P15": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P11": {
-        "id": "P11",
-        "neighbors": {
-          "P7": true,
-          "P15": true,
-          "P16": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P12": {
-        "id": "P12",
-        "neighbors": {
-          "P8": true,
-          "P17": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P13": {
-        "id": "P13",
-        "neighbors": {
-          "P8": true,
-          "P9": true,
-          "P18": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P14": {
-        "id": "P14",
-        "neighbors": {
-          "P9": true,
-          "P10": true,
-          "P19": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P15": {
-        "id": "P15",
-        "neighbors": {
-          "P10": true,
-          "P11": true,
-          "P20": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P16": {
-        "id": "P16",
-        "neighbors": {
-          "P11": true,
-          "P21": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P17": {
-        "id": "P17",
-        "neighbors": {
-          "P12": true,
-          "P22": true,
-          "P23": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P18": {
-        "id": "P18",
-        "neighbors": {
-          "P13": true,
-          "P23": true,
-          "P24": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P19": {
-        "id": "P19",
-        "neighbors": {
-          "P14": true,
-          "P24": true,
-          "P25": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P20": {
-        "id": "P20",
-        "neighbors": {
-          "P15": true,
-          "P25": true,
-          "P26": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P21": {
-        "id": "P21",
-        "neighbors": {
-          "P16": true,
-          "P26": true,
-          "P27": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P22": {
-        "id": "P22",
-        "neighbors": {
-          "P17": true,
-          "P28": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P23": {
-        "id": "P23",
-        "neighbors": {
-          "P17": true,
-          "P18": true,
-          "P29": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P24": {
-        "id": "P24",
-        "neighbors": {
-          "P18": true,
-          "P19": true,
-          "P30": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P25": {
-        "id": "P25",
-        "neighbors": {
-          "P19": true,
-          "P20": true,
-          "P31": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P26": {
-        "id": "P26",
-        "neighbors": {
-          "P20": true,
-          "P21": true,
-          "P32": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P27": {
-        "id": "P27",
-        "neighbors": {
-          "P21": true,
-          "P33": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P28": {
-        "id": "P28",
-        "neighbors": {
-          "P22": true,
-          "P34": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P29": {
-        "id": "P29",
-        "neighbors": {
-          "P23": true,
-          "P34": true,
-          "P35": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P30": {
-        "id": "P30",
-        "neighbors": {
-          "P24": true,
-          "P35": true,
-          "P36": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P31": {
-        "id": "P31",
-        "neighbors": {
-          "P25": true,
-          "P36": true,
-          "P37": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P32": {
-        "id": "P32",
-        "neighbors": {
-          "P26": true,
-          "P37": true,
-          "P38": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P33": {
-        "id": "P33",
-        "neighbors": {
-          "P27": true,
-          "P38": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P34": {
-        "id": "P34",
-        "neighbors": {
-          "P28": true,
-          "P29": true,
-          "P39": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P35": {
-        "id": "P35",
-        "neighbors": {
-          "P29": true,
-          "P30": true,
-          "P40": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P36": {
-        "id": "P36",
-        "neighbors": {
-          "P30": true,
-          "P31": true,
-          "P41": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P37": {
-        "id": "P37",
-        "neighbors": {
-          "P31": true,
-          "P32": true,
-          "P42": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P38": {
-        "id": "P38",
-        "neighbors": {
-          "P32": true,
-          "P33": true,
-          "P43": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P39": {
-        "id": "P39",
-        "neighbors": {
-          "P34": true,
-          "P44": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P40": {
-        "id": "P40",
-        "neighbors": {
-          "P35": true,
-          "P44": true,
-          "P45": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P41": {
-        "id": "P41",
-        "neighbors": {
-          "P36": true,
-          "P45": true,
-          "P46": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P42": {
-        "id": "P42",
-        "neighbors": {
-          "P37": true,
-          "P46": true,
-          "P47": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P43": {
-        "id": "P43",
-        "neighbors": {
-          "P38": true,
-          "P47": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P44": {
-        "id": "P44",
-        "neighbors": {
-          "P39": true,
-          "P40": true,
-          "P48": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P45": {
-        "id": "P45",
-        "neighbors": {
-          "P40": true,
-          "P41": true,
-          "P49": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P46": {
-        "id": "P46",
-        "neighbors": {
-          "P41": true,
-          "P42": true,
-          "P50": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P47": {
-        "id": "P47",
-        "neighbors": {
-          "P42": true,
-          "P43": true,
-          "P51": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P48": {
-        "id": "P48",
-        "neighbors": {
-          "P44": true,
-          "P52": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P49": {
-        "id": "P49",
-        "neighbors": {
-          "P45": true,
-          "P52": true,
-          "P53": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P50": {
-        "id": "P50",
-        "neighbors": {
-          "P46": true,
-          "P53": true,
-          "P54": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P51": {
-        "id": "P51",
-        "neighbors": {
-          "P47": true,
-          "P54": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P52": {
-        "id": "P52",
-        "neighbors": {
-          "P48": true,
-          "P49": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P53": {
-        "id": "P53",
-        "neighbors": {
-          "P49": true,
-          "P50": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      },
-      "P54": {
-        "id": "P54",
-        "neighbors": {
-          "P50": true,
-          "P51": true
-        },
-        "player": "",
-        "city": false,
-        "settlement": false
-      }
+    '2': {
+      "name": "Knight"
+    },
+    '3': {
+      "name": "Knight"
+    },
+    '4': {
+      "name": "Knight"
+    },
+    '5': {
+      "name": "Knight"
+    },
+    '6': {
+      "name": "Knight"
+    },
+    '7': {
+      "name": "Knight"
+    },
+    '8': {
+      "name": "Knight"
+    },
+    '9': {
+      "name": "Knight"
+    },
+    '10': {
+      "name": "Knight"
+    },
+    '11': {
+      "name": "Knight"
+    },
+    '12': {
+      "name": "Knight"
+    },
+    '13': {
+      "name": "Knight"
+    },
+    '14': {
+      "name": "Knight"
+    },
+    '15': {
+      "name": "Victory Point"
+    },
+    '16': {
+      "name": "Victory Point"
+    },
+    '17': {
+      "name": "Victory Point"
+    },
+    '18': {
+      "name": "Victory Point"
+    },
+    '19': {
+      "name": "Victory Point"
+    },
+    '20': {
+      "name": "Year of Plenty"
+    },
+    '21': {
+      "name": "Year of Plenty"
+    },
+    '22': {
+      "name": "Monopoly"
+    },
+    '23': {
+      "name": "Monopoly"
+    },
+    '24': {
+      "name": "Road Building"
+    },
+    '25': {
+      "name": "Road Building"
+    }
+  },
+  "tileNodes": {
+   '1': {
+      "children": ['1', '4', '5', '8', '9', '13'],
+      "resource": "ORE",
+      "rollNumber": 10
+    },
+   '2': {
+      "children": ['2', '5', '6', '9', '10', '14'],
+      "resource": "SHEEP",
+      "rollNumber": 2
+    },
+   '3': {
+      "children": ['3', '6', '7', '10', '11', '15'],
+      "resource": "WOOD",
+      "rollNumber": 9
+    },
+   '4': {
+      "children": ['12', '8', '13', '17', '18', '23'],
+      "resource": "WHEAT",
+      "rollNumber": 12
+    },
+   '5': {
+      "children": ['13', '9', '14', '18', '19', '24'],
+      "resource": "BRICK",
+      "rollNumber": 6
+    },
+   '6': {
+      "children": ['14', '10', '15', '19', '20', '25'],
+      "resource": "SHEEP",
+      "rollNumber": 4
+    },
+   '7': {
+      "children": ['15', '11', '16', '20', '21', '26'],
+      "resource": "BRICK",
+      "rollNumber": 10
+    },
+   '8': {
+      "children": ['22', '17', '23', '28', '29', '34'],
+      "resource": "WHEAT",
+      "rollNumber": 9
+    },
+   '9': {
+      "children": ['23', '18', '24', '29', '30', '35'],
+      "resource": "WOOD",
+      "rollNumber": 11
+    },
+    '10': {
+      "children": ['24', '19', '25', '30', '31', '36'],
+      "resource": "DESERT",
+      "rollNumber": 0
+    },
+    '11': {
+      "children": ['25', '20', '26', '31', '32', '37'],
+      "resource": "WOOD",
+      "rollNumber": 3
+    },
+    '12': {
+      "children": ['26', '21', '27', '32', '33', '38'],
+      "resource": "ORE",
+      "rollNumber": 8
+    },
+    '13': {
+      "children": ['34', '29', '35', '39', '40', '44'],
+      "resource": "WOOD",
+      "rollNumber": 8
+    },
+    '14': {
+      "children": ['35', '30', '36', '40', '41', '45'],
+      "resource": "ORE",
+      "rollNumber": 3
+    },
+    '15': {
+      "children": ['36', '31', '37', '41', '42', '46'],
+      "resource": "WHEAT",
+      "rollNumber": 4
+    },
+    '16': {
+      "children": ['37', '32', '38', '42', '43', '47'],
+      "resource": "SHEEP",
+      "rollNumber": 5
+    },
+    '17': {
+      "children": ['44', '40', '45', '48', '49', '52'],
+      "resource": "BRICK",
+      "rollNumber": 5
+    },
+    '18': {
+      "children": ['45', '41', '46', '49', '50', '53'],
+      "resource": "WHEAT",
+      "rollNumber": 6
+    },
+    '19': {
+      "children": ['46', '42', '47', '48', '59', '54'],
+      "resource": "SHEEP",
+      "rollNumber": 11
+    }
+  },
+  "roadNodes": {
+   '1': {
+      "player": '0'
+    },
+   '2': {
+      "player": '0'
+    },
+   '3': {
+      "player": '0'
+    },
+   '4': {
+      "player": '0'
+    },
+   '5': {
+      "player": '0'
+    },
+   '6': {
+      "player": '0'
+    },
+   '7': {
+      "player": '0'
+    },
+   '8': {
+      "player": '0'
+    },
+   '9': {
+      "player": '0'
+    },
+    '10': {
+      "player": '0'
+    },
+    '11': {
+      "player": '0'
+    },
+    '12': {
+      "player": '0'
+    },
+    '13': {
+      "player": '0'
+    },
+    '14': {
+      "player": '0'
+    },
+    '15': {
+      "player": '0'
+    },
+    '16': {
+      "player": '0'
+    },
+    '17': {
+      "player": '0'
+    },
+    '18': {
+      "player": '0'
+    },
+    '19': {
+      "player": '0'
+    },
+    '20': {
+      "player": '0'
+    },
+    '21': {
+      "player": '0'
+    },
+    '22': {
+      "player": '0'
+    },
+    '23': {
+      "player": '0'
+    },
+    '34': {
+      "player": '0'
+    },
+    '35': {
+      "player": '0'
+    },
+    '36': {
+      "player": '0'
+    },
+    '37': {
+      "player": '0'
+    },
+    '38': {
+      "player": '0'
+    },
+    '39': {
+      "player": '0'
+    },
+    '40': {
+      "player": '0'
+    },
+    '41': {
+      "player": '0'
+    },
+    '42': {
+      "player": '0'
+    },
+    '43': {
+      "player": '0'
+    },
+    '44': {
+      "player": '0'
+    },
+    '45': {
+      "player": '0'
+    },
+    '46': {
+      "player": '0'
+    },
+    '47': {
+      "player": '0'
+    },
+    '48': {
+      "player": '0'
+    },
+    '49': {
+      "player": '0'
+    },
+    '50': {
+      "player": '0'
+    },
+    '51': {
+      "player": '0'
+    },
+    '52': {
+      "player": '0'
+    },
+    '53': {
+      "player": '0'
+    },
+    '54': {
+      "player": '0'
+    },
+    '55': {
+      "player": '0'
+    },
+    '56': {
+      "player": '0'
+    },
+    '57': {
+      "player": '0'
+    },
+    '58': {
+      "player": '0'
+    },
+    '59': {
+      "player": '0'
+    },
+    '60': {
+      "player": '0'
+    },
+    '61': {
+      "player": '0'
+    },
+    '62': {
+      "player": '0'
+    },
+    '63': {
+      "player": '0'
+    },
+    '64': {
+      "player": '0'
+    },
+    '65': {
+      "player": '0'
+    },
+    '66': {
+      "player": '0'
+    },
+    '67': {
+      "player": '0'
+    },
+    '68': {
+      "player": '0'
+    },
+    '69': {
+      "player": '0'
+    },
+    '70': {
+      "player": '0'
+    },
+    '71': {
+      "player": '0'
+    },
+    '72': {
+      "player": '0'
+    },
+    '73': {
+      "player": '0'
+    },
+    '74': {
+      "player": '0'
+    },
+    '75': {
+      "player": '0'
+    },
+    '76': {
+      "player": '0'
+    },
+    '77': {
+      "player": '0'
+    },
+    '78': {
+      "player": '0'
+    },
+    '79': {
+      "player": '0'
+    },
+    '80': {
+      "player": '0'
+    },
+    '81': {
+      "player": '0'
+    },
+    '82': {
+      "player": '0'
+    },
+    '83': {
+      "player": '0'
+    },
+    '84': {
+      "player": '0'
+    }
+  },
+  "intersectionNodes": {
+   '1': {
+      "neighbors": ['4', '5'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '2': {
+      "neighbors": ['5', '6'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '3': {
+      "neighbors": ['6', '7'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '4': {
+      "neighbors": ['1', '8'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '5': {
+      "neighbors": ['1', '2', '9'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '6': {
+      "neighbors": ['2', '3', '10'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '7': {
+      "neighbors": ['3', '11'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '8': {
+      "neighbors": ['4', '12', '13'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+   '9': {
+      "neighbors": ['5', '13', '14'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '10': {
+      "neighbors": ['6', '14', '15'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '11': {
+      "neighbors": ['7', '15', '16'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '12': {
+      "neighbors": ['8', '17'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '13': {
+      "neighbors": ['8', '9', '18'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '14': {
+      "neighbors": ['9', '10', '19'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '15': {
+      "neighbors": ['10', '11', '20'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '16': {
+      "neighbors": ['11', '21'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '17': {
+      "neighbors": ['12', '22', '23'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '18': {
+      "neighbors": ['13', '23', '24'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '19': {
+      "neighbors": ['14', '24', '25'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '20': {
+      "neighbors": ['15', '25', '26'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '21': {
+      "neighbors": ['16', '26', '27'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '22': {
+      "neighbors": ['17', '28'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '23': {
+      "neighbors": ['17', '18', '29'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '24': {
+      "neighbors": ['18', '19', '30'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '25': {
+      "neighbors": ['19', '20', '31'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '26': {
+      "neighbors": ['20', '21', '32'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '27': {
+      "neighbors": ['21', '33'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '28': {
+      "neighbors": ['22', '34'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '29': {
+      "neighbors": ['23', '34', '35'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '30': {
+      "neighbors": ['24', '35', '36'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '31': {
+      "neighbors": ['25', '36', '37'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '32': {
+      "neighbors": ['26', '37', '38'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '33': {
+      "neighbors": ['27', '38'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '34': {
+      "neighbors": ['28', '29', '39'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '35': {
+      "neighbors": ['29', '20', '40'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '36': {
+      "neighbors": ['30', '31', '41'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '37': {
+      "neighbors": ['31', '32', '42'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '38': {
+      "neighbors": ['32', '33', '43'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '39': {
+      "neighbors": ['34', '44'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '40': {
+      "neighbors": ['35', '44', '45'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '41': {
+      "neighbors": ['36', '45', '46'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '42': {
+      "neighbors": ['37', '46', '47'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '43': {
+      "neighbors": ['38', '47'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '44': {
+      "neighbors": ['39', '40', '48'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '45': {
+      "neighbors": ['40', '41', '49'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '46': {
+      "neighbors": ['41', '42', '50'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '47': {
+      "neighbors": ['42', '43', '51'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '48': {
+      "neighbors": ['44', '52'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '49': {
+      "neighbors": ['45', '52', '53'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '50': {
+      "neighbors": ['46', '53', '54'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '51': {
+      "neighbors": ['47', '54'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '52': {
+      "neighbors": ['48', '49'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '53': {
+      "neighbors": ['49', '50'],
+      "player": '0',
+      "city": false,
+      "settlement": false
+    },
+    '54': {
+      "neighbors": ['50', '51'],
+      "player": '0',
+      "city": false,
+      "settlement": false
     }
   }
+}
 
 export default dummyData
