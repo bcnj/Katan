@@ -7,6 +7,9 @@ import Brick from '../images/hill.png';
 import Ore from '../images/mountain.png';
 import Sheep from '../images/pasture.png';
 
+import setRobberBuild from './RobberBtn.jsx'
+
+
 class Tile extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +49,13 @@ class Tile extends Component {
   isOccupied() {} // Returns BOOL
 
   handleClick() {
-    // console.log("Clicked on tile", this.props.id);
+    //first check if the property of robberBuild is true
+    // if(this.props.game.robberBuild === true) {
+      //game store and call a thunk on it that will set the robber
+      // this.props.game.setRobber(this.props.id)
+      //change game.setRobber back to false right after
+      // setRobberBuild('what current game is', false)
+    // }
   }
 
   render() {

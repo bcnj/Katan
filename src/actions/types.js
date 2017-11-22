@@ -9,3 +9,5 @@ export const SET_USER = 'SET_USER'
 
 export const GET_TILES = 'GET_TILES'
 export const SET_ROBBER = 'SET_ROBBER'
+
+export const SET_ROBBER_BUILD = 'SET_ROBBER_BUILD'

@@ -6,7 +6,8 @@ const dummyData = {
     "playerCount": 0,
     "setup": true, // Setup will remain true until turn > totalPlayerCount * 2
     "turn": 0, // Add for each turn
-    "robber": '10'
+    "robber": '10',
+    "robberBuild": false
   },
   "players": {
     "player1": {
