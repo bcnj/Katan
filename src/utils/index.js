@@ -62,18 +62,20 @@ export const turnIntersectionOnForCity = (currentPlayer, gameId, intersectionNod
   .update(cityUpdate)
 }
 
-export const buildSettlement = (currentPlayer, gameId, intersectionId) => {
+export const buildSettlement = (currentPlayer, gameId, intersectionId, vp) => {
   const settlementUpdate = {}
   settlementUpdate[`intersectionNodes.${intersectionId}.player`] = currentPlayer
   settlementUpdate[`intersectionNodes.${intersectionId}.settlement`] = true
+  settlementUpdate[`players.${currentPlayer}.score`] = vp + 1
   db.collection('games').doc(`${gameId}`)
   .update(settlementUpdate)
   turnIntersectionOff(gameId)
 }
 
-export const buildCity = (currentPlayer, gameId, intersectionId) => {
+export const buildCity = (currentPlayer, gameId, intersectionId, vp) => {
   const cityUpdate = {}
   cityUpdate[`intersectionNodes.${intersectionId}.city`] = true
+  cityUpdate[`players.${currentPlayer}.score`] = vp + 1
   db.collection('games').doc(`${gameId}`)
   .update(cityUpdate)
   turnIntersectionOff(gameId)
