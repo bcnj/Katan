@@ -114,47 +114,43 @@ export const distributeCards = function(rollNumber) {
   let tiles = [] // Tiles correlating to rollNumber
   return function() {
     const instance = db.collection(testCollection).doc(testDoc)
-    instance
-      .get()
-      .then(doc => {
-        console.log('doc.data', doc.data().tileNodes)
-        let { tileNodes, intersectionNodes } = doc.data()
-        let tileKeys = Object.keys(tileNodes)
-        tileKeys.forEach(function(key) {
-          if (tileNodes[key].rollNumber === 10) {
-            
-            tiles.push(tileNodes[key])
+    instance.get().then(doc => {
+      console.log('doc.data', doc.data().tileNodes)
+      let { tileNodes, intersectionNodes } = doc.data()
+      let tileKeys = Object.keys(tileNodes)
+      tileKeys.forEach(function(key) {
+        if (tileNodes[key].rollNumber === 10) {
+          tiles.push(tileNodes[key])
+        }
+      })
+      // console.log('tiles', tiles)
+      tiles.forEach(function(tile) {
+        // console.log('tile', tile)
+        tile.children.forEach(function(intersectionNode) {
+          console.log('tile.resource', tile.resource)
+          console.log('intersectionNode', intersectionNode)
+          // If a player exists on this intersection
+          const intersection = intersectionNodes[intersectionNode]
+          if (intersection.player !== '0') {
+            // Create an array and feed into Promise.all
+            console.log('Player', intersection.player, 'receives resources!')
+            // If player owns a settlement on this intersection
+            if (intersection.settlement === true) {
+              // Award 1 resource
+              console.log('Oee resource')
+            } else if (intersection.city === true) {
+              // If player owns a city on this intesection
+              // Award 2 resources
+            }
           }
         })
-        // console.log('tiles', tiles)
-        tiles.forEach(function(tile) {
-          // console.log('tile', tile)
-          tile.children.forEach(function(intersectionNode) {
-            console.log('tile.resource', tile.resource)
-            console.log('intersectionNode', intersectionNode)
-            // If a player exists on this intersection
-            const intersection = intersectionNodes[intersectionNode]
-            if (intersection.player !== '0') {
-              // Create an array and feed into Promise.all
-              console.log('Player', intersection.player, 'receives resources!')
-              // If player owns a settlement on this intersection
-              if (intersection.settlement === true) {
-                // Award 1 resource
-                console.log('Oee resource')
-              }
-              // If player owns a city on this intesection
-              else if (intersection.city === true) {
-                // Award 2 resources
-              }
-            }
-          })
-        })
-        // console.log('intersectionNodes', intersectionNodes)
-        // tiles = tileNodes.filter(function(tileNode) {
-        //   return tileNode.rollNumber === 10
-        // })
-        // console.log('tiles', tiles)
-      })  
+      })
+      // console.log('intersectionNodes', intersectionNodes)
+      // tiles = tileNodes.filter(function(tileNode) {
+      //   return tileNode.rollNumber === 10
+      // })
+      // console.log('tiles', tiles)
+    })
   }
 }
 
@@ -281,19 +277,19 @@ export const buildCity = currentPlayerNumber => {
     offer & exchange: objects containing card types and quantity
 */
 export const initiateTrade = (initiator, receiver, offer, exchange) => {
-  let initiatorPlayer = 'player' + initiator
+  let initiatorPlayer = 'player' + initiator // ie: player1
   let receiverPlayer = 'player' + receiver
-  let initiatorData,
+  let initiatorData, // Empty
     receiverData,
     updatedInitiatorData = {},
     updatedReceiverData = {}
-  const game = db.collection(testCollection).doc(testDoc)
+  const gameInstance = db.collection(testCollection).doc(testDoc)
   return function() {
-    game
-      .get()
-      .then(function(doc) {
-        initiatorData = doc.data().players[initiatorPlayer]
-        receiverData = doc.data().players[receiverPlayer]
+    gameInstance
+      .get() // Get entire game instance object
+      .then(doc => {
+        initiatorData = doc.data().players[initiatorPlayer] // Get player data for trade initiator
+        receiverData = doc.data().players[receiverPlayer] // Get player data for trade receiver
       })
       .then(() => {
         console.log('initiatorData', initiatorData)
@@ -310,8 +306,8 @@ export const initiateTrade = (initiator, receiver, offer, exchange) => {
       })
       .then(() =>
         Promise.all([
-          game.update(updatedInitiatorData),
-          game.update(updatedReceiverData)
+          gameInstance.update(updatedInitiatorData),
+          gameInstance.update(updatedReceiverData)
         ])
       )
   }
