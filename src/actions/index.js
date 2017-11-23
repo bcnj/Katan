@@ -103,9 +103,59 @@ export const endTurn = player => {
       .update(currentPlayer)
   }
 }
-/* TODO */
-export const distributeCards = function() {
-  var ref = db.ref('testGames').child('bryan-test')
+/* TODO 
+  ASSUMPTION:
+    - intersectionNodes
+      - 1
+        - player (default at '0', assume value converts to integer when user builds, ie: player: 1, not player: '1')
+*/
+
+export const distributeCards = function(rollNumber) {
+  let tiles = [] // Tiles correlating to rollNumber
+  return function() {
+    const instance = db.collection(testCollection).doc(testDoc)
+    instance
+      .get()
+      .then(doc => {
+        console.log('doc.data', doc.data().tileNodes)
+        let { tileNodes, intersectionNodes } = doc.data()
+        let tileKeys = Object.keys(tileNodes)
+        tileKeys.forEach(function(key) {
+          if (tileNodes[key].rollNumber === 10) {
+            
+            tiles.push(tileNodes[key])
+          }
+        })
+        // console.log('tiles', tiles)
+        tiles.forEach(function(tile) {
+          // console.log('tile', tile)
+          tile.children.forEach(function(intersectionNode) {
+            console.log('tile.resource', tile.resource)
+            console.log('intersectionNode', intersectionNode)
+            // If a player exists on this intersection
+            const intersection = intersectionNodes[intersectionNode]
+            if (intersection.player !== '0') {
+              // Create an array and feed into Promise.all
+              console.log('Player', intersection.player, 'receives resources!')
+              // If player owns a settlement on this intersection
+              if (intersection.settlement === true) {
+                // Award 1 resource
+                console.log('Oee resource')
+              }
+              // If player owns a city on this intesection
+              else if (intersection.city === true) {
+                // Award 2 resources
+              }
+            }
+          })
+        })
+        // console.log('intersectionNodes', intersectionNodes)
+        // tiles = tileNodes.filter(function(tileNode) {
+        //   return tileNode.rollNumber === 10
+        // })
+        // console.log('tiles', tiles)
+      })  
+  }
 }
 
 /* ENABLE BUILD AND TRADE

@@ -28,7 +28,7 @@ class Test extends Component {
             <div>
               <Button onClick={this.props.rollDice}>Roll dice</Button>
               <Button onClick={() => this.props.endTurn(this.props.currentGame.game.currentPlayer)}>Next player</Button>
-              <Button onClick={this.props.distributeCards}>Distribute Cards</Button>
+              <Button onClick={() => this.props.distributeCards()}>Distribute Cards</Button>
               <Button onClick={() => this.props.enableBuildAndTrade(2)}>enableBuildAndTrade</Button>
               <Button onClick={() => this.props.enableBuild(1)}>enableBuild</Button>
               <Button onClick={() => this.props.buildRoad(1)}>buildRoad</Button>
