@@ -31,6 +31,55 @@ export const buildRoad = (currentPlayer, gameId, roadId) => {       const roadUp
   turnRoadsOff(gameId)
 }
 
+export const turnIntersectionOff = (gameId) => {
+  const intersectionUpdate = {}
+  for (let i = 1; i<= 72; i++){
+    intersectionUpdate[`intersectionNodes.${i}.active`] = false
+  }
+  db.collection('games').doc(`${gameId}`)
+  .update(intersectionUpdate)
+}
+
+export const turnIntersectionOnForSettlement = (currentPlayer, gameId, intersectionNodes, roadNodes) =>{
+  const settlementUpdate = {}
+  for (let i =1; i<=54; i++){
+    if(intersectionNodes[i].player === '0' && !intersectionNodes.neighbors.find(n => intersectionNodes[n].player !== '0') && intersectionNodes[i].roadNeighbors.find(n => roadNodes[n].player === currentPlayer)){
+      settlementUpdate[`interseciontNodes.${i}.active`] = true
+    }
+  }
+  db.collection('games').doc(`${gameId}`)
+  .update(settlementUpdate)
+}
+
+export const turnIntersectionOnForCity = (currentPlayer, gameId, intersectionNodes) =>{
+  const cityUpdate = {}
+  for (let i =1; i<=54; i++){
+    if(intersectionNodes[i].player === currentPlayer && intersectionNodes[i].city === false && intersectionNodes[i].settlement === true){
+      cityUpdate[`intersectionNodes.${i}.active`] = true
+    }
+  }
+  db.collection('games').doc(`${gameId}`)
+  .update(cityUpdate)
+}
+
+export const buildSettlement = (currentPlayer, gameId, intersectionId, vp) => {
+  const settlementUpdate = {}
+  settlementUpdate[`intersectionNodes.${intersectionId}.player`] = currentPlayer
+  settlementUpdate[`intersectionNodes.${intersectionId}.settlement`] = true
+  settlementUpdate[`players.${currentPlayer}.score`] = vp + 1
+  db.collection('games').doc(`${gameId}`)
+  .update(settlementUpdate)
+  turnIntersectionOff(gameId)
+}
+
+export const buildCity = (currentPlayer, gameId, intersectionId, vp) => {
+  const cityUpdate = {}
+  cityUpdate[`intersectionNodes.${intersectionId}.city`] = true
+  cityUpdate[`players.${currentPlayer}.score`] = vp + 1
+  db.collection('games').doc(`${gameId}`)
+  .update(cityUpdate)
+  turnIntersectionOff(gameId)
+}
 
 
 // export const rollDice = () => {
