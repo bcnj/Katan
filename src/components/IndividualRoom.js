@@ -3,7 +3,6 @@ import { Button, Card, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 export default ({allGames, handleJoin, handleWatch, user}) => {
-  console.log(allGames)
   return(
     <Card.Group>
 

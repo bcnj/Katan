@@ -69,15 +69,19 @@ class Robber extends Component {
       sheep,
       wood,
       wheat
-    if (this.props && this.props.props && this.props.props.game) {
-      let currentPlayer = this.props.props.game.currentPlayer,
-        currentPlayerData = this.props.props.players[currentPlayer]
-      totalCards =
-        currentPlayerData.brick +
-        currentPlayerData.ore +
-        currentPlayerData.sheep +
-        currentPlayerData.wood +
-        currentPlayerData.wheat
+    if (this.props && this.props.currentGame && this.props.currentGame.game) {
+      console.log(this.props.user, this.props.currentGame)
+      //this will need to be changed to playerNum rather then name
+      let currentPlayerNum = this.props.user.name,
+        currentPlayerData = this.props.currentGame.players[
+          `player${currentPlayerNum}`
+        ],
+        totalCards =
+          currentPlayerData.brick +
+          currentPlayerData.ore +
+          currentPlayerData.sheep +
+          currentPlayerData.wood +
+          currentPlayerData.wheat
       brick = currentPlayerData.brick
       ore = currentPlayerData.ore
       sheep = currentPlayerData.sheep
@@ -85,120 +89,106 @@ class Robber extends Component {
       wheat = currentPlayerData.wheat
       totalCards = totalCards
     }
+    console.log(this.props)
     return (
       <div>
-        <Modal
-          //this should not be a button but something which occurs when a player rolls a 7.
-          style={{ width: '60%' }}
-          trigger={
-            <Button style={{ width: '30%', height: '150%' }}>
+        <Modal open>
+          {/* {this.props &&
+            this.props.currentGame &&
+            this.props.currentGame.game &&
+            totalCards > 0 && ( */}
+          <div>
+            <br />
+            <h1 style={{ textAlign: 'center', fontSize: '2em' }}>
+              Every player with over 7 cards must discard down to half their
+              cards
+            </h1>
+            <br />
+            <h1 style={{ textAlign: 'center', fontSize: '2em' }}>
+              You have {totalCards} cards, discard down to{' '}
+              {Math.floor(totalCards / 2)}
+            </h1>
+            <br />
+            <Modal.Content>
+              <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                <img
+                  src={brickImage}
+                  style={{
+                    height: '15%',
+                    width: '15%'
+                  }}
+                />
+                <img
+                  src={wheatImage}
+                  style={{
+                    height: '15%',
+                    width: '15%'
+                  }}
+                />
+                <img
+                  src={woodImage}
+                  style={{
+                    height: '15%',
+                    width: '15%'
+                  }}
+                />
+                <img
+                  src={oreImage}
+                  style={{
+                    height: '15%',
+                    width: '15%'
+                  }}
+                />
+                <img
+                  src={sheepImage}
+                  style={{
+                    height: '15%',
+                    width: '15%'
+                  }}
+                />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                {' '}
+                <Button.Group size="medium" color="red">
+                  <Button onClick={this.upOrDown('brick', 'up', currentPlayer)}>
+                    ⬇
+                  </Button>
+                  <Button>{brick}</Button>
+                  <Button>⬆</Button>
+                </Button.Group>
+                <Button.Group size="medium" color="yellow">
+                  <Button>⬇</Button>
+                  <Button>{wheat}</Button>
+                  <Button>⬆</Button>
+                </Button.Group>
+                <Button.Group size="medium" color="brown">
+                  <Button>⬇</Button>
+                  <Button>{wood}</Button>
+                  <Button>⬆</Button>
+                </Button.Group>
+                <Button.Group size="medium" color="black">
+                  <Button>⬇</Button>
+                  <Button>{ore}</Button>
+                  <Button>⬆</Button>
+                </Button.Group>
+                <Button.Group size="medium" color="green">
+                  <Button>⬇</Button>
+                  <Button>{sheep}</Button>
+                  <Button>⬆</Button>
+                </Button.Group>
+              </div>
+              <br />
+            </Modal.Content>
+            <Button
+              fluid
+              color="violet"
+              size="huge"
+              inverted
+              onClick={this.setBuildRobber}
+            >
               Relocate Robber
             </Button>
-          }
-        >
-          {this.props &&
-            this.props.props &&
-            this.props.props.game &&
-            totalCards > 0 && (
-              <div>
-                <br />
-                <h1 style={{ textAlign: 'center', fontSize: '2em' }}>
-                  Every player with over 7 cards must discard down to half their
-                  cards
-                </h1>
-                <br />
-                <h1 style={{ textAlign: 'center', fontSize: '2em' }}>
-                  You have {totalCards} cards, discard down to{' '}
-                  {Math.floor(totalCards / 2)}
-                </h1>
-                <br />
-                <Modal.Content>
-                  <div
-                    style={{ display: 'flex', justifyContent: 'space-around' }}
-                  >
-                    <img
-                      src={brickImage}
-                      style={{
-                        height: '15%',
-                        width: '15%'
-                      }}
-                    />
-                    <img
-                      src={wheatImage}
-                      style={{
-                        height: '15%',
-                        width: '15%'
-                      }}
-                    />
-                    <img
-                      src={woodImage}
-                      style={{
-                        height: '15%',
-                        width: '15%'
-                      }}
-                    />
-                    <img
-                      src={oreImage}
-                      style={{
-                        height: '15%',
-                        width: '15%'
-                      }}
-                    />
-                    <img
-                      src={sheepImage}
-                      style={{
-                        height: '15%',
-                        width: '15%'
-                      }}
-                    />
-                  </div>
-                  <div
-                    style={{ display: 'flex', justifyContent: 'space-around' }}
-                  >
-                    {' '}
-                    <Button.Group size="medium" color="red">
-                      <Button
-                        onClick={this.upOrDown('brick', 'up', currentPlayer)}
-                      >
-                        ⬇
-                      </Button>
-                      <Button>{brick}</Button>
-                      <Button>⬆</Button>
-                    </Button.Group>
-                    <Button.Group size="medium" color="yellow">
-                      <Button>⬇</Button>
-                      <Button>{wheat}</Button>
-                      <Button>⬆</Button>
-                    </Button.Group>
-                    <Button.Group size="medium" color="brown">
-                      <Button>⬇</Button>
-                      <Button>{wood}</Button>
-                      <Button>⬆</Button>
-                    </Button.Group>
-                    <Button.Group size="medium" color="black">
-                      <Button>⬇</Button>
-                      <Button>{ore}</Button>
-                      <Button>⬆</Button>
-                    </Button.Group>
-                    <Button.Group size="medium" color="green">
-                      <Button>⬇</Button>
-                      <Button>{sheep}</Button>
-                      <Button>⬆</Button>
-                    </Button.Group>
-                  </div>
-                  <br />
-                </Modal.Content>
-                <Button
-                  fluid
-                  color="violet"
-                  size="huge"
-                  inverted
-                  onClick={this.setBuildRobber}
-                >
-                  Relocate Robber
-                </Button>
-              </div>
-            )}
+          </div>
         </Modal>
       </div>
     )
