@@ -603,325 +603,379 @@ const dummyData = {
       "neighbors": ['4', '5'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '2': {
       "neighbors": ['5', '6'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '3': {
       "neighbors": ['6', '7'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '4': {
       "neighbors": ['1', '8'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '5': {
       "neighbors": ['1', '2', '9'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '6': {
       "neighbors": ['2', '3', '10'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '7': {
       "neighbors": ['3', '11'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '8': {
       "neighbors": ['4', '12', '13'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
    '9': {
       "neighbors": ['5', '13', '14'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '10': {
       "neighbors": ['6', '14', '15'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '11': {
       "neighbors": ['7', '15', '16'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '12': {
       "neighbors": ['8', '17'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '13': {
       "neighbors": ['8', '9', '18'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '14': {
       "neighbors": ['9', '10', '19'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '15': {
       "neighbors": ['10', '11', '20'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '16': {
       "neighbors": ['11', '21'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '17': {
       "neighbors": ['12', '22', '23'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '18': {
       "neighbors": ['13', '23', '24'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '19': {
       "neighbors": ['14', '24', '25'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '20': {
       "neighbors": ['15', '25', '26'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '21': {
       "neighbors": ['16', '26', '27'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '22': {
       "neighbors": ['17', '28'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '23': {
       "neighbors": ['17', '18', '29'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '24': {
       "neighbors": ['18', '19', '30'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '25': {
       "neighbors": ['19', '20', '31'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '26': {
       "neighbors": ['20', '21', '32'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '27': {
       "neighbors": ['21', '33'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '28': {
       "neighbors": ['22', '34'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '29': {
       "neighbors": ['23', '34', '35'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '30': {
       "neighbors": ['24', '35', '36'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '31': {
       "neighbors": ['25', '36', '37'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '32': {
       "neighbors": ['26', '37', '38'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '33': {
       "neighbors": ['27', '38'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '34': {
       "neighbors": ['28', '29', '39'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '35': {
       "neighbors": ['29', '20', '40'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '36': {
       "neighbors": ['30', '31', '41'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '37': {
       "neighbors": ['31', '32', '42'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '38': {
       "neighbors": ['32', '33', '43'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '39': {
       "neighbors": ['34', '44'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '40': {
       "neighbors": ['35', '44', '45'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '41': {
       "neighbors": ['36', '45', '46'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '42': {
       "neighbors": ['37', '46', '47'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '43': {
       "neighbors": ['38', '47'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '44': {
       "neighbors": ['39', '40', '48'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '45': {
       "neighbors": ['40', '41', '49'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '46': {
       "neighbors": ['41', '42', '50'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '47': {
       "neighbors": ['42', '43', '51'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '48': {
       "neighbors": ['44', '52'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '49': {
       "neighbors": ['45', '52', '53'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '50': {
       "neighbors": ['46', '53', '54'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '51': {
       "neighbors": ['47', '54'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '52': {
       "neighbors": ['48', '49'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '53': {
       "neighbors": ['49', '50'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     },
     '54': {
       "neighbors": ['50', '51'],
       "player": '0',
       "city": false,
-      "settlement": false
+      "settlement": false,
+      "active": false
     }
   }
 }
