@@ -1015,27 +1015,27 @@ class Board extends Component {
       return <Tile key={id} id={id} x={x} y={y} resourceType={resourceType} />;
     });
   }
-  renderIntersections(intersectionNodes) {
+  renderIntersections(intersectionNodes,  currentGame, gameId) {
     return this.state.intersections.map(function (intersection) {
       const { idx, x, y } = intersection;
       let color;
       let type;
 
       if (intersectionNodes[idx].player === '0') { color = 'transparent' };
-      
+
       if (intersectionNodes[idx].player === 'player1' && intersectionNodes[idx].city === true) { color = 'red'; type = 'city' }
       else if (intersectionNodes[idx].player === 'player1') { color = 'red'; type = 'settlement' }
-      
+
       if (intersectionNodes[idx].player === 'player2' && intersectionNodes[idx].city === true) { color = 'white'; type = 'city' }
-      else if (intersectionNodes[idx].player === 'playe2') { color = 'white'; type = 'settlement' }      
-      
+      else if (intersectionNodes[idx].player === 'playe2') { color = 'white'; type = 'settlement' }
+
       if (intersectionNodes[idx].player === 'player3' && intersectionNodes[idx].city === true) { color = 'green'; type = 'city' }
       else if (intersectionNodes[idx].player === 'player3') { color = 'green'; type = 'settlement' }
-      
+
       if (intersectionNodes[idx].player === 'player4' && intersectionNodes[idx].city === true) { color = 'blue'; type = 'city' }
       else if (intersectionNodes[idx].player === 'player4') { color = 'blue'; type = 'settlement' }
-      
-      return <Intersection key={idx} x={x} y={y} id={idx} color={color} type={type} />;
+
+      return <Intersection key={idx} x={x} y={y} id={idx} color={color} type={type}  gameId={gameId} currentGame={currentGame}/>;
     });
   }
   renderRoads(roadNodes, currentGame, gameId) {
@@ -1080,7 +1080,7 @@ class Board extends Component {
           <Layer>
             {this.renderTiles()}
             {this.renderRoads(this.props.currentGame.roadNodes, this.props.currentGame, this.props.gameId)}
-            {this.renderIntersections(this.props.currentGame.intersectionNodes)}
+            {this.renderIntersections(this.props.currentGame.intersectionNodes,this.props.currentGame, this.props.gameId )}
             {this.renderNumbers()}
           </Layer>
         }
