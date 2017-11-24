@@ -74,6 +74,7 @@ export const buildSettlement = (currentPlayer, gameId, intersectionId, vp) => {
 }
 
 export const buildCity = (currentPlayer, gameId, intersectionId, vp) => {
+  console.log("!!!!")
   const cityUpdate = {}
   cityUpdate[`intersectionNodes.${intersectionId}.city`] = true
   cityUpdate[`players.${currentPlayer}.score`] = vp + 1

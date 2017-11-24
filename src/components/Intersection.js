@@ -9,9 +9,11 @@ class Intersection extends Component {
 
   render() {
     const { id, x, y, color, type, currentGame, gameId } = this.props;
+    console.log(type)
     let stroke, strokeWidth, radius;
-    if (type === 'settlement') { radius = 7; stroke = ''; strokeWidth = '' }
-    if (type === 'city') { radius = 14; stroke = 'black'; strokeWidth = '5' }
+    if (type === 'city') { radius = 14; stroke = 'black'; strokeWidth = '5' } else {
+      radius = 7; stroke = ''; strokeWidth = ''
+    }
 
     return (
       <Circle
@@ -22,28 +24,13 @@ class Intersection extends Component {
         stroke={stroke}
         strokeWidth={strokeWidth}
         shadowBlur={5}
-        onClick={e => console.log('!!!')}
+        onClick={ e => {
+          (currentGame.intersectionNodes[id].settlement === true) ? buildCity(currentGame.game.currentPlayer, gameId, id, 1) :
+            buildSettlement(currentGame.game.currentPlayer, gameId, id, 1)}}
+        listening={currentGame.intersectionNodes[id].active}
       />
     );
   }
 }
-
-
-//     return
-//     <Circle
-//         x={x}
-//         y={y}
-//         radius={radius}
-//         fill={color}
-//         stroke={stroke}
-//         strokeWidth={strokeWidth}
-//         shadowBlur={5}
-//         onClick={(e) => buildSettlement(currentGame.game.currentPlayer, gameId, id, currentGame.players[currentGame.game.currentPlayer].score)}
-//         listening={currentGame.intersectionNodes[id].active}
-//         />
-//     )
-//   }
-// }
-
 
 export default Intersection;
