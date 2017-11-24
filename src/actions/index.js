@@ -55,7 +55,9 @@ export const setPlayer = payload => ({})
   FUNCTIONS BEGIN HERE
 */
 
-/* Firebase collection and document current points to testing database */
+/* Firebase collection and document current points to testing database
+***** Change testCollection and testDoc to point towards intended Firebase collection/document *****
+*/
 const testCollection = 'testGames'
 const testDoc = 'bryan-test'
 
@@ -103,53 +105,78 @@ export const endTurn = player => {
       .update(currentPlayer)
   }
 }
-/* TODO 
-  ASSUMPTION:
-    - intersectionNodes
-      - 1
-        - player (default at '0', assume value converts to integer when user builds, ie: player: 1, not player: '1')
+/* DISTRIBUTE CARDS
+  Accepts a dice roll number (1 - 12) and updates all player resources in Firebase
+  
+  HOW TO TEST
+  Within game instance object in Firebase, navigate to tileNodes and find corresponding rollNumber that is being tested
+  See all possible children (intersection nodes) associated with this tileNode
+  Navigate to intersectionNodes to and adjust 'player' to value of '1', '2', '3', or '4'
+  Set value of 'settlement' OR 'city' to true
+  Test by clicking 'Distribute Cards' in localhost:3000 and observe affected player objects to see updated resources
 */
-
 export const distributeCards = function(rollNumber) {
   let tiles = [] // Tiles correlating to rollNumber
   return function() {
-    const instance = db.collection(testCollection).doc(testDoc)
-    instance.get().then(doc => {
+    const gameInstance = db.collection(testCollection).doc(testDoc)
+    gameInstance.get().then(doc => {
       console.log('doc.data', doc.data().tileNodes)
+      // console.log('all players', doc.data().players)
+      // clone all players into separate object
+      var allPlayers = Object.assign({}, doc.data().players)
+      let updatedGameInstance = {}
+      // updatedGameInstance[`players`] = {}// Clone players object only in here
+      console.log('allPlayers', allPlayers)
       let { tileNodes, intersectionNodes } = doc.data()
       let tileKeys = Object.keys(tileNodes)
+      console.log('tileKeys', tileKeys)
+      console.log('tileNodes', tileNodes)
+      // Collect all tiles into 'tiles' array whose rollNumber matches current dice value rolled
       tileKeys.forEach(function(key) {
-        if (tileNodes[key].rollNumber === 10) {
+        if (tileNodes[key].rollNumber === rollNumber) {
           tiles.push(tileNodes[key])
         }
       })
-      // console.log('tiles', tiles)
+      console.log('tiles', tiles)
+      // Loop through all tiles with matching rollNumber
       tiles.forEach(function(tile) {
-        // console.log('tile', tile)
+        // Loop through all intersection nodes of tile
         tile.children.forEach(function(intersectionNode) {
-          console.log('tile.resource', tile.resource)
-          console.log('intersectionNode', intersectionNode)
-          // If a player exists on this intersection
+          // console.log("HELLO")
+          // console.log('tile.resource', tile.resource)
+          // console.log('intersectionNode', intersectionNode)
+          // Reference to current single intersectionNode object within intersectionNodes(plural) object containing all intersecitons
           const intersection = intersectionNodes[intersectionNode]
+          // If a player exists on this intersection
           if (intersection.player !== '0') {
-            // Create an array and feed into Promise.all
             console.log('Player', intersection.player, 'receives resources!')
-            // If player owns a settlement on this intersection
+            // Creating reference to player with provided integer ie: (1, 2, 3, 4) -> (player1, player2, player3, player4)
+            let playerReference = 'player' + intersection.player // if intersection.player = 1, playerReference = 'player1'
+            // tile.resource refers to tileNodes>(intenger)>children>resource
+            // Currenly listed in all caps, converted to lowercase here to easily refer to resource in player object
+            /* SUGGESTION: Change resources in capitals to lowercase ie: (ORE -> ore) */
+            let tileResourceReference = tile.resource.toLowerCase();
+            // If this intersection contains a SETTLEMENT
             if (intersection.settlement === true) {
-              // Award 1 resource
-              console.log('Oee resource')
-            } else if (intersection.city === true) {
-              // If player owns a city on this intesection
-              // Award 2 resources
+              // Award 1 resource to playerReference
+              console.log('Player', intersection.player, 'received', 1, tile.resource)
+              allPlayers[playerReference][tileResourceReference] += 1
+            } 
+            // If this intersection contains a CITY
+            else if (intersection.city === true) {
+              // Award 2 resources to playerReference
+              allPlayers[playerReference][tileResourceReference] += 2
+              console.log('Player', intersection.player, 'received', 2, tile.resource)
             }
           }
         })
       })
-      // console.log('intersectionNodes', intersectionNodes)
-      // tiles = tileNodes.filter(function(tileNode) {
-      //   return tileNode.rollNumber === 10
-      // })
-      // console.log('tiles', tiles)
+      // Logs updated players object
+      console.log(allPlayers)
+      // Overwrite updated player values in Firebase 'players' object
+      updatedGameInstance[`players`] = allPlayers
+      // Updates 'player' object in Firebase game instance
+      gameInstance.update(updatedGameInstance) 
     })
   }
 }
@@ -291,14 +318,15 @@ export const initiateTrade = (initiator, receiver, offer, exchange) => {
         initiatorData = doc.data().players[initiatorPlayer] // Get player data for trade initiator
         receiverData = doc.data().players[receiverPlayer] // Get player data for trade receiver
       })
+
       .then(() => {
-        console.log('initiatorData', initiatorData)
+        console.log('initiatorData', initiatorData) // Test log
         console.log('receiverData', receiverData)
       })
       .then(() => {
-        let offerKey = Object.keys(offer)
-        offerKey.forEach(function(type) {
-          updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
+        let offerKey = Object.keys(offer) // offerKey = ['brick', 'ore', 'sheep', 'wheat', 'wood'];
+        offerKey.forEach(function(type) { // Use offerKey to loop over only cardTypes in player data object to adjust
+          updatedInitiatorData[`players.${initiatorPlayer}.${type}`] = // 
             initiatorData[type] - offer[type] + exchange[type]
           updatedReceiverData[`players.${receiverPlayer}.${type}`] =
             receiverData[type] + offer[type] - exchange[type]

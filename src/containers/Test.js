@@ -14,6 +14,10 @@ class Test extends Component {
   }
 
   componentWillMount() {
+    /* How to test
+      Uncomment first line to reseed database
+      After database is seeded, uncomment this.props.fetchSingleGame
+    */
       // db.collection('testGames').doc('bryan-test').set(dummyData) // Seed Firebase with dummyData
     this.props.fetchSingleGame('bryan-test');
   }
@@ -28,7 +32,7 @@ class Test extends Component {
             <div>
               <Button onClick={this.props.rollDice}>Roll dice</Button>
               <Button onClick={() => this.props.endTurn(this.props.currentGame.game.currentPlayer)}>Next player</Button>
-              <Button onClick={() => this.props.distributeCards()}>Distribute Cards</Button>
+              <Button onClick={() => this.props.distributeCards(10)}>Distribute Cards</Button>
               <Button onClick={() => this.props.enableBuildAndTrade(2)}>enableBuildAndTrade</Button>
               <Button onClick={() => this.props.enableBuild(1)}>enableBuild</Button>
               <Button onClick={() => this.props.buildRoad(1)}>buildRoad</Button>
