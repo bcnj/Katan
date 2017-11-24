@@ -21,7 +21,8 @@ const dummyData = {
       "ore": 0,
       "color": 'red',
       "build": true,
-      "trade": false
+      "trade": false,
+      "tempTotal": 0
     },
     "player2": {
       "id": 2,

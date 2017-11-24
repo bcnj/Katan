@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { connect } from 'react-redux';
 import { Button, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'

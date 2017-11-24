@@ -17,7 +17,6 @@ class Wait extends Component {
 
   render() {
     const { currentGame, handleStart, gameId } = this.props
-
     return (
       <Container style={{marginTop: '10vh'}}>
       { currentGame && currentGame.game &&
