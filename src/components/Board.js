@@ -4,7 +4,7 @@ import Tile from "./Tile";
 import Intersection from "./Intersection";
 import Road from "./Road";
 import Number from "./Number";
-import { Layer, Rect, Stage, Group, RegularPolygon, Circle } from "react-konva";
+import { Layer, Stage } from "react-konva";
 
 class Board extends Component {
   constructor(props) {

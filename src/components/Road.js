@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Ellipse } from "react-konva";
-import {buildRoad} from '../utils'
+import { buildRoad } from '../utils'
 
 class Road extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class Road extends Component {
   }
 
   handleClick() {
-      // console.log('Clicked on road', this.props.id)
+    // console.log('Clicked on road', this.props.id)
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layer, Circle, Image } from "react-konva";
+import { Circle } from "react-konva";
 
 class Intersection extends Component {
   constructor(props) {

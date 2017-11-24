@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layer, Rect, Stage, Group, RegularPolygon, Image } from "react-konva";
+import { RegularPolygon } from "react-konva";
 import Wheat from "../images/field.png";
 import Desert from '../images/desert.png';
 import Wood from '../images/forest.png';
