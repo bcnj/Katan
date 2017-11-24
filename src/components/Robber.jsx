@@ -45,11 +45,14 @@ class Robber extends Component {
       sheep: 0,
       ore: 0,
       wheat: 0,
-      open: true
+      open: true,
+      moveRobber: true
     }
     this.setBuildRobber = this.setBuildRobber.bind(this)
     this.upOrDown = this.upOrDown.bind(this)
     this.finishTransaction = this.finishTransaction.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleOpen = this.handleOpen.bind(this)
   }
 
   finishTransaction(event) {
@@ -64,8 +67,6 @@ class Robber extends Component {
       sheepDifference = this.state.sheepStart - this.state.sheep,
       oreDifference = this.state.oreStart - this.state.ore,
       woodDifference = this.state.woodStart - this.state.wood
-
-      console.log(oreDifference,player)
 
     game.get().then(() => {
       let updateSheep = {},
@@ -90,11 +91,9 @@ class Robber extends Component {
   }
 
   upOrDown(event, type, direction) {
-    //So I have to decrement or increment, simple as that, solely altering the one I want!!!
     event.preventDefault()
     if (direction === 'down') {
       if (type === 'brick') {
-        console.log(this.state.brick)
         this.setState({
           totalCards: this.state.totalCards - 1,
           brick: this.state.brick - 1
@@ -181,17 +180,27 @@ class Robber extends Component {
         brickStart + oreStart + sheepStart + woodStart + wheatStart,
       totalCards: brick + wheat + ore + sheep + wood
     })
+    //when user works properly
+    // if(this.props.currentGame.game.currentUser === `player${this.props.user.playerNum}`){
+    this.setState({
+      moveRobber: true
+    })
+    // }
   }
 
   setBuildRobber(event) {
     let currentGame = window.location.href.slice(27)
     setRobberBuild(currentGame, true)
+    this.setState({ moveRobber: false })
   }
+
+  handleOpen = () => this.setState({ open: true })
+  handleClose = () => this.setState({ open: false })
 
   render() {
     return (
       <div>
-        <Modal open closeOnDimmerClick={false}>
+        <Modal open handleClose={this.handleClose} handleOpen={this.handleOpen}>
           {this.props &&
             this.props.currentGame &&
             this.props.currentGame.game &&
@@ -346,15 +355,39 @@ class Robber extends Component {
                   </div>
                   <br />
                 </Modal.Content>
-                <Button
-                  fluid
-                  color="violet"
-                  size="huge"
-                  inverted
-                  onClick={this.finishTransaction}
-                >
-                  Finish
-                </Button>
+                {Math.floor(this.state.tempTotalCards / 2) ===
+                this.state.totalCards ? (
+                  <Button
+                    fluid
+                    color="violet"
+                    size="huge"
+                    inverted
+                    onClick={e => {
+                      this.finishTransaction(e)
+                      this.handleClose()
+                    }}
+                  >
+                    Finish
+                  </Button>
+                ) : (
+                  <Button disabled fluid color="violet" size="huge" inverted>
+                    Finish
+                  </Button>
+                )}
+                {this.state.moveRobber ? (
+                  <Button
+                    fluid
+                    color="black"
+                    size="huge"
+                    onClick={this.setBuildRobber}
+                  >
+                    Move Robber
+                  </Button>
+                ) : (
+                  <Button disabled fluid color="black" size="huge">
+                    Move Robber
+                  </Button>
+                )}
               </div>
             )}
         </Modal>
