@@ -1027,7 +1027,7 @@ class Board extends Component {
       else if (intersectionNodes[idx].player === 'player1') { color = 'red'; type = 'settlement' }
 
       if (intersectionNodes[idx].player === 'player2' && intersectionNodes[idx].city === true) { color = 'white'; type = 'city' }
-      else if (intersectionNodes[idx].player === 'playe2') { color = 'white'; type = 'settlement' }
+      else if (intersectionNodes[idx].player === 'player2') { color = 'white'; type = 'settlement' }
 
       if (intersectionNodes[idx].player === 'player3' && intersectionNodes[idx].city === true) { color = 'green'; type = 'city' }
       else if (intersectionNodes[idx].player === 'player3') { color = 'green'; type = 'settlement' }
