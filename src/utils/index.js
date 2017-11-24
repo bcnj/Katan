@@ -40,18 +40,18 @@ export const turnIntersectionOff = (gameId) => {
   .update(intersectionUpdate)
 }
 
-export const turnIntersectionOnForSettlement = (currentPlayer, gameId, intersectionNodes, roadNodes) =>{
+export const turnSettlementOn = (currentPlayer, gameId, intersectionNodes, roadNodes) =>{
   const settlementUpdate = {}
   for (let i =1; i<=54; i++){
-    if(intersectionNodes[i].player === '0' && !intersectionNodes.neighbors.find(n => intersectionNodes[n].player !== '0') && intersectionNodes[i].roadNeighbors.find(n => roadNodes[n].player === currentPlayer)){
-      settlementUpdate[`interseciontNodes.${i}.active`] = true
+    if(intersectionNodes[i].player === '0' && !intersectionNodes[i].neighbors.find(n => intersectionNodes[n].player !== '0') && intersectionNodes[i].roadNeighbors.find(n => roadNodes[n].player === currentPlayer)){
+      settlementUpdate[`intersectionNodes.${i}.active`] = true
     }
   }
   db.collection('games').doc(`${gameId}`)
   .update(settlementUpdate)
 }
 
-export const turnIntersectionOnForCity = (currentPlayer, gameId, intersectionNodes) =>{
+export const turnCityOn = (currentPlayer, gameId, intersectionNodes) =>{
   const cityUpdate = {}
   for (let i =1; i<=54; i++){
     if(intersectionNodes[i].player === currentPlayer && intersectionNodes[i].city === false && intersectionNodes[i].settlement === true){
@@ -64,6 +64,7 @@ export const turnIntersectionOnForCity = (currentPlayer, gameId, intersectionNod
 
 export const buildSettlement = (currentPlayer, gameId, intersectionId, vp) => {
   const settlementUpdate = {}
+  console.log('intersection', intersectionId)
   settlementUpdate[`intersectionNodes.${intersectionId}.player`] = currentPlayer
   settlementUpdate[`intersectionNodes.${intersectionId}.settlement`] = true
   settlementUpdate[`players.${currentPlayer}.score`] = vp + 1
@@ -73,6 +74,7 @@ export const buildSettlement = (currentPlayer, gameId, intersectionId, vp) => {
 }
 
 export const buildCity = (currentPlayer, gameId, intersectionId, vp) => {
+  console.log("!!!!")
   const cityUpdate = {}
   cityUpdate[`intersectionNodes.${intersectionId}.city`] = true
   cityUpdate[`players.${currentPlayer}.score`] = vp + 1

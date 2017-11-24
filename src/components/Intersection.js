@@ -1,27 +1,19 @@
 import React, { Component } from "react";
 import { Circle } from "react-konva";
+import { buildCity, buildSettlement } from '../utils'
 
 class Intersection extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
   }
-
-  handleClick() {
-    // console.log("You clicked on intersection", this.props.id);
-  }
-
-  addSettlement() { } // Query Firebase to change settlement occupation to true
-  addCity() { } // Query Firebase to change city occupation to true
-  getNeighbors() { } // Query Firebase to get neighbors; consider hardcoding?
-  isOccupied() { } // Query Firebase to see if city or settlement exists
 
   render() {
-
-    const { id, x, y, color, type } = this.props;
+    const { id, x, y, color, type, currentGame, gameId } = this.props;
+    console.log(type)
     let stroke, strokeWidth, radius;
-    if (type === 'settlement') { radius = 7; stroke = ''; strokeWidth = '' }
-    if (type === 'city') { radius = 14; stroke = 'black'; strokeWidth = '5' }
+    if (type === 'city') { radius = 14; stroke = 'black'; strokeWidth = '5' } else {
+      radius = 7; stroke = ''; strokeWidth = ''
+    }
 
     return (
       <Circle
@@ -32,7 +24,10 @@ class Intersection extends Component {
         stroke={stroke}
         strokeWidth={strokeWidth}
         shadowBlur={5}
-        onClick={this.handleClick}
+        onClick={ e => {
+          (currentGame.intersectionNodes[id].settlement === true) ? buildCity(currentGame.game.currentPlayer, gameId, id, 1) :
+            buildSettlement(currentGame.game.currentPlayer, gameId, id, 1)}}
+        listening={currentGame.intersectionNodes[id].active}
       />
     );
   }

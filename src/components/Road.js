@@ -5,11 +5,6 @@ import { buildRoad } from '../utils'
 class Road extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    // console.log('Clicked on road', this.props.id)
   }
 
   render() {
