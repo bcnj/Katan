@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Stage } from 'react-konva'
-import { Container, Grid, Button, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Menu } from 'semantic-ui-react'
 import { fetchSingleGame } from '../actions'
 
 import Board from '../components/Board';

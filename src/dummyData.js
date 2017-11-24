@@ -601,6 +601,7 @@ const dummyData = {
   "intersectionNodes": {
    '1': {
       "neighbors": ['4', '5'],
+      "roadNeighbors": ['1', '2'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -608,6 +609,7 @@ const dummyData = {
     },
    '2': {
       "neighbors": ['5', '6'],
+      "roadNeighbors": ['3', '4'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -615,6 +617,7 @@ const dummyData = {
     },
    '3': {
       "neighbors": ['6', '7'],
+      "roadNeighbors": ['5', '6'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -622,6 +625,7 @@ const dummyData = {
     },
    '4': {
       "neighbors": ['1', '8'],
+      "roadNeighbors": ['1', '7'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -629,6 +633,7 @@ const dummyData = {
     },
    '5': {
       "neighbors": ['1', '2', '9'],
+      "roadNeighbors": ['2', '3', '8'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -636,6 +641,7 @@ const dummyData = {
     },
    '6': {
       "neighbors": ['2', '3', '10'],
+      "roadNeighbors": ['4', '5', '9'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -643,6 +649,7 @@ const dummyData = {
     },
    '7': {
       "neighbors": ['3', '11'],
+      "roadNeighbors": ['6', '10'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -650,6 +657,7 @@ const dummyData = {
     },
    '8': {
       "neighbors": ['4', '12', '13'],
+      "roadNeighbors": ['7', '11', '12'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -657,6 +665,7 @@ const dummyData = {
     },
    '9': {
       "neighbors": ['5', '13', '14'],
+      "roadNeighbors": ['8', '13', '14'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -664,6 +673,7 @@ const dummyData = {
     },
     '10': {
       "neighbors": ['6', '14', '15'],
+      "roadNeighbors": ['9', '15', '16'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -671,6 +681,7 @@ const dummyData = {
     },
     '11': {
       "neighbors": ['7', '15', '16'],
+      "roadNeighbors": ['10', '17', '18'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -678,6 +689,7 @@ const dummyData = {
     },
     '12': {
       "neighbors": ['8', '17'],
+      "roadNeighbors": ['11', '19'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -685,6 +697,7 @@ const dummyData = {
     },
     '13': {
       "neighbors": ['8', '9', '18'],
+      "roadNeighbors": ['12', '13', '20'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -692,6 +705,7 @@ const dummyData = {
     },
     '14': {
       "neighbors": ['9', '10', '19'],
+      "roadNeighbors": ['14', '15', '21'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -699,6 +713,7 @@ const dummyData = {
     },
     '15': {
       "neighbors": ['10', '11', '20'],
+      "roadNeighbors": ['16', '17', '22'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -706,6 +721,7 @@ const dummyData = {
     },
     '16': {
       "neighbors": ['11', '21'],
+      "roadNeighbors": ['18', '23'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -713,6 +729,7 @@ const dummyData = {
     },
     '17': {
       "neighbors": ['12', '22', '23'],
+      "roadNeighbors": ['19', '24', '25'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -720,6 +737,7 @@ const dummyData = {
     },
     '18': {
       "neighbors": ['13', '23', '24'],
+      "roadNeighbors": ['20', '26', '27'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -727,6 +745,7 @@ const dummyData = {
     },
     '19': {
       "neighbors": ['14', '24', '25'],
+      "roadNeighbors": ['21', '28', '29'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -734,6 +753,7 @@ const dummyData = {
     },
     '20': {
       "neighbors": ['15', '25', '26'],
+      "roadNeighbors": ['22', '30', '31'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -741,6 +761,7 @@ const dummyData = {
     },
     '21': {
       "neighbors": ['16', '26', '27'],
+      "roadNeighbors": ['23', '32', '33'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -748,6 +769,7 @@ const dummyData = {
     },
     '22': {
       "neighbors": ['17', '28'],
+      "roadNeighbors": ['24', '34'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -755,6 +777,7 @@ const dummyData = {
     },
     '23': {
       "neighbors": ['17', '18', '29'],
+      "roadNeighbors": ['25', '26', '35'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -762,6 +785,7 @@ const dummyData = {
     },
     '24': {
       "neighbors": ['18', '19', '30'],
+      "roadNeighbors": ['27', '28', '36'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -769,6 +793,7 @@ const dummyData = {
     },
     '25': {
       "neighbors": ['19', '20', '31'],
+      "roadNeighbors": ['29', '30', '37'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -776,6 +801,7 @@ const dummyData = {
     },
     '26': {
       "neighbors": ['20', '21', '32'],
+      "roadNeighbors": ['31', '32', '38'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -783,6 +809,7 @@ const dummyData = {
     },
     '27': {
       "neighbors": ['21', '33'],
+      "roadNeighbors": ['33', '39'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -790,6 +817,7 @@ const dummyData = {
     },
     '28': {
       "neighbors": ['22', '34'],
+      "roadNeighbors": ['34', '40'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -797,6 +825,7 @@ const dummyData = {
     },
     '29': {
       "neighbors": ['23', '34', '35'],
+      "roadNeighbors": ['35', '41', '42'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -804,6 +833,7 @@ const dummyData = {
     },
     '30': {
       "neighbors": ['24', '35', '36'],
+      "roadNeighbors": ['36', '43', '44'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -811,6 +841,7 @@ const dummyData = {
     },
     '31': {
       "neighbors": ['25', '36', '37'],
+      "roadNeighbors": ['37', '45', '46'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -818,6 +849,7 @@ const dummyData = {
     },
     '32': {
       "neighbors": ['26', '37', '38'],
+      "roadNeighbors": ['38', '47', '48'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -825,6 +857,7 @@ const dummyData = {
     },
     '33': {
       "neighbors": ['27', '38'],
+      "roadNeighbors": ['39', '49'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -832,6 +865,7 @@ const dummyData = {
     },
     '34': {
       "neighbors": ['28', '29', '39'],
+      "roadNeighbors": ['40', '41', '50'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -839,6 +873,7 @@ const dummyData = {
     },
     '35': {
       "neighbors": ['29', '20', '40'],
+      "roadNeighbors": ['42', '43', '51'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -846,6 +881,7 @@ const dummyData = {
     },
     '36': {
       "neighbors": ['30', '31', '41'],
+      "roadNeighbors": ['44', '45', '52'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -853,6 +889,7 @@ const dummyData = {
     },
     '37': {
       "neighbors": ['31', '32', '42'],
+      "roadNeighbors": ['46', '47', '53'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -860,6 +897,7 @@ const dummyData = {
     },
     '38': {
       "neighbors": ['32', '33', '43'],
+      "roadNeighbors": ['48', '49', '54'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -867,6 +905,7 @@ const dummyData = {
     },
     '39': {
       "neighbors": ['34', '44'],
+      "roadNeighbors": ['50', '55'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -874,6 +913,7 @@ const dummyData = {
     },
     '40': {
       "neighbors": ['35', '44', '45'],
+      "roadNeighbors": ['51', '56', '57'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -881,6 +921,7 @@ const dummyData = {
     },
     '41': {
       "neighbors": ['36', '45', '46'],
+      "roadNeighbors": ['52', '58', '59'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -888,6 +929,7 @@ const dummyData = {
     },
     '42': {
       "neighbors": ['37', '46', '47'],
+      "roadNeighbors": ['53', '60', '61'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -895,6 +937,7 @@ const dummyData = {
     },
     '43': {
       "neighbors": ['38', '47'],
+      "roadNeighbors": ['54', '62'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -902,6 +945,7 @@ const dummyData = {
     },
     '44': {
       "neighbors": ['39', '40', '48'],
+      "roadNeighbors": ['55', '56', '63'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -909,6 +953,7 @@ const dummyData = {
     },
     '45': {
       "neighbors": ['40', '41', '49'],
+      "roadNeighbors": ['57', '58', '64'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -916,6 +961,7 @@ const dummyData = {
     },
     '46': {
       "neighbors": ['41', '42', '50'],
+      "roadNeighbors": ['59', '60', '65'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -923,6 +969,7 @@ const dummyData = {
     },
     '47': {
       "neighbors": ['42', '43', '51'],
+      "roadNeighbors": ['61', '62', '66'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -930,6 +977,7 @@ const dummyData = {
     },
     '48': {
       "neighbors": ['44', '52'],
+      "roadNeighbors": ['63', '67'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -937,6 +985,7 @@ const dummyData = {
     },
     '49': {
       "neighbors": ['45', '52', '53'],
+      "roadNeighbors": ['64', '68', '69'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -944,6 +993,7 @@ const dummyData = {
     },
     '50': {
       "neighbors": ['46', '53', '54'],
+      "roadNeighbors": ['65', '70', '71'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -951,6 +1001,7 @@ const dummyData = {
     },
     '51': {
       "neighbors": ['47', '54'],
+      "roadNeighbors": ['66', '72'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -958,6 +1009,7 @@ const dummyData = {
     },
     '52': {
       "neighbors": ['48', '49'],
+      "roadNeighbors": ['67', '68'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -965,6 +1017,7 @@ const dummyData = {
     },
     '53': {
       "neighbors": ['49', '50'],
+      "roadNeighbors": ['69', '70'],
       "player": '0',
       "city": false,
       "settlement": false,
@@ -972,6 +1025,7 @@ const dummyData = {
     },
     '54': {
       "neighbors": ['50', '51'],
+      "roadNeighbors": ['71', '72'],
       "player": '0',
       "city": false,
       "settlement": false,
