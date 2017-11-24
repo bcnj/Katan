@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react'
 import { connect } from 'react-redux';
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'
 import { turnRoadsOn } from '../utils'
 
@@ -11,7 +11,6 @@ const BuildBtn = (props) => {
     <Modal trigger={<Button style={{width: '49%', height: '75%'}}>Build</Button>}>
     <Modal.Actions>
         { currentGame && currentGame.game && currentGame.roadNodes &&
-
         <Button color='blue' inverted onClick={(e) => turnRoadsOn(currentGame.game.currentPlayer, gameId, currentGame.roadNodes)}>
           Build Road
         </Button>}
@@ -23,7 +22,7 @@ const BuildBtn = (props) => {
         </Button>
       </Modal.Actions>
     <Modal.Content>
-        <img src={buildImage} style={{height: '100'}}/>
+        <img src={buildImage} alt="build item"style={{height: '100'}}/>
     </Modal.Content>
     </Modal>
   )

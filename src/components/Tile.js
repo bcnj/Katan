@@ -59,7 +59,10 @@ class Tile extends Component {
   handleClick() {
     //this.props.id is tile
     //this.props.currentGame.game
-    let robberBuild = this.props.props.currentGame.game.robberBuild
+    let robberBuild = false
+    if(this.props && this.props.props) {
+      let robberBuild = this.props.props.currentGame.game.robberBuild
+    }
     if (robberBuild === true) {
       setRobberOnTile(this.props.props.gameId, this.props.id)
       setRobberBuild(this.props.props.gameId, false)

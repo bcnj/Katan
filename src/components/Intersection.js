@@ -8,7 +8,7 @@ class Intersection extends Component {
   }
 
   handleClick() {
-    console.log("You clicked on intersection", this.props.id);
+    // console.log("You clicked on intersection", this.props.id);
   }
 
   addSettlement() {} // Query Firebase to change settlement occupation to true

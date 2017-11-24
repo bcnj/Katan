@@ -957,10 +957,9 @@ class Board extends Component {
   }
 
   renderTiles() {
-    console.log(this.props)
     return this.state.tiles.map(function (tile) {
       const { id, x, y, resourceType } = tile;
-      return <Tile id={id} x={x} y={y} resourceType={resourceType} />;
+      return <Tile id={id} x={x} y={y} resourceType={resourceType} key={id}/>;
     });
   }
   renderIntersections() {
@@ -976,8 +975,6 @@ class Board extends Component {
 
       const { x, y, idx } = roads;
       let color;
-
-      console.log(roadNodes)
 
       if (roadNodes[idx].player === '0') { color = 'transparent' };
       if (roadNodes[idx].player === 'player1') { color = 'red' };

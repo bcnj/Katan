@@ -101,13 +101,13 @@ class GamePage extends Component {
                     {/* action buttons column */}
                     <Grid.Column width={5} >
                         <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
+                            <Robber props={this.props.currentGame}/>
                             <BuildBtn gameId={gameId} currentGame={currentGame}/>
                             <TradeBtn />
                         </Grid.Row>
 
                         <Grid.Row style={{ height: '50%' }}>
                             <DevCardBtn />
-                            <Robber props={this.props}/>
                             <EndTurnBtn gameId={gameId}/>
                         </Grid.Row>
                     </Grid.Column>
