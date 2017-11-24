@@ -41,13 +41,13 @@ class Robber extends Component {
     let game = window.location.href.slice(27)
     let updateResource = {}
     if (upDown === 'up') {
-      updateResource[`players.${player}.${type}`] += 1
+      updateResource[`players.${player}.${type}`]
       db
         .collection('testGames')
         .doc(game)
         .update(updateResource)
     } else {
-      updateResource[`players.${player}.${type}`] -= 1
+      updateResource[`players.${player}.${type}`]
       db
         .collection('testGames')
         .doc(currentGame)

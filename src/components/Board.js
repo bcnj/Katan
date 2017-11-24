@@ -4,7 +4,7 @@ import Tile from "./Tile";
 import Intersection from "./Intersection";
 import Road from "./Road";
 import Number from "./Number";
-import { Layer, Rect, Stage, Group, RegularPolygon, Circle } from "react-konva";
+import { Layer, Stage } from "react-konva";
 
 class Board extends Component {
   constructor(props) {
@@ -131,228 +131,282 @@ class Board extends Component {
       ],
       intersections: [
         {
+          idx: 1,
           x: 250,
           y: 95
         },
         {
+          idx: 2,
           x: 350,
           y: 95
         },
         {
+          idx: 3,
           x: 450,
           y: 95
         },
 
         {
+          idx: 4,
           x: 200,
           y: 120
         },
         {
+          idx: 5,
           x: 300,
           y: 120
         },
         {
+          idx: 6,
           x: 400,
           y: 120
         },
         {
+          idx: 7,
           x: 500,
           y: 120
         },
 
         {
+          idx: 8,
           x: 200,
           y: 180
         },
         {
+          idx: 9,
           x: 300,
           y: 180
         },
         {
+          idx: 10,
           x: 400,
           y: 180
         },
         {
+          idx: 11,
           x: 500,
           y: 180
         },
 
         {
+          idx: 12,
           x: 150,
           y: 205
         },
         {
+          idx: 13,
           x: 250,
           y: 205
         },
         {
+          idx: 14,
           x: 350,
           y: 205
         },
         {
+          idx: 15,
           x: 450,
           y: 205
         },
         {
+          idx: 16,
           x: 550,
           y: 205
         },
 
         {
+          idx: 17,
           x: 150,
           y: 265
         },
         {
+          idx: 18,
           x: 250,
           y: 265
         },
         {
+          idx: 19,
           x: 350,
           y: 265
         },
         {
+          idx: 20,
           x: 450,
           y: 265
         },
         {
+          idx: 21,
           x: 550,
           y: 265
         },
         {
+          idx: 22,
           x: 100,
           y: 290
         },
         {
+          idx: 23,
           x: 200,
           y: 290
         },
         {
+          idx: 24,
           x: 300,
           y: 290
         },
         {
+          idx: 25,
           x: 400,
           y: 290
         },
         {
+          idx: 26,
           x: 500,
           y: 290
         },
         {
+          idx: 27,
           x: 600,
           y: 290
         },
 
         {
+          idx: 28,
           x: 100,
           y: 350
         },
         {
+          idx: 29,
           x: 200,
           y: 350
         },
         {
+          idx: 30,
           x: 300,
           y: 350
         },
         {
+          idx: 31,
           x: 400,
           y: 350
         },
         {
+          idx: 32,
           x: 500,
           y: 350
         },
         {
+          idx: 33,
           x: 600,
           y: 350
         },
 
         {
+          idx: 34,
           x: 150,
           y: 375
         },
         {
+          idx: 35,
           x: 250,
           y: 375
         },
         {
+          idx: 36,
           x: 350,
           y: 375
         },
         {
+          idx: 37,
           x: 450,
           y: 375
         },
         {
+          idx: 38,
           x: 550,
           y: 375
         },
 
         {
+          idx: 39,
           x: 150,
           y: 435
         },
         {
+          idx: 40,
           x: 250,
           y: 435
         },
         {
+          idx: 41,
           x: 350,
           y: 435
         },
         {
+          idx: 42,
           x: 450,
           y: 435
         },
         {
+          idx: 43,
           x: 550,
           y: 435
         },
 
         {
+          idx: 44,
           x: 200,
           y: 460
         },
         {
+          idx: 45,
           x: 300,
           y: 460
         },
         {
+          idx: 46,
           x: 400,
           y: 460
         },
         {
+          idx: 47,
           x: 500,
           y: 460
         },
 
         {
+          idx: 48,
           x: 200,
           y: 520
         },
         {
+          idx: 49,
           x: 300,
           y: 520
         },
         {
+          idx: 50,
           x: 400,
           y: 520
         },
         {
+          idx: 51,
           x: 500,
           y: 520
         },
 
         {
+          idx: 52,
           x: 250,
           y: 545
         },
         {
+          idx: 53,
           x: 350,
           y: 545
         },
         {
+          idx: 54,
           x: 450,
           y: 545
         }
@@ -962,11 +1016,27 @@ class Board extends Component {
       return <Tile id={id} x={x} y={y} resourceType={resourceType} key={id}/>;
     });
   }
-  renderIntersections() {
-    //idx is not being passed in, why is it used below?
+  renderIntersections(intersectionNodes) {
     return this.state.intersections.map(function (intersection) {
-      const { x, y } = intersection;
-      return <Intersection key={x+y} x={x} y={y} />;
+      const { idx, x, y } = intersection;
+      let color;
+      let type;
+
+      if (intersectionNodes[idx].player === '0') { color = 'transparent' };
+      
+      if (intersectionNodes[idx].player === 'player1' && intersectionNodes[idx].city === true) { color = 'red'; type = 'city' }
+      else if (intersectionNodes[idx].player === 'player1') { color = 'red'; type = 'settlement' }
+      
+      if (intersectionNodes[idx].player === 'player2' && intersectionNodes[idx].city === true) { color = 'white'; type = 'city' }
+      else if (intersectionNodes[idx].player === 'playe2') { color = 'white'; type = 'settlement' }      
+      
+      if (intersectionNodes[idx].player === 'player3' && intersectionNodes[idx].city === true) { color = 'green'; type = 'city' }
+      else if (intersectionNodes[idx].player === 'player3') { color = 'green'; type = 'settlement' }
+      
+      if (intersectionNodes[idx].player === 'player4' && intersectionNodes[idx].city === true) { color = 'blue'; type = 'city' }
+      else if (intersectionNodes[idx].player === 'player4') { color = 'blue'; type = 'settlement' }
+      
+      return <Intersection key={idx} x={x} y={y} id={idx} color={color} type={type} />;
     });
   }
   renderRoads(roadNodes, currentGame, gameId) {
@@ -983,7 +1053,7 @@ class Board extends Component {
       if (roadNodes[idx].player === 'player4') { color = 'blue' };
 
       const rotation = roads.rotation || "";
-      return <Road key={idx} x={x} y={y} rotation={rotation} id={idx} color={color} gameId={gameId} currentGame={currentGame}/>;
+      return <Road key={idx} x={x} y={y} rotation={rotation} id={idx} color={color} gameId={gameId} currentGame={currentGame} />;
     });
   }
   renderNumbers() {
@@ -1007,11 +1077,11 @@ class Board extends Component {
         height={700}
         draggable={true}
       >
-        {this.props.currentGame.game &&
+        {this.props.currentGame.roadNodes && this.props.currentGame.intersectionNodes &&
           <Layer>
             {this.renderTiles()}
             {this.renderRoads(this.props.currentGame.roadNodes, this.props.currentGame, this.props.gameId)}
-            {this.renderIntersections()}
+            {this.renderIntersections(this.props.currentGame.intersectionNodes)}
             {this.renderNumbers()}
           </Layer>
         }
@@ -1034,5 +1104,3 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);
-
-// {!Object.is(this.props.currentGame, {}) &&

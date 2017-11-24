@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layer, Circle, Image } from "react-konva";
+import { Circle } from "react-konva";
 
 import Aimg from '../images/A.png';
 import Bimg from '../images/B.png';

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layer, Circle } from "react-konva";
+import { Circle } from "react-konva";
 
 class Intersection extends Component {
   constructor(props) {
@@ -11,19 +11,26 @@ class Intersection extends Component {
     // console.log("You clicked on intersection", this.props.id);
   }
 
-  addSettlement() {} // Query Firebase to change settlement occupation to true
-  addCity() {} // Query Firebase to change city occupation to true
-  getNeighbors() {} // Query Firebase to get neighbors; consider hardcoding?
-  isOccupied() {} // Query Firebase to see if city or settlement exists
+  addSettlement() { } // Query Firebase to change settlement occupation to true
+  addCity() { } // Query Firebase to change city occupation to true
+  getNeighbors() { } // Query Firebase to get neighbors; consider hardcoding?
+  isOccupied() { } // Query Firebase to see if city or settlement exists
 
   render() {
-    const { x, y } = this.props;
+
+    const { id, x, y, color, type } = this.props;
+    let stroke, strokeWidth, radius;
+    if (type === 'settlement') { radius = 7; stroke = ''; strokeWidth = '' }
+    if (type === 'city') { radius = 14; stroke = 'black'; strokeWidth = '5' }
+
     return (
       <Circle
         x={x}
         y={y}
-        radius={10}
-        fill={"black"}
+        radius={radius}
+        fill={color}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
         shadowBlur={5}
         onClick={this.handleClick}
       />
