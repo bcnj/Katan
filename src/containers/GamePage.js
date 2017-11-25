@@ -18,6 +18,9 @@ import { connect } from 'react-redux'
 
 import Robber from '../components/Robber.jsx'
 
+import Winning from '../components/Winning.js'
+import { checkForWinner } from '../utils/index'
+
 class GamePage extends Component {
   constructor(props) {
     super(props)
@@ -134,12 +137,15 @@ class GamePage extends Component {
               <DevCardBtn />
               <EndTurnBtn gameId={gameId} />
             </Grid.Row>
-            {/*Right now it immidiately pops up when a 7 is rolled, and after finishing using the component */}
+            {/*Right now it immidiately pops up when a 7 is rolled, and after finishing using the component*/}
             {currentGame &&
               currentGame.game &&
               currentGame.game.diceRoll === 7 && (
                 <Robber currentGame={currentGame} user={user} />
               )}
+            {currentGame &&
+              currentGame.game &&
+              (checkForWinner(currentGame)[0] && <Winning winner={checkForWinner(currentGame)[1]} />)}
           </Grid.Column>
         </Grid.Row>
       </Grid>

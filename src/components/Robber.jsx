@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Image, Modal } from 'semantic-ui-react'
 import brickImage from '../images/brick.jpg'
 import wheatImage from '../images/wheat.jpg'
 import woodImage from '../images/wood.jpg'
