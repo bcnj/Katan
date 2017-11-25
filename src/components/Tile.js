@@ -49,6 +49,7 @@ class Tile extends Component {
   isOccupied() {} // Returns BOOL
 
   handleClick(event) {
+    //if robberBuild is in place user can click to set robber in place... the robber renders on the screen but oddly it needs a hard refresh.
     let currentGameId = window.location.href.slice(27)
     let robberBuild = this.props.robberBuild
     if (robberBuild === true) {

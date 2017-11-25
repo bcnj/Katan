@@ -12,6 +12,8 @@ import {setRobberBuild} from '../utils/index.js'
 class Robber extends Component {
   constructor(props) {
     super(props)
+    //massive state to handle comparing data at beginning of the display of the component until its end
+    //moveRobber is used to find out if the current user is the one who rolled, this needs to be fixed when we have user properly figured out
     this.state = {
       totalCards: 0,
       tempTotalCards: 0,
@@ -25,7 +27,6 @@ class Robber extends Component {
       sheep: 0,
       ore: 0,
       wheat: 0,
-      open: true,
       moveRobber: null
     }
     this.setBuildRobber = this.setBuildRobber.bind(this)
@@ -35,6 +36,7 @@ class Robber extends Component {
 
   finishTransaction(event) {
     event.preventDefault()
+    //when multiple users works...
     // let currentPlayerNum = this.props.user.playerNum
     // let currentPlayer = `player${currentPlayerNum}`
     let player = 'player1' //for now
@@ -70,6 +72,7 @@ class Robber extends Component {
 
   upOrDown(event, type, direction) {
     event.preventDefault()
+    //up or down as in the component each resource can be increased or decreased based upon what is logically able to be done
     if (direction === 'down') {
       if (type === 'brick') {
         this.setState({
@@ -128,6 +131,7 @@ class Robber extends Component {
   }
 
   componentDidMount() {
+    //insert massive data into state, again when user works this must be fixed, as in currentPlayer and currentPlayerData, the if/else relates to if the user should be able to move the robber
     let currentPlayerData = this.props.currentGame.players.player1,
       currentPlayer = this.props.currentGame.game.currentPlayer,
       brick = currentPlayerData.brick,
@@ -181,6 +185,7 @@ class Robber extends Component {
   }
 
   setBuildRobber(event) {
+    //sets movement of robber to begin, function in utils
     event.preventDefault()
     let currentGame = window.location.href.slice(27)
     setRobberBuild(currentGame, true)
@@ -188,6 +193,7 @@ class Robber extends Component {
   }
 
   render() {
+    //massive modal, as I had to create 20 buttons because of the ternary nature of user having enough resources, not gaining more then they had, etc.
     return (
       <div>
         <Modal open>
@@ -346,7 +352,7 @@ class Robber extends Component {
                   <br />
                 </Modal.Content>
                 {Math.floor(this.state.tempTotalCards / 2) ===
-                this.state.totalCards ? (
+                this.state.totalCards && !this.state.moveRobber ? (
                   <Button
                     fluid
                     color="violet"

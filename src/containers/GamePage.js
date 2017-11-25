@@ -134,7 +134,7 @@ class GamePage extends Component {
               <DevCardBtn />
               <EndTurnBtn gameId={gameId} />
             </Grid.Row>
-            {/*There should be a dice roll that affects state to render this component and it should close by sending data back from the Robber component. This status keeps the modal open until diceRoll changes, that could also be done in a hacky way*/}
+            {/*Right now it immidiately pops up when a 7 is rolled, and after finishing using the component */}
             {currentGame &&
               currentGame.game &&
               currentGame.game.diceRoll === 7 && (
