@@ -25,8 +25,8 @@ class Intersection extends Component {
         strokeWidth={strokeWidth}
         shadowBlur={5}
         onClick={ e => {
-          (currentGame.intersectionNodes[id].settlement === true) ? buildCity(currentGame.game.currentPlayer, gameId, id, 1) :
-            buildSettlement(currentGame.game.currentPlayer, gameId, id, 1)}}
+          (currentGame.intersectionNodes[id].settlement === true) ? buildCity(currentGame.game.currentPlayer, gameId, id) :
+            buildSettlement(currentGame.game.currentPlayer, gameId, id)}}
         listening={currentGame.intersectionNodes[id].active}
       />
     );
