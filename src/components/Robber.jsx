@@ -7,27 +7,7 @@ import woodImage from '../images/wood.jpg'
 import sheepImage from '../images/sheep.jpg'
 import oreImage from '../images/ore.jpg'
 import { db } from '../firebase'
-
-//currentGame is to be passed in
-const total = 0
-
-export const setRobberBuild = (currentGame, setTrueFalse) => {
-  if (setTrueFalse === true) {
-    let robberBuildUpdate = {}
-    robberBuildUpdate[`game.robberBuild`] = true
-    db
-      .collection('testGames')
-      .doc(currentGame)
-      .update(robberBuildUpdate)
-  } else {
-    let robberBuildUpdate = {}
-    robberBuildUpdate[`game.robberBuild`] = false
-    db
-      .collection('testGames')
-      .doc(currentGame)
-      .update(robberBuildUpdate)
-  }
-}
+import {setRobberBuild} from '../utils/index.js'
 
 class Robber extends Component {
   constructor(props) {
@@ -46,13 +26,11 @@ class Robber extends Component {
       ore: 0,
       wheat: 0,
       open: true,
-      moveRobber: true
+      moveRobber: null
     }
     this.setBuildRobber = this.setBuildRobber.bind(this)
     this.upOrDown = this.upOrDown.bind(this)
     this.finishTransaction = this.finishTransaction.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-    this.handleOpen = this.handleOpen.bind(this)
   }
 
   finishTransaction(event) {
@@ -60,7 +38,7 @@ class Robber extends Component {
     // let currentPlayerNum = this.props.user.playerNum
     // let currentPlayer = `player${currentPlayerNum}`
     let player = 'player1' //for now
-    let currentGameId = window.location.href.slice(27)
+    let currentGameId = window.location.href.slice(27) //or -20
     const game = db.collection('games').doc(currentGameId)
     let brickDifference = this.state.brickStart - this.state.brick,
       wheatDifference = this.state.wheatStart - this.state.wheat,
@@ -73,20 +51,20 @@ class Robber extends Component {
         updateBrick = {},
         updateWood = {},
         updateOre = {},
-        updateWheat = {}
+        updateWheat = {},
+        updateDice = {}
       updateBrick[`players.${player}.brick`] = brickDifference
       updateWood[`players.${player}.wood`] = woodDifference
       updateOre[`players.${player}.ore`] = oreDifference
       updateSheep[`players.${player}.sheep`] = sheepDifference
       updateWheat[`players.${player}.wheat`] = wheatDifference
+      updateDice[`game.diceRoll`] = 1
       game.update(updateBrick)
       game.update(updateOre)
       game.update(updateSheep)
       game.update(updateWheat)
       game.update(updateWood)
-      this.setState({
-        open: false
-      })
+      game.update(updateDice)
     })
   }
 
@@ -165,6 +143,7 @@ class Robber extends Component {
       tempTotalCards =
         brickStart + oreStart + sheepStart + woodStart + wheatStart,
       totalCards
+    // if(this.props.currentGame.game.currentUser === `player${this.props.user.playerNum}`){
     this.setState({
       brick,
       ore,
@@ -178,29 +157,40 @@ class Robber extends Component {
       oreStart,
       tempTotalCards:
         brickStart + oreStart + sheepStart + woodStart + wheatStart,
-      totalCards: brick + wheat + ore + sheep + wood
-    })
-    //when user works properly
-    // if(this.props.currentGame.game.currentUser === `player${this.props.user.playerNum}`){
-    this.setState({
+      totalCards: brick + wheat + ore + sheep + wood,
       moveRobber: true
     })
+    // else{
+    //   //moveRobber does not change, only specific user has access to that state
+    //   this.setState({
+    //     brick,
+    //     ore,
+    //     sheep,
+    //     wood,
+    //     wheat,
+    //     brickStart,
+    //     sheepStart,
+    //     woodStart,
+    //     wheatStart,
+    //     oreStart,
+    //     tempTotalCards:
+    //       brickStart + oreStart + sheepStart + woodStart + wheatStart,
+    //     totalCards: brick + wheat + ore + sheep + wood
+    //   })
     // }
   }
 
   setBuildRobber(event) {
+    event.preventDefault()
     let currentGame = window.location.href.slice(27)
     setRobberBuild(currentGame, true)
     this.setState({ moveRobber: false })
   }
 
-  handleOpen = () => this.setState({ open: true })
-  handleClose = () => this.setState({ open: false })
-
   render() {
     return (
       <div>
-        <Modal open handleClose={this.handleClose} handleOpen={this.handleOpen}>
+        <Modal open>
           {this.props &&
             this.props.currentGame &&
             this.props.currentGame.game &&
@@ -364,7 +354,6 @@ class Robber extends Component {
                     inverted
                     onClick={e => {
                       this.finishTransaction(e)
-                      this.handleClose()
                     }}
                   >
                     Finish
@@ -379,7 +368,7 @@ class Robber extends Component {
                     fluid
                     color="black"
                     size="huge"
-                    onClick={this.setBuildRobber}
+                    onClick={e=> this.setBuildRobber(e, true)}
                   >
                     Move Robber
                   </Button>

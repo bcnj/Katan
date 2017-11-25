@@ -8,16 +8,8 @@ import Ore from '../images/mountain.png'
 import Sheep from '../images/pasture.png'
 import { db } from '../firebase'
 
-import { setRobberBuild } from './Robber.jsx'
+import { setRobberBuild, setRobberOnTile } from '../utils/index.js'
 
-export const setRobberOnTile = (currentGame, tileId) => {
-  let setRobberOnTileUpdate = {}
-  setRobberOnTileUpdate[`game.robber`] = String(tileId)
-  db
-    .collection('testGames')
-    .doc(currentGame)
-    .update(setRobberOnTileUpdate)
-}
 
 class Tile extends Component {
   constructor(props) {
@@ -56,16 +48,12 @@ class Tile extends Component {
   getNeighbors() {} // Returns an array of player ID's
   isOccupied() {} // Returns BOOL
 
-  handleClick() {
-    //this.props.id is tile
-    //this.props.currentGame.game
-    let robberBuild = false
-    if(this.props && this.props.props) {
-      let robberBuild = this.props.props.currentGame.game.robberBuild
-    }
+  handleClick(event) {
+    let currentGameId = window.location.href.slice(27)
+    let robberBuild = this.props.robberBuild
     if (robberBuild === true) {
-      setRobberOnTile(this.props.props.gameId, this.props.id)
-      setRobberBuild(this.props.props.gameId, false)
+      setRobberOnTile(currentGameId, this.props.id)
+      setRobberBuild(currentGameId, false)
     }
   }
 

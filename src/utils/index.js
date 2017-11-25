@@ -287,3 +287,29 @@ export const buildCity = (currentPlayer, gameId, intersectionId, vp) => {
 //   }
 // }
 
+export const setRobberBuild = (currentGameId,setTrueFalse) => {
+  if (setTrueFalse === true) {
+    let robberBuildUpdate = {}
+    robberBuildUpdate[`game.robberBuild`] = true
+    db
+      .collection('games')
+      .doc(currentGameId)
+      .update(robberBuildUpdate)
+  } else {
+    let robberBuildUpdate = {}
+    robberBuildUpdate[`game.robberBuild`] = false
+    db
+      .collection('games')
+      .doc(currentGameId)
+      .update(robberBuildUpdate)
+  }
+}
+
+export const setRobberOnTile = (currentGame, tileId) => {
+  let setRobberOnTileUpdate = {}
+  setRobberOnTileUpdate[`game.robber`] = String(tileId)
+  db
+    .collection('games')
+    .doc(currentGame)
+    .update(setRobberOnTileUpdate)
+}
