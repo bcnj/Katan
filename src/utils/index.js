@@ -367,8 +367,11 @@ export const updateScoreToCloseModal = (e, winner) => {
   let player = 'player' + winner
 
   game.get().then(() => {
+    let updateGameToInactive = {}
     let updateScoreToCloseModal = {}
+    updateGameToInactive[`game.active`] = false
     updateScoreToCloseModal[`players.${player}.score`] = 0
     game.update(updateScoreToCloseModal)
+    game.update(updateGameToInactive)
   })
 }
