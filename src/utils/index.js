@@ -30,14 +30,26 @@ export const turnRoadsOn = (currentPlayer, gameId, roadNodes) => {
     .update(roadUpdate)
 }
 
-export const buildRoad = (currentPlayer, gameId, roadId) => {
+export const turnRoadsOnInit = (currentPlayer, gameId, roadNodes) =>{
+  const roadUpdate = {}
+  for (let i = 1; i<= 72; i++){
+    if(roadNodes[i].player === '0'){
+      roadUpdate[`roadNodes.${i}.active`] = true
+    }
+  }
+  roadUpdate[`players.${currentPlayer}.trade`] = false
+  db.collection('games').doc(`${gameId}`)
+  .update(roadUpdate)
+}
+
+export const buildRoad = (currentPlayer, gameId, roadId, turn) => {
   const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
-  db
-    .collection('games')
-    .doc(`${gameId}`)
-    .update(roadUpdate)
-  buildRoadResource(currentPlayer, gameId)
+  db.collection('games').doc(`${gameId}`)
+  .update(roadUpdate)
+  if ( turn >= 8){
+    buildRoadResource(currentPlayer, gameId)
+  }
   turnRoadsOff(gameId)
 }
 
@@ -78,7 +90,18 @@ export const turnSettlementOn = (
     .update(settlementUpdate)
 }
 
-export const turnCityOn = (currentPlayer, gameId, intersectionNodes) => {
+export const turnSettlementOnInit = (currentPlayer, gameId, intersectionNodes, roadNodes) =>{
+  const settlementUpdate = {}
+  for (let i =1; i<=54; i++){
+    if(intersectionNodes[i].player === '0' && !intersectionNodes[i].neighbors.find(n => intersectionNodes[n].player !== '0') && intersectionNodes[i].roadNeighbors.find(n => roadNodes[n].player === currentPlayer)){
+      settlementUpdate[`intersectionNodes.${i}.active`] = true
+    }
+  }
+  db.collection('games').doc(`${gameId}`)
+  .update(settlementUpdate)
+}
+
+export const turnCityOn = (currentPlayer, gameId, intersectionNodes) =>{
   const cityUpdate = {}
   for (let i = 1; i <= 54; i++) {
     if (
@@ -95,15 +118,18 @@ export const turnCityOn = (currentPlayer, gameId, intersectionNodes) => {
     .update(cityUpdate)
 }
 
-export const buildSettlement = (currentPlayer, gameId, intersectionId) => {
+export const buildSettlement = (currentPlayer, gameId, intersectionId, turn) => {
   const settlementUpdate = {}
   settlementUpdate[`intersectionNodes.${intersectionId}.player`] = currentPlayer
   settlementUpdate[`intersectionNodes.${intersectionId}.settlement`] = true
-  db
-    .collection('games')
-    .doc(`${gameId}`)
-    .update(settlementUpdate)
-  buildSettlementResource(currentPlayer, gameId)
+  db.collection('games').doc(`${gameId}`)
+  .update(settlementUpdate)
+  if ( turn >= 8){
+    buildSettlementResource(currentPlayer, gameId)
+    //trigger nextTurn button
+  } else {
+    endTurn(turn, currentPlayer, gameId)
+  }
   turnIntersectionOff(gameId)
 }
 
@@ -182,6 +208,29 @@ export const distributeResources = (
       })
     }
   }
+}
+
+export const endTurn = (currentTurn, currentPlayer, gameId) => {
+  let endTurn = {}
+  let playerNum = +currentPlayer[6]
+  endTurn[`game.turn`] = currentTurn+1
+  endTurn[`game.diceRollCount`] = currentTurn+1
+  if (currentTurn == 2){
+    endTurn[`game.currentPlayer`] = 'player4'
+  } else if (currentTurn == 3 ){
+    endTurn[`game.currentPlayer`] = 'player4'
+  } else if (currentTurn == 4 ){
+    endTurn[`game.currentPlayer`] = 'player3'
+  } else if (currentTurn == 5 ){
+    endTurn[`game.currentPlayer`] = 'player2'
+  } else if (currentTurn == 6 ){
+    endTurn[`game.currentPlayer`] = 'player1'
+  } else {
+    endTurn[`game.currentPlayer`] = ((playerNum < 4) ? `player${playerNum+1}` : `player${playerNum-3}`)
+  }
+
+  db.collection('games').doc(`${gameId}`)
+  .update(endTurn)
 }
 
 // /* END TURN

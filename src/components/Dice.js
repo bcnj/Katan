@@ -30,7 +30,8 @@ class DiceRoll extends React.Component {
           dotColor={'#002D7F'}
           disableIndividual={true}
         />
-        <button onClick={(e) => this.rollAll(gameId, currentGame.game.diceRollCount)} disabled={
+        <button onClick={(e) => this.rollAll(gameId, currentGame.game.diceRollCount)}
+          disabled={ currentGame.game.turn < 8 ||
           currentGame.game.diceRollCount > currentGame.game.turn || localStorage.getItem(`${gameId}`) !== currentGame.game.currentPlayer
           }> RollDice </button>
         </div>}
