@@ -295,7 +295,7 @@ class DevCardBtn extends Component {
               <Menu.Item>
                 <Dropdown
                   options={this.state.options}
-                  placeholder="Click"
+                  placeholder="Pick Tile"
                   fluid
                   selection
                   onChange={this.handleKnightChange}
