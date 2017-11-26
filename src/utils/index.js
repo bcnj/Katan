@@ -24,12 +24,23 @@ export const turnRoadsOn = (currentPlayer, gameId, roadNodes) =>{
   .update(roadUpdate)
 }
 
+export const turnRoadsOnInitial = (currentPlayer, gameId, roadNodes) =>{
+  const roadUpdate = {}
+  for (let i = 1; i<= 72; i++){
+    if(roadNodes[i].player === '0'){
+      roadUpdate[`roadNodes.${i}.active`] = true
+    }
+  }
+  roadUpdate[`players.${currentPlayer}.trade`] = false
+  db.collection('games').doc(`${gameId}`)
+  .update(roadUpdate)
+}
+
 export const buildRoad = (currentPlayer, gameId, roadId) => {
   const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
   db.collection('games').doc(`${gameId}`)
   .update(roadUpdate)
-  buildRoadResource(currentPlayer, gameId)
   turnRoadsOff(gameId)
 }
 
