@@ -101,9 +101,6 @@ export const distributeResources = (diceCount, gameId, tileNodes, intersectionNo
     tileNodes[i].children.forEach(n => {
       let intersection = intersectionNodes[n]
       let currentTile = tileNodes[i]
-      console.log('XXXX', 'i', i, 'n', n)
-      console.log('!!!', intersection.city)
-      console.log('@@@', currentTile)
       // has a city
       if (intersection.city){
         console.log('iam HERE')
@@ -112,7 +109,6 @@ export const distributeResources = (diceCount, gameId, tileNodes, intersectionNo
         .get()
         .then(doc => {
           playerData = doc.data().players[intersection.player]
-          console.log('!!!??', playerData)
         })
         .then(() => {
           let updateResourceForCity = {}
