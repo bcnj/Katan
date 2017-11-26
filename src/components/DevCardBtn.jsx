@@ -23,6 +23,7 @@ import {
 class DevCardBtn extends Component {
   constructor(props) {
     super(props)
+    //resources are needed as are devCards user currently has, I store the dev cards as so: 1=knight, 2=monopoly, 3=roadBuild, 4=plenty, 5=vPoint. As in, looking in the DB, storing the cards solely puts the integer, not the name of the card
     this.state = {
       brick: 0,
       wheat: 0,
@@ -35,7 +36,6 @@ class DevCardBtn extends Component {
       monopoly: 0,
       roadBuild: 0,
       canOrCannotBuyCard: false,
-      totalCardsToReRender: 0,
       knightMode: false,
       options: [],
       knightValueVictim: 0,
@@ -63,6 +63,7 @@ class DevCardBtn extends Component {
   }
 
   componentDidMount() {
+    //grab all resources and dev cards to display in component
     let currentPlayerData = this.props.currentGame.players.player1,
       currentPlayer = this.props.currentGame.game.currentPlayer,
       brick = currentPlayerData.brick,
@@ -81,6 +82,7 @@ class DevCardBtn extends Component {
     if (sheep >= 1 && ore >= 1 && wheat >= 1) {
       canOrCannotBuyCard = true
     }
+    //for state as each is stored as integer
     devCards.forEach((card, i) => {
       if (card === 1) knight++
       if (card === 2) monopoly++
@@ -109,6 +111,7 @@ class DevCardBtn extends Component {
   handleBuyClick(e) {
     e.preventDefault()
     let gameId = window.location.href.slice(-20)
+    //check if there is one of the needed cards, if only one, next time button is disabled
     let sheep = this.state.sheep,
       ore = this.state.ore,
       wheat = this.state.wheat
@@ -127,7 +130,8 @@ class DevCardBtn extends Component {
         wheat: wheat - 1
       })
     }
-    //player + String(this.props.user.playerNum)
+    //player + String(this.props.user.playerNum) for user
+    //num is what is returned from the firebase function, so I know what to increment in state, so that the page reRenders correctly
     let num = purchaseDevCard('player1', gameId)
     console.log(num)
     if (num === 1) {
@@ -151,6 +155,7 @@ class DevCardBtn extends Component {
       })
     }
     if (num === 5) {
+      //do this automatically, as no need to be able to click a vPoint card, solely need to add 1 to score
       //...user not '1'
       victoryPointCard('1', gameId)
       this.setState({
@@ -164,8 +169,6 @@ class DevCardBtn extends Component {
     //player + String(this.props.user.playerNum)
     let gameId = window.location.href.slice(-20)
     if (num === 1) {
-      // setRobberBuild(gameId, true)
-      // useKnightTakeCard()
       this.setState({
         knightMode: true,
         knight: this.state.knight - 1
@@ -196,6 +199,7 @@ class DevCardBtn extends Component {
     let knightValueTile = parseInt(data.value.tile)
     //user...
     let knightValuePlayer = '1'
+    //to check if possible players to take card from are connected to tile
     let knightValuePosPlayers = data.value.players
     this.setState({
       knightValueTile,
@@ -213,21 +217,26 @@ class DevCardBtn extends Component {
     let count = 0
     let gameId = window.location.href.slice(-20)
     if (this.state.knightValuePosPlayers.length === 0) {
+      //when robber is merged
       // setRobberOnTile(this.state.knightValueTile)
     } else {
       this.state.knightValuePosPlayers.forEach(player => {
+        //only want the key, that is the player, this is to check if the player that user wants to take card from is connected to tile
         player = Object.keys(player)[0]
         if (this.state.knightValueVictim === player) {
           count++
         }
       })
+      //force user to enter correct player
       if (count === 0) alert('Enter a correct player')
       else {
+        //switch card, random card from victims hand given to player, no interaction, simply increment and decrement of resource
         useKnightTakeCard(
           gameId,
           this.state.knightValuePlayer,
           this.state.knightValueVictim
         )
+        //...robber
         // setRobberOnTile(this.state.knightValueTile)
       }
     }
@@ -253,6 +262,7 @@ class DevCardBtn extends Component {
     this.setState({
       monopolyMode
     })
+    monopolize(gameId, this.state.monopolyResource, this.state.monopolyPlayer)
   }
 
   handleRoadBuildChange(e, data) {
@@ -278,13 +288,13 @@ class DevCardBtn extends Component {
 
   handlePlentyAdd(e, data) {
     let resourceChoice = this.state.plentyResource
+    //get added resources
     this.setState({
       plentyResourceChoices: [
         ...this.state.plentyResourceChoices,
         resourceChoice
       ]
     })
-    console.log(resourceChoice, this.state.plentyResourceChoices)
   }
 
   handlePlentySubmit(e, data) {
@@ -300,16 +310,6 @@ class DevCardBtn extends Component {
       plentyResourceChoices: []
     })
   }
-
-  // handleVpointClick(e) {
-  //   e.preventDefault()
-  //   let gameId = window.location.href.slice(-20)
-
-  //   this.setState({
-  //     vPoint: this.state.vPoint - 1
-  //   })
-  //   deleteSpecificDevCard(5, 'player1', gameId)
-  // }
 
   render() {
     return (
@@ -390,7 +390,10 @@ class DevCardBtn extends Component {
                   Use
                 </Button>
               ) : (
-                <Button color="orange" onClick={e => this.handleCardClick(e, 2)}>
+                <Button
+                  color="orange"
+                  onClick={e => this.handleCardClick(e, 2)}
+                >
                   Use
                 </Button>
               )}
@@ -501,7 +504,11 @@ class DevCardBtn extends Component {
                   onChange={this.handlePlentyChange}
                 />
               </Menu.Item>
-              <Button onClick={this.handlePlentyAdd}>Add</Button>
+              {this.state.plentyResourceChoices.length === 2 ? (
+                <Button disabled>Add</Button>
+              ) : (
+                <Button onClick={this.handlePlentyAdd}>Add</Button>
+              )}
               {this.state.plentyResourceChoices.length === 2 ? (
                 <Button onClick={this.handlePlentySubmit}>Submit</Button>
               ) : (

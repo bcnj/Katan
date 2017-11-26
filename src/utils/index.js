@@ -561,6 +561,7 @@ export const updateMessageStart = () => {
   })
 }
 
+//convoluted grabbing all resources of other player and giving them to the right player
 export const monopolize = (gameId, resource, player) => {
   const game = db.collection('games').doc(gameId)
   game.get().then(doc => {
