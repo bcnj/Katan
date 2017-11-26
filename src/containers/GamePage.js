@@ -105,7 +105,9 @@ class GamePage extends Component {
                       </Grid.Row>
 
                       <Grid.Row style={{ height: '50%' }}>
-                          <DevCardBtn />
+                      { currentGame && currentGame.game &&
+                          <DevCardBtn currentGame={currentGame}/>
+                      }
                           <EndTurnBtn gameId={gameId}/>
                       </Grid.Row>
                   </Grid.Column>

@@ -9,7 +9,6 @@ class Intersection extends Component {
 
   render() {
     const { id, x, y, color, type, currentGame, gameId } = this.props;
-    console.log(type)
     let stroke, strokeWidth, radius;
     if (type === 'city') { radius = 14; stroke = 'black'; strokeWidth = '5' } else {
       radius = 7; stroke = ''; strokeWidth = ''

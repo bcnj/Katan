@@ -18,6 +18,7 @@ const dummyData = {
       "wheat": 0,
       "sheep": 0,
       "ore": 0,
+      "devCards": [],
       "color": 'red',
       "build": true,
       "trade": false
@@ -31,6 +32,7 @@ const dummyData = {
       "wheat": 0,
       "sheep": 0,
       "ore": 0,
+      "devCards": [],
       "color": 'white',
       "build": true,
       "trade": false
@@ -44,6 +46,7 @@ const dummyData = {
       "wheat": 0,
       "sheep": 0,
       "ore": 0,
+      "devCards": [],
       "color": "green",
       "build": true,
       "trade": false
@@ -57,6 +60,7 @@ const dummyData = {
       "wheat": 0,
       "sheep": 0,
       "ore": 0,
+      "devCards": [],
       "color": "blue",
       "build": true,
       "trade": false
