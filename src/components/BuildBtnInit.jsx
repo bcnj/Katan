@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'
-import { turnRoadsOnInitial, turnSettlementOn, turnCityOn } from '../utils'
+import { turnRoadsOnInit, turnSettlementOnInit } from '../utils'
 
 class BuildBtnInit extends Component {
   constructor(props) {
     super(props)
     this.state = {
       open: false,
-      buildRoadDisabled: true,
-      buildSettlementDisabled: true,
-      buildCityDisabled: true,
+      buildRoadDisabled: false,
+      buildSettlementDisabled: false,
+      // buildRoad and buildSettlement is only allowed once per turn
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
@@ -31,16 +31,19 @@ class BuildBtnInit extends Component {
         onClose={this.handleClose}>
         <Modal.Actions>
           <Button color='blue' inverted
-            disabled={!currentGame.players[currentGame.currentPlayer].trade}
+            disabled={this.state.buildRoadDisabled}
             onClick={e => {
-            turnRoadsOnInitial(currentGame.game.currentPlayer, gameId, currentGame.roadNodes)
+            turnRoadsOnInit(currentGame.game.currentPlayer, gameId, currentGame.roadNodes)
+            this.setState({buildRoadDisabled: true})
             this.handleClose()
           }}>
             Build Road
           </Button>
           <Button color='blue' inverted
+            disabled={this.state.buildSettlementDisabled}
             onClick={e => {
-            turnSettlementOn(currentGame.game.currentPlayer, gameId, currentGame.intersectionNodes, currentGame.roadNodes)
+            turnSettlementOnInit(currentGame.game.currentPlayer, gameId, currentGame.intersectionNodes, currentGame.roadNodes)
+            this.setState({buildRoadDisabled: false})
             this.handleClose()
           }}>
             Build Settlement
