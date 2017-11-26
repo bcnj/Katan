@@ -24,10 +24,12 @@ export const turnRoadsOn = (currentPlayer, gameId, roadNodes) =>{
   .update(roadUpdate)
 }
 
-export const buildRoad = (currentPlayer, gameId, roadId) => {       const roadUpdate = {}
+export const buildRoad = (currentPlayer, gameId, roadId) => {
+  const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
   db.collection('games').doc(`${gameId}`)
   .update(roadUpdate)
+  buildRoadResource(currentPlayer, gameId)
   turnRoadsOff(gameId)
 }
 
@@ -62,24 +64,23 @@ export const turnCityOn = (currentPlayer, gameId, intersectionNodes) =>{
   .update(cityUpdate)
 }
 
-export const buildSettlement = (currentPlayer, gameId, intersectionId, vp) => {
+export const buildSettlement = (currentPlayer, gameId, intersectionId) => {
   const settlementUpdate = {}
   console.log('intersection', intersectionId)
   settlementUpdate[`intersectionNodes.${intersectionId}.player`] = currentPlayer
   settlementUpdate[`intersectionNodes.${intersectionId}.settlement`] = true
-  settlementUpdate[`players.${currentPlayer}.score`] = vp + 1
   db.collection('games').doc(`${gameId}`)
   .update(settlementUpdate)
+  buildSettlementResource(currentPlayer, gameId)
   turnIntersectionOff(gameId)
 }
 
-export const buildCity = (currentPlayer, gameId, intersectionId, vp) => {
-  console.log("!!!!")
+export const buildCity = (currentPlayer, gameId, intersectionId) => {
   const cityUpdate = {}
   cityUpdate[`intersectionNodes.${intersectionId}.city`] = true
-  cityUpdate[`players.${currentPlayer}.score`] = vp + 1
   db.collection('games').doc(`${gameId}`)
   .update(cityUpdate)
+  buildCityResource(currentPlayer, gameId)
   turnIntersectionOff(gameId)
 }
 
@@ -165,85 +166,71 @@ export const buildCity = (currentPlayer, gameId, intersectionId, vp) => {
 //   }
 // }
 
-// /* BUILDING FUNCTIONS FOR ROADS, SETTLEMENTS, AND CITIES */
+/* BUILDING FUNCTIONS FOR ROADS, SETTLEMENTS, AND CITIES */
 
-// /* BUILD ROAD FROM BUY PAGE
-//   Deducts resources required to build road
-//   No validation to check if player has enough resources
-//   currentPlayerNumber can be any value from 1 to 4, to indicate player1 to player4
-// */
-// export const buildRoadResource = currentPlayerNumber => {
-//   var player = 'player' + currentPlayerNumber
-//   let playerData
-//   const game = db.collection(testCollection).doc(testDoc)
-//   return function() {
-//     game
-//       .get()
-//       .then(doc => {
-//         playerData = doc.data().players[player]
-//       })
-//       .then(() => {
-//         console.log('Grabbed player data...')
-//         console.log(playerData)
-//         let updatedPlayerData = {}
-//         // Reduce player resources
-//         updatedPlayerData[`players.${player}.brick`] = playerData.brick - 1 // Reduce 1 brick
-//         updatedPlayerData[`players.${player}.wood`] = playerData.wood - 1 // Reduce 1 brick
-//         game.update(updatedPlayerData)
-//       })
-//   }
-// }
+/* BUILD ROAD FROM BUY PAGE
+  Deducts resources required to build road
+  No validation to check if player has enough resources
+  currentPlayerNumber can be any value from 1 to 4, to indicate player1 to player4
+*/
+export const buildRoadResource = (currentPlayer, gameId) => {
+  let playerData
+  const game = db.collection('games').doc(gameId)
+  game
+    .get()
+    .then(doc => {
+      playerData = doc.data().players[currentPlayer]
+    })
+    .then(() => {
+      let updatedPlayerData = {}
+      // Reduce player resources
+      updatedPlayerData[`players.${currentPlayer}.brick`] = playerData.brick - 1 // Reduce 1 brick
+      updatedPlayerData[`players.${currentPlayer}.wood`] = playerData.wood - 1 // Reduce 1 brick
+      game.update(updatedPlayerData)
+    })
+}
 
-// /* BUILD SETTLEMENT FROM BUY PAGE
-// */
-// export const buildSettlementResource = currentPlayerNumber => {
-//   var player = 'player' + currentPlayerNumber
-//   let playerData
-//   const game = db.collection(testCollection).doc(testDoc)
-//   return function() {
-//     game
-//       .get()
-//       .then(doc => {
-//         playerData = doc.data().players[player]
-//       })
-//       .then(() => {
-//         let updatedPlayerData = {}
-//         // Reduce player resources
-//         updatedPlayerData[`players.${player}.brick`] = playerData.brick - 1
-//         updatedPlayerData[`players.${player}.wood`] = playerData.wood - 1
-//         updatedPlayerData[`players.${player}.wheat`] = playerData.wheat - 1
-//         updatedPlayerData[`players.${player}.sheep`] = playerData.sheep - 1
-//         // Add victory points
-//         updatedPlayerData[`players.${player}.score`] = playerData.score + 1
-//         // Update Firebase
-//         game.update(updatedPlayerData)
-//       })
-//   }
-// }
+/* BUILD SETTLEMENT FROM BUY PAGE
+*/
+export const buildSettlementResource = ( currentPlayer, gameId ) => {
+  let playerData
+  const game = db.collection('games').doc(gameId)
+  game
+      .get()
+      .then(doc => {
+        playerData = doc.data().players[currentPlayer]
+      })
+      .then(() => {
+        let updatedPlayerData = {}
+        // Reduce player resources
+        updatedPlayerData[`players.${currentPlayer}.brick`] = playerData.brick - 1
+        updatedPlayerData[`players.${currentPlayer}.wood`] = playerData.wood - 1
+        updatedPlayerData[`players.${currentPlayer}.wheat`] = playerData.wheat - 1
+        updatedPlayerData[`players.${currentPlayer}.sheep`] = playerData.sheep - 1
+        updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
+        game.update(updatedPlayerData)
+      })
+}
 
-// /* BUILD CITY FROM BUY PAGE */
-// export const buildCityResource = currentPlayerNumber => {
-//   var player = 'player' + currentPlayerNumber
-//   let playerData
-//   const game = db.collection(testCollection).doc(testDoc)
-//   return function() {
-//     game
-//       .get()
-//       .then(doc => {
-//         playerData = doc.data().players[player]
-//       })
-//       .then(() => {
-//         let updatedPlayerData = {}
-//         // Reduce player resources
-//         updatedPlayerData[`players.${player}.wheat`] = playerData.wheat - 2
-//         updatedPlayerData[`players.${player}.ore`] = playerData.ore - 3
-//         // Add victory points
-//         updatedPlayerData[`players.${player}.score`] = playerData.score + 2
-//         // Update Firebase
-//         game.update(updatedPlayerData)
-//       })
-//   }
-// }
+/* BUILD CITY FROM BUY PAGE */
+export const buildCityResource = ( currentPlayer, gameId ) => {
+  let playerData
+  const game = db.collection('games').doc(gameId)
+  game
+      .get()
+      .then(doc => {
+        playerData = doc.data().players[currentPlayer]
+      })
+      .then(() => {
+        let updatedPlayerData = {}
+        // Reduce player resources
+        updatedPlayerData[`players.${currentPlayer}.wheat`] = playerData.wheat - 2
+        updatedPlayerData[`players.${currentPlayer}.ore`] = playerData.ore - 3
+        updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
+        // Update Firebase
+        game.update(updatedPlayerData)
+      })
+}
 
 // /* INITIATE TRADE
 //   Parameters types:
@@ -312,4 +299,15 @@ export const setRobberOnTile = (currentGame, tileId) => {
     .collection('games')
     .doc(currentGame)
     .update(setRobberOnTileUpdate)
+//updates message start property - used so as to have only 13 messages at a time
+export const updateMessageStart = () => {
+  const gameId = window.location.href.slice(-20)
+  const game = db.collection('games').doc(gameId)
+  let updateMessageStartData = {}
+  game.get().then(doc => {
+    let messageStart = doc.data().game.messageStart
+    messageStart = messageStart + 1
+    updateMessageStartData[`game.messageStart`] = messageStart
+    game.update(updateMessageStartData)
+  })
 }

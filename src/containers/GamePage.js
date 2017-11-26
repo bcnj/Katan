@@ -36,13 +36,18 @@ class GamePage extends Component {
   }
 
   render() {
-    //controls which panel tab appears based on menu selection
     let section
     if (this.state.activeItem === 'players') {
       section = <PlayerTab currentGame={this.props.currentGame} />
     }
     if (this.state.activeItem === 'messages') {
-      section = <MessageTab />
+      section = (
+        <MessageTab
+          players={this.props.currentGame.players}
+          messageCount={this.props.currentGame.game.messageCount}
+          messageStart={this.props.currentGame.game.messageStart}
+        />
+      )
     }
     if (this.state.activeItem === 'log') {
       section = <LogTab />
@@ -125,7 +130,7 @@ class GamePage extends Component {
 
           {/* action buttons column */}
           <Grid.Column width={5}>
-            <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
+            <Grid.Row style={{ height: '50%' }}>
               <BuildBtn gameId={gameId} currentGame={currentGame} />
               <TradeBtn />
             </Grid.Row>
@@ -133,13 +138,12 @@ class GamePage extends Component {
             <Grid.Row style={{ height: '50%' }}>
               <DevCardBtn />
               <EndTurnBtn gameId={gameId} />
+              {currentGame &&
+                currentGame.game &&
+                currentGame.game.diceRoll === 7 && (
+                  <Robber currentGame={currentGame} user={user} />
+                )}
             </Grid.Row>
-            {/*Right now it immidiately pops up when a 7 is rolled, and after finishing using the component */}
-            {currentGame &&
-              currentGame.game &&
-              currentGame.game.diceRoll === 7 && (
-                <Robber currentGame={currentGame} user={user} />
-              )}
           </Grid.Column>
         </Grid.Row>
       </Grid>
