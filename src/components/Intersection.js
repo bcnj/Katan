@@ -25,7 +25,7 @@ class Intersection extends Component {
         shadowBlur={5}
         onClick={ e => {
           (currentGame.intersectionNodes[id].settlement === true) ? buildCity(currentGame.game.currentPlayer, gameId, id) :
-            buildSettlement(currentGame.game.currentPlayer, gameId, id)}}
+            buildSettlement(currentGame.game.currentPlayer, gameId, id, currentGame.game.turn)}}
         listening={currentGame.intersectionNodes[id].active}
       />
     );
