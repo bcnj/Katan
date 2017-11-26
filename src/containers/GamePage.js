@@ -7,7 +7,6 @@ import Board from '../components/Board';
 import PlayerTab from '../components/PlayerTab'
 import MessageTab from '../components/MessageTab'
 import LogTab from '../components/LogTab'
-
 import BuildBtn from '../components/BuildBtn'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
@@ -39,7 +38,8 @@ class GamePage extends Component {
 
       //controls which panel tab appears based on menu selection
       let section;
-      if (this.state.activeItem === 'players') { section = <PlayerTab currentGame={this.props.currentGame}/>; }
+
+      if (this.state.activeItem === 'players') { section = <PlayerTab currentGame={this.props.currentGame} gameId={this.props.gameId}/>; }
       if (this.state.activeItem === 'messages') { section = <MessageTab players={this.props.currentGame.players} messageCount={this.props.currentGame.game.messageCount} messageStart={this.props.currentGame.game.messageStart}/>; }
       if (this.state.activeItem === 'log') { section = <LogTab />; }
 

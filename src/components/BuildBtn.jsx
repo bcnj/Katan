@@ -28,8 +28,7 @@ class BuildBtn extends Component {
   }
 
   return (
-    <div>
-      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build</Button>
+      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
         { currentGame && currentGame.game && currentGame.roadNodes && playerResource &&
       <Modal
         open={this.state.open}
@@ -65,10 +64,9 @@ class BuildBtn extends Component {
               <img src={buildImage} style={{ height: '100' }} />
             </Modal.Content>
           </Modal>}
-      </Button>
+        </Button>
     )
   }
 }
 
 export default connect()(BuildBtn);
-
