@@ -97,7 +97,7 @@ export const distributeResources = (diceCount, gameId, tileNodes, intersectionNo
   // const resourceUpdate = {}
   let playerData
   for (let i = 1; i<= 19; i++){
-    if(tileNodes[i].rollNumber === diceCount && tileNodes[i].resource !== 'DESSERT'){
+    if(tileNodes[i].rollNumber === diceCount && tileNodes[i].resource !== 'dessert'){
     tileNodes[i].children.forEach(n => {
       let intersection = intersectionNodes[n]
       let currentTile = tileNodes[i]
