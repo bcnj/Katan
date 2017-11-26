@@ -159,7 +159,6 @@ class DevCardBtn extends Component {
 
   handleKnightChange(e, data) {
     e.preventDefault()
-    //I need victim, currentPlayer, and thats it
     let knightValueTile = parseInt(data.value.tile)
     //user...
     let knightValuePlayer = '1'
@@ -213,6 +212,18 @@ class DevCardBtn extends Component {
       monopolyResource,
       monopolyPlayer
     })
+  }
+
+  handleMonopolySubmit(e, data) {
+    let gameId = window.location.href.slice(-20)
+    let monopolyMode = false
+    this.setState({
+      monopolyMode
+    })
+  }
+
+  handleRoadBuildChange(e, data) {
+    e.preventDefault()
   }
 
   handleMonopolySubmit(e, data) {
