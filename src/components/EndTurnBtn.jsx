@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { db } from '../firebase'
-import { endTurn } from '../utils'
+import { endTurn, distributeResourcesInit } from '../utils'
 
 const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
 
@@ -10,6 +10,7 @@ const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
       <Button onClick={e => {
         e.preventDefault()
         endTurn(currentGame.game.turn, currentGame.game.currentPlayer, gameId)
+        { currentGame.game.turn == 7 ? distributeResourcesInit(gameId, currentGame.tileNodes, currentGame.intersectionNodes) : 'hello'}
         }} style={{width: '49%', height: '75%'}}>
           End Turn
       </Button>

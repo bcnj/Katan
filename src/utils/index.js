@@ -133,7 +133,6 @@ export const distributeResources = (diceCount, gameId, tileNodes, intersectionNo
       let currentTile = tileNodes[i]
       // has a city
       if (intersection.city){
-        console.log('iam HERE')
         let game = db.collection('games').doc(gameId)
         game
         .get()
@@ -156,7 +155,7 @@ export const distributeResources = (diceCount, gameId, tileNodes, intersectionNo
         })
         .then(() => {
           let updateResourceForSet = {}
-          updateResourceForSet[`players.${intersection.player}.${currentTile.resource}`] = playerData[currentTile.resource] + 1 // Add 2 resources
+          updateResourceForSet[`players.${intersection.player}.${currentTile.resource}`] = playerData[currentTile.resource] + 1 // Add 1 resource
           game.update(updateResourceForSet)
         })
       }
@@ -164,6 +163,32 @@ export const distributeResources = (diceCount, gameId, tileNodes, intersectionNo
   }
 }}
 
+export const distributeResourcesInit = (gameId, tileNodes, intersectionNodes) => {
+  let playerData
+  let resourceUpdate = {}
+  let game = db.collection('games').doc(gameId)
+  for (let i = 1; i<= 19; i++){
+    tileNodes[i].children.forEach(n => {
+      let intersection = intersectionNodes[n]
+      let currentTile = tileNodes[i]
+      if (intersection.settlement && currentTile.resource !== 'dessert'){
+        game
+        .get()
+        .then(doc => {
+          playerData = doc.data().players[intersection.player]
+        })
+        .then(() => {
+          if (resourceUpdate[`players.${intersection.player}.${currentTile.resource}`]){
+            resourceUpdate[`players.${intersection.player}.${currentTile.resource}`] ++
+          } else {
+            resourceUpdate[`players.${intersection.player}.${currentTile.resource}`] = playerData[currentTile.resource] + 1
+          }
+        })
+      }
+    })
+  }
+  game.update(resourceUpdate)
+}
 
 export const endTurn = (currentTurn, currentPlayer, gameId) => {
   let endTurn = {}
@@ -179,6 +204,8 @@ export const endTurn = (currentTurn, currentPlayer, gameId) => {
   } else if (currentTurn == 5 ){
     endTurn[`game.currentPlayer`] = 'player2'
   } else if (currentTurn == 6 ){
+    endTurn[`game.currentPlayer`] = 'player1'
+  } else if (currentTurn == 7 ){
     endTurn[`game.currentPlayer`] = 'player1'
   } else {
     endTurn[`game.currentPlayer`] = ((playerNum < 4) ? `player${playerNum+1}` : `player${playerNum-3}`)
