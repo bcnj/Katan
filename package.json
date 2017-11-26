@@ -31,5 +31,7 @@
     "enzyme": "^3.2.0",
     "sinon": "^4.1.2",
     "sinon-chai": "^2.14.0"
+    "react-dice": "^1.0.1",
+    "react-dice-complete": "^1.0.2"
   }
 }

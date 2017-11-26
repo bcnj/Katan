@@ -28,7 +28,7 @@ return (
             <Segment style={{ height: '100%', width: '100%' }} >
               <Grid columns={5}>
                 <Grid.Row>
-                  <Grid.Column> Brick: { currentGame.players[player].brick } </Grid.Column>
+                  <Grid.Column> Brick: { currentGame.players[`${player}`].brick } </Grid.Column>
                   <Grid.Column> Wood: { currentGame.players[player].wood } </Grid.Column>
                   <Grid.Column> Sheep: { currentGame.players[player].sheep } </Grid.Column>
                   <Grid.Column> Wheat: { currentGame.players[player].wheat } </Grid.Column>
