@@ -442,3 +442,15 @@ export const getOptions = (game, currentPlayerId) => {
   }
   return options
 }
+//updates message start property - used so as to have only 13 messages at a time
+export const updateMessageStart = () => {
+  const gameId = window.location.href.slice(-20)
+  const game = db.collection('games').doc(gameId)
+  let updateMessageStartData = {}
+  game.get().then(doc => {
+    let messageStart = doc.data().game.messageStart
+    messageStart = messageStart + 1
+    updateMessageStartData[`game.messageStart`] = messageStart
+    game.update(updateMessageStartData)
+  })
+}

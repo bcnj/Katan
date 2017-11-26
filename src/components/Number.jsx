@@ -93,43 +93,43 @@ class Number extends Component {
 
     const ids = {
       A: {
-        img: this.state.A,
+        img: this.state.F,
       },
       B: {
         img: this.state.B,
       },
       C: {
-        img: this.state.C,
-      },
-      D: {
-        img: this.state.D,
-      },
-      E: {
-        img: this.state.E,
-      },
-      F: {
-        img: this.state.F,
-      },
-      G: {
         img: this.state.G,
       },
-      H: {
+      D: {
         img: this.state.H,
+      },
+      E: {
+        img: this.state.C,
+      },
+      F: {
+        img: this.state.J,
+      },
+      G: {
+        img: this.state.L,
+      },
+      H: {
+        img: this.state.M,
       },
       I: {
         img: this.state.I,
       },
       J: {
-        img: this.state.J,
+        img: this.state.Q,
       },
       K: {
         img: this.state.K,
       },
       L: {
-        img: this.state.L,
+        img: this.state.E,
       },
       M: {
-        img: this.state.M,
+        img: this.state.D,
       },
       N: {
         img: this.state.N,
@@ -138,10 +138,10 @@ class Number extends Component {
         img: this.state.O,
       },
       P: {
-        img: this.state.P,
+        img: this.state.A,
       },
       Q: {
-        img: this.state.Q,
+        img: this.state.P,
       },
       R: {
         img: this.state.R,
