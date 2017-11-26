@@ -9,9 +9,14 @@ import YearOfPlentyImg from '../images/yearOfPlenty.jpg'
 import RoadBuildingImg from '../images/roadBuilding.jpg'
 import VictoryPointImg from '../images/victoryPoint.jpg'
 
-import { purchaseDevCard, deleteSpecificDevCard, getOptions, useKnightTakeCard } from '../utils/index.js'
+import {
+  purchaseDevCard,
+  deleteSpecificDevCard,
+  getOptions,
+  useKnightTakeCard,
+  monopolize
+} from '../utils/index.js'
 //setRobberOnTile will be imported
-//`{ text: '', value: '' }`
 
 class DevCardBtn extends Component {
   constructor(props) {
@@ -33,54 +38,61 @@ class DevCardBtn extends Component {
       knightValueVictim: 0,
       knightValuePlayer: 0,
       knightValueTile: 0,
-      knightValuePosPlayers: []
+      knightValuePosPlayers: [],
+      monopolyMode: false,
+      monopolyResource: '',
+      monopolyPlayer: ''
     }
     this.handleCardClick = this.handleCardClick.bind(this)
     this.handleBuyClick = this.handleBuyClick.bind(this)
-    this.handleKnightChange =this.handleKnightChange.bind(this)
-    this.handleKnightSubmit =this.handleKnightSubmit.bind(this)
-    this.handleKnightInputChange=this.handleKnightInputChange.bind(this)
+    this.handleKnightChange = this.handleKnightChange.bind(this)
+    this.handleKnightSubmit = this.handleKnightSubmit.bind(this)
+    this.handleKnightInputChange = this.handleKnightInputChange.bind(this)
+    this.handleMonopolyChange = this.handleMonopolyChange.bind(this)
+    this.handleMonopolySubmit = this.handleMonopolySubmit.bind(this)
   }
 
-  handleKnightChange(e, data) {
-    e.preventDefault()
-    //I need victim, currentPlayer, and thats it
-    let knightValueTile = parseInt(data.value.tile)
-    //user...
-    let knightValuePlayer = '1'
-    let knightValuePosPlayers = data.value.players
-    this.setState({
-      knightValueTile,
-      knightValuePlayer,
-      knightValuePosPlayers
-    })
-  }
-
-  handleKnightInputChange(e,data) {
-    let knightValueVictim = data.value
-    this.setState({knightValueVictim})
-  }
-
-  handleKnightSubmit(e, data) {
-    let count = 0
-    let gameId = window.location.href.slice(-20)
-    if(this.state.knightValuePosPlayers.length===0){
-      // setRobberOnTile(this.state.knightValueTile)
-    } else {
-      this.state.knightValuePosPlayers.forEach((player)=> {
-        player = Object.keys(player)[0]
-        if(this.state.knightValueVictim===player) {
-          count++
-        }
-      })
-      if(count===0) alert('Enter a correct player')
-      else {
-        useKnightTakeCard(gameId, this.state.knightValuePlayer, this.state.knightValueVictim)
-        // setRobberOnTile(this.state.knightValueTile)
-      }
+  componentDidMount() {
+    let currentPlayerData = this.props.currentGame.players.player1,
+      currentPlayer = this.props.currentGame.game.currentPlayer,
+      brick = currentPlayerData.brick,
+      ore = currentPlayerData.ore,
+      sheep = currentPlayerData.sheep,
+      wood = currentPlayerData.wood,
+      wheat = currentPlayerData.wheat,
+      devCards = currentPlayerData.devCards,
+      canOrCannotBuyCard = false,
+      roadBuild = 0,
+      vPoint = 0,
+      plenty = 0,
+      monopoly = 0,
+      knight = 0,
+      options = getOptions(this.props.currentGame, '1')
+    if (sheep >= 1 && ore >= 1 && wheat >= 1) {
+      canOrCannotBuyCard = true
     }
+    devCards.forEach((card, i) => {
+      if (card === 1) knight++
+      if (card === 2) monopoly++
+      if (card === 3) roadBuild++
+      if (card === 4) plenty++
+      if (card === 5) vPoint++
+    })
+    // if(this.props.currentGame.game.currentUser === `player${this.props.user.playerNum}`){
+    //rather then player1
     this.setState({
-      knightMode: false
+      brick,
+      ore,
+      sheep,
+      wood,
+      wheat,
+      roadBuild,
+      vPoint,
+      plenty,
+      monopoly,
+      knight,
+      canOrCannotBuyCard,
+      options
     })
   }
 
@@ -123,69 +135,92 @@ class DevCardBtn extends Component {
     }
     if (num === 2) {
       this.setState({
-        vPoint: this.state.vPoint - 1
+        monopolyMode: true,
+        monopoly: this.state.monopoly - 1
       })
     }
     if (num === 3) {
       this.setState({
-        plenty: this.state.plenty - 1
+        roadBuild: this.state.roadBuild - 1
       })
     }
     if (num === 4) {
       this.setState({
-        roadBuild: this.state.roadBuild - 1
+        plenty: this.state.plenty - 1
       })
     }
     if (num === 5) {
       this.setState({
-        monopoly: this.state.monopoly - 1
+        vPoint: this.state.vPoint - 1
       })
     }
     deleteSpecificDevCard(num, 'player1', gameId)
   }
 
-  componentDidMount() {
-    let currentPlayerData = this.props.currentGame.players.player1,
-      currentPlayer = this.props.currentGame.game.currentPlayer,
-      brick = currentPlayerData.brick,
-      ore = currentPlayerData.ore,
-      sheep = currentPlayerData.sheep,
-      wood = currentPlayerData.wood,
-      wheat = currentPlayerData.wheat,
-      devCards = currentPlayerData.devCards,
-      canOrCannotBuyCard = false,
-      roadBuild = 0,
-      vPoint = 0,
-      plenty = 0,
-      monopoly = 0,
-      knight = 0,
-      options = getOptions(this.props.currentGame, '1')
-    if (sheep >= 1 && ore >= 1 && wheat >= 1) {
-      canOrCannotBuyCard = true
-    }
-
-    devCards.forEach((card, i) => {
-      if (card === 1) knight++
-      if (card === 2) vPoint++
-      if (card === 3) plenty++
-      if (card === 4) roadBuild++
-      if (card === 5) monopoly++
-    })
-    // if(this.props.currentGame.game.currentUser === `player${this.props.user.playerNum}`){
-    //rather then player1
+  handleKnightChange(e, data) {
+    e.preventDefault()
+    //I need victim, currentPlayer, and thats it
+    let knightValueTile = parseInt(data.value.tile)
+    //user...
+    let knightValuePlayer = '1'
+    let knightValuePosPlayers = data.value.players
     this.setState({
-      brick,
-      ore,
-      sheep,
-      wood,
-      wheat,
-      roadBuild,
-      vPoint,
-      plenty,
-      monopoly,
-      knight,
-      canOrCannotBuyCard,
-      options
+      knightValueTile,
+      knightValuePlayer,
+      knightValuePosPlayers
+    })
+  }
+
+  handleKnightInputChange(e, data) {
+    let knightValueVictim = data.value
+    this.setState({ knightValueVictim })
+  }
+
+  handleKnightSubmit(e, data) {
+    let count = 0
+    let gameId = window.location.href.slice(-20)
+    if (this.state.knightValuePosPlayers.length === 0) {
+      // setRobberOnTile(this.state.knightValueTile)
+    } else {
+      this.state.knightValuePosPlayers.forEach(player => {
+        player = Object.keys(player)[0]
+        if (this.state.knightValueVictim === player) {
+          count++
+        }
+      })
+      if (count === 0) alert('Enter a correct player')
+      else {
+        useKnightTakeCard(
+          gameId,
+          this.state.knightValuePlayer,
+          this.state.knightValueVictim
+        )
+        // setRobberOnTile(this.state.knightValueTile)
+      }
+    }
+    this.setState({
+      knightMode: false
+    })
+  }
+
+  handleMonopolyChange(e, data) {
+    e.preventDefault()
+    //I need victim, currentPlayer, and thats it
+    let monopolyResource = data.value
+    //user...
+    let monopolyPlayer = '1'
+    this.setState({
+      monopolyResource,
+      monopolyPlayer
+    })
+  }
+
+  handleMonopolySubmit(e, data) {
+    let gameId = window.location.href.slice(-20)
+    monopolize(gameId, this.state.monopolyResource, this.state.monopolyPlayer)
+    let monopolyMode = false
+    this.setState({
+      monopolyMode
     })
   }
 
@@ -260,7 +295,7 @@ class DevCardBtn extends Component {
               {this.state.monopoly === 0 ? (
                 <Button disabled>Use</Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 5)}>Use</Button>
+                <Button onClick={e => this.handleCardClick(e, 2)}>Use</Button>
               )}
               <Button disabled>{this.state.monopoly}</Button>
             </Button.Group>
@@ -268,7 +303,7 @@ class DevCardBtn extends Component {
               {this.state.roadBuild === 0 ? (
                 <Button disabled>Use</Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 4)}>Use</Button>
+                <Button onClick={e => this.handleCardClick(e, 3)}>Use</Button>
               )}
               <Button disabled>{this.state.roadBuild}</Button>
             </Button.Group>
@@ -276,7 +311,7 @@ class DevCardBtn extends Component {
               {this.state.plenty === 0 ? (
                 <Button disabled>Use</Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 3)}>Use</Button>
+                <Button onClick={e => this.handleCardClick(e, 4)}>Use</Button>
               )}
               <Button disabled>{this.state.plenty}</Button>
             </Button.Group>
@@ -284,7 +319,7 @@ class DevCardBtn extends Component {
               {this.state.vPoint === 0 ? (
                 <Button disabled>Use</Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 2)}>Use</Button>
+                <Button onClick={e => this.handleCardClick(e, 5)}>Use</Button>
               )}
               <Button disabled>{this.state.vPoint}</Button>
             </Button.Group>
@@ -301,8 +336,33 @@ class DevCardBtn extends Component {
                   onChange={this.handleKnightChange}
                 />
               </Menu.Item>
-              <Input placeholder='Which player?' onChange={this.handleKnightInputChange}/>
+              <Input
+                placeholder="Which player?"
+                onChange={this.handleKnightInputChange}
+              />
               <Button onClick={this.handleKnightSubmit}>Submit</Button>
+            </Menu>
+          )}
+          {this.state.monopolyMode && (
+            <Menu vertical>
+              <Menu.Item header>Select a resource</Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  //`{ text: '', value: '' }`
+                  options={[
+                    { text: 'Ore', value: 'ore' },
+                    { text: 'Wheat', value: 'WHEAT' },
+                    { text: 'Wood', value: 'WOOD' },
+                    { text: 'Brick', value: 'BRICK' },
+                    { text: 'Sheep', value: 'SHEEP' }
+                  ]}
+                  placeholder="Pick one"
+                  fluid
+                  selection
+                  onChange={this.handleMonopolyChange}
+                />
+              </Menu.Item>
+              <Button onClick={this.handleMonopolySubmit}>Submit</Button>
             </Menu>
           )}
         </Modal.Content>

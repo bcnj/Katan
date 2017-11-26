@@ -116,57 +116,71 @@ export const buildCity = (currentPlayer, gameId, intersectionId) => {
   turnIntersectionOff(gameId)
 }
 
-
 export const rollDice = (diceSum, gameId) => {
-    const diceRoll = {}
-    diceRoll[`game.diceRoll`] = diceSum
-    db.collection('games').doc(`${gameId}`)
-      .update(diceRoll)
-      .then(() => console.log('Dice has been rolled'))
-      .catch(err => console.log('Error has occured for rolling dice: ', err))
+  const diceRoll = {}
+  diceRoll[`game.diceRoll`] = diceSum
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(diceRoll)
+    .then(() => console.log('Dice has been rolled'))
+    .catch(err => console.log('Error has occured for rolling dice: ', err))
 }
 
-export const distributeResources = (diceCount, gameId, tileNodes, intersectionNodes) => {
+export const distributeResources = (
+  diceCount,
+  gameId,
+  tileNodes,
+  intersectionNodes
+) => {
   // const resourceUpdate = {}
   let playerData
-  for (let i = 1; i<= 19; i++){
-    if(tileNodes[i].rollNumber === diceCount && tileNodes[i].resource !== 'dessert'){
-    tileNodes[i].children.forEach(n => {
-      let intersection = intersectionNodes[n]
-      let currentTile = tileNodes[i]
-      // has a city
-      if (intersection.city){
-        console.log('iam HERE')
-        let game = db.collection('games').doc(gameId)
-        game
-        .get()
-        .then(doc => {
-          playerData = doc.data().players[intersection.player]
-        })
-        .then(() => {
-          let updateResourceForCity = {}
-          updateResourceForCity[`players.${intersection.player}.${currentTile.resource}`] = playerData[`${currentTile.resource}`] + 2 // Add 2 resources
-          game.update(updateResourceForCity)
-        })
-      }
-      // has a settlement
-      else if (intersection.settlement){
-        let game = db.collection('games').doc(gameId)
-        game
-        .get()
-        .then(doc => {
-          playerData = doc.data().players[intersection.player]
-        })
-        .then(() => {
-          let updateResourceForSet = {}
-          updateResourceForSet[`players.${intersection.player}.${currentTile.resource}`] = playerData[currentTile.resource] + 1 // Add 2 resources
-          game.update(updateResourceForSet)
-        })
-      }
-    })
+  for (let i = 1; i <= 19; i++) {
+    if (
+      tileNodes[i].rollNumber === diceCount &&
+      tileNodes[i].resource !== 'dessert'
+    ) {
+      tileNodes[i].children.forEach(n => {
+        let intersection = intersectionNodes[n]
+        let currentTile = tileNodes[i]
+        // has a city
+        if (intersection.city) {
+          console.log('iam HERE')
+          let game = db.collection('games').doc(gameId)
+          game
+            .get()
+            .then(doc => {
+              playerData = doc.data().players[intersection.player]
+            })
+            .then(() => {
+              let updateResourceForCity = {}
+              updateResourceForCity[
+                `players.${intersection.player}.${currentTile.resource}`
+              ] =
+                playerData[`${currentTile.resource}`] + 2 // Add 2 resources
+              game.update(updateResourceForCity)
+            })
+        } else if (intersection.settlement) {
+          // has a settlement
+          let game = db.collection('games').doc(gameId)
+          game
+            .get()
+            .then(doc => {
+              playerData = doc.data().players[intersection.player]
+            })
+            .then(() => {
+              let updateResourceForSet = {}
+              updateResourceForSet[
+                `players.${intersection.player}.${currentTile.resource}`
+              ] =
+                playerData[currentTile.resource] + 1 // Add 2 resources
+              game.update(updateResourceForSet)
+            })
+        }
+      })
+    }
   }
-}}
-
+}
 
 // /* END TURN
 //   Player ends turn, switches to next player
@@ -381,7 +395,7 @@ export const shuffle = arr => {
 export const useKnightTakeCard = (gameId, taker, victim) => {
   const game = db.collection('games').doc(gameId)
   game.get().then(doc => {
-    let cards = ['ore', 'sheep', 'wheat', 'wood', 'brick'],
+    let cards = ['ORE', 'SHEEP', 'WHEAT', 'WOOD', 'BRICK'],
       shuffled = shuffle(cards),
       check = true,
       i = 0
@@ -487,5 +501,52 @@ export const updateMessageStart = () => {
     messageStart = messageStart + 1
     updateMessageStartData[`game.messageStart`] = messageStart
     game.update(updateMessageStartData)
+  })
+}
+
+export const monopolize = (gameId, resource, player) => {
+  const game = db.collection('games').doc(gameId)
+  game.get().then(doc => {
+    let player1Resource = doc.data().players.player1[resource],
+      player2Resource = doc.data().players.player2[resource],
+      player3Resource = doc.data().players.player3[resource],
+      player4Resource = doc.data().players.player4[resource]
+    if (player === '1') {
+      player1Resource += player2Resource + player3Resource + player4Resource
+      player2Resource = 0
+      player3Resource = 0
+      player4Resource = 0
+    }
+    if (player === '2') {
+      player2Resource += player1Resource + player3Resource + player4Resource
+      player1Resource = 0
+      player3Resource = 0
+      player4Resource = 0
+    }
+    if (player === '3') {
+      player3Resource += player2Resource + player1Resource + player4Resource
+      player2Resource = 0
+      player1Resource = 0
+      player4Resource = 0
+    }
+    if (player === '4') {
+      player4Resource += player2Resource + player3Resource + player1Resource
+      player2Resource = 0
+      player3Resource = 0
+      player1Resource = 0
+    }
+    let player1Update = {},
+      player2Update = {},
+      player3Update = {},
+      player4Update = {}
+
+    player1Update[`players.player1.${resource}`] = player1Resource
+    player2Update[`players.player2.${resource}`] = player2Resource
+    player3Update[`players.player3.${resource}`] = player3Resource
+    player4Update[`players.player4.${resource}`] = player4Resource
+    game.update(player1Update)
+    game.update(player2Update)
+    game.update(player3Update)
+    game.update(player4Update)
   })
 }
