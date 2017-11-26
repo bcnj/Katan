@@ -6,8 +6,17 @@ const dummyData = {
     "active": false,
     "playerCount": 0,
     "setup": true, // Setup will remain true until turn > totalPlayerCount * 2
+    "messageCount": 2,
+    "messageStart": 1,
     "turn": 0, // Add for each turn
     "robber": '10',
+  },
+  "messages": {
+    "1": {
+      "player": "admin",
+      "time": "the past",
+      "content": "Welcome to the game!!!!"
+    }
   },
   "players": {
     "player1": {
