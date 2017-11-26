@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Segment } from 'semantic-ui-react';
 import { Card } from 'semantic-ui-react'
+import Dice from '../components/Dice'
 
-const PlayerTab = ({currentGame}) => {
+const PlayerTab = ({currentGame, gameId}) => {
 
 return (
     <Segment style={{ height: '90%' }}>
@@ -18,6 +19,7 @@ return (
               />
           ))}
       </Card.Group>
+      <Dice currentGame={currentGame} gameId={gameId}/>
     </Segment>
   );
 };

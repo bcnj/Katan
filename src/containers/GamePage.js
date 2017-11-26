@@ -7,7 +7,6 @@ import Board from '../components/Board'
 import PlayerTab from '../components/PlayerTab'
 import MessageTab from '../components/MessageTab'
 import LogTab from '../components/LogTab'
-
 import BuildBtn from '../components/BuildBtn'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
@@ -47,6 +46,76 @@ class GamePage extends Component {
           messageCount={this.props.currentGame.game.messageCount}
           messageStart={this.props.currentGame.game.messageStart}
         />
+      if (this.state.activeItem === 'log') { section = <LogTab />; }
+
+      //local state governing current panel selection
+      const { activeItem } = this.state
+      const { user, currentGame, gameId } = this.props
+
+      return (
+
+          <Grid padded>
+              {/* this row contains game map, players, chat, log */}
+              <Grid.Row
+                  style={{ height: '80vh' }}
+              >
+                  {/* Konva map column */}
+                  <Grid.Column
+                      textAlign={'center'}
+                      // color={'red'}
+                      width={11}
+                  >
+                  { currentGame && currentGame.game &&
+                      <Board currentPlayer={currentGame.game.currentPlayer} gameId={gameId}/>
+                  }
+                  </Grid.Column>
+
+                  {/* right-side panel column */}
+                  <Grid.Column
+                      textAlign={'center'}
+                      // color={'blue'}
+                      width={5}
+                  >
+                      {/* do not abtract due to local state (unless we transition to using redux store) */}
+                      <Menu pointing secondary>
+                          <Menu.Item name='players' active={activeItem === 'players'} onClick={this.handlePanelClick} />
+                          <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handlePanelClick} />
+                          <Menu.Item name='log' active={activeItem === 'log'} onClick={this.handlePanelClick} />
+                          <Menu.Menu position='right'>
+                              <Menu.Item name='quit' active={activeItem === 'quit'} onClick={this.handlePanelClick} />
+                          </Menu.Menu>
+                      </Menu>
+
+                      {/* section depends on menu selection */}
+                      {section}
+
+                  </Grid.Column>
+              </Grid.Row>
+
+              {/* contains the players table and action buttons */}
+              <Grid.Row
+                  style={{ height: '20vh' }}
+              // color={'yellow'}
+              >
+                  {/* players table column */}
+                  <Grid.Column width={11} >
+                      <PlayerTable user={user} currentGame={currentGame} gameId={gameId}/>
+                  </Grid.Column>
+
+                  {/* action buttons column */}
+                  <Grid.Column width={5} >
+                      <Grid.Row style={{ height: '50%' }}>
+                          <BuildBtn gameId={gameId} currentGame={currentGame}/>
+                          <TradeBtn />
+                      </Grid.Row>
+
+                      <Grid.Row style={{ height: '50%' }}>
+                          <DevCardBtn />
+                          <EndTurnBtn gameId={gameId}/>
+                      </Grid.Row>
+                  </Grid.Column>
+              </Grid.Row>
+          </Grid>
       )
     }
     if (this.state.activeItem === 'log') {
