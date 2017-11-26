@@ -8,6 +8,7 @@ import PlayerTab from '../components/PlayerTab'
 import MessageTab from '../components/MessageTab'
 import LogTab from '../components/LogTab'
 import BuildBtn from '../components/BuildBtn'
+import BuildBtnInit from '../components/BuildBtnInit'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
@@ -215,7 +216,9 @@ class GamePage extends Component {
                   {/* action buttons column */}
                   <Grid.Column width={5} >
                       <Grid.Row style={{ height: '50%' }}>
-                          <BuildBtn gameId={gameId} currentGame={currentGame}/>
+                        { currentGame && currentGame.game && (currentGame.game.turn >= 8 ?
+                          <BuildBtn gameId={gameId} currentGame={currentGame}/> : <BuildBtnInit gameId={gameId} currentGame={currentGame}/>
+                        )}
                           <TradeBtn />
                       </Grid.Row>
 
