@@ -1,5 +1,7 @@
 import { db } from '../firebase'
 
+import { createDevCards, shuffle } from '../helpers.js'
+
 export const turnRoadsOff = gameId => {
   const roadUpdate = {}
   for (let i = 1; i <= 72; i++) {
@@ -358,6 +360,10 @@ export const buildCityResource = (currentPlayer, gameId) => {
 export const purchaseDevCard = (player, gameId) => {
   const game = db.collection('games').doc(gameId)
   let resourceUpdate = {}
+
+  let devCards = createDevCards(),
+    shuffledDevCards = shuffle(devCards)
+
   game.get().then(doc => {
     let prevOre = doc.data().players[player].ore,
       prevWheat = doc.data().players[player].wheat,
@@ -366,7 +372,15 @@ export const purchaseDevCard = (player, gameId) => {
     resourceUpdate[`players.${player}.sheep`] = prevSheep - 1
     resourceUpdate[`players.${player}.wheat`] = prevWheat - 1
     game.update(resourceUpdate)
+
+    let prevDevCards = doc.data().players[player].devCards,
+      newDevCards = [shuffledDevCards[0], ...prevDevCards]
+
+    let devCardUpdate = {}
+    devCardUpdate[`players.${player}.devCards`] = newDevCards
+    game.update(devCardUpdate)
   })
+  return shuffledDevCards[0]
 }
 
 export const deleteSpecificDevCard = (cardId, player, gameId) => {
@@ -383,12 +397,6 @@ export const deleteSpecificDevCard = (cardId, player, gameId) => {
     })
     deleteDevCard[`players.${player}.devCards`] = newDevCards
     game.update(deleteDevCard)
-  })
-}
-
-export const shuffle = arr => {
-  return arr.sort(function(a, b) {
-    return 0.5 - Math.random()
   })
 }
 
@@ -548,5 +556,49 @@ export const monopolize = (gameId, resource, player) => {
     game.update(player2Update)
     game.update(player3Update)
     game.update(player4Update)
+  })
+}
+
+export const addTwoSelectedResources = (gameId, resources, player) => {
+  const game = db.collection('games').doc(gameId)
+  game.get().then(doc => {
+    let firstResource = resources[0]
+    let currentFirstResource = doc.data().players[`player${player}`][
+      firstResource
+    ]
+
+    if (resources[0] === resources[1]) {
+      let firstResourceUpdate = {}
+      firstResourceUpdate[`players.player${player}.${firstResource}`] =
+        currentFirstResource + 2
+
+      game.update(firstResourceUpdate)
+    } else {
+      let firstResourceUpdate = {}
+      firstResourceUpdate[`players.player${player}.${firstResource}`] =
+        currentFirstResource + 1
+
+      game.update(firstResourceUpdate)
+
+      let secondResource = resources[1],
+        currentSecondResource = doc.data().players[`player${player}`][
+          secondResource
+        ],
+        secondResourceUpdate = {}
+      secondResourceUpdate[`players.player${player}.${secondResource}`] =
+        currentSecondResource + 1
+
+      game.update(secondResourceUpdate)
+    }
+  })
+}
+
+export const victoryPointCard = (player, gameId) => {
+  const game = db.collection('games').doc(gameId)
+  game.get().then(doc => {
+    let incrementedPlayerScore = doc.data().players[`player${player}`].score+1
+    let updateScore = {}
+    updateScore[`players.player${player}.score`] = incrementedPlayerScore
+    game.update(updateScore)
   })
 }

@@ -14,7 +14,9 @@ import {
   deleteSpecificDevCard,
   getOptions,
   useKnightTakeCard,
-  monopolize
+  monopolize,
+  addTwoSelectedResources,
+  victoryPointCard
 } from '../utils/index.js'
 //setRobberOnTile will be imported
 
@@ -33,6 +35,7 @@ class DevCardBtn extends Component {
       monopoly: 0,
       roadBuild: 0,
       canOrCannotBuyCard: false,
+      totalCardsToReRender: 0,
       knightMode: false,
       options: [],
       knightValueVictim: 0,
@@ -41,7 +44,11 @@ class DevCardBtn extends Component {
       knightValuePosPlayers: [],
       monopolyMode: false,
       monopolyResource: '',
-      monopolyPlayer: ''
+      monopolyPlayer: '',
+      plentyMode: false,
+      plentyResource: '',
+      plentyResourceChoices: [],
+      plentyPlayer: ''
     }
     this.handleCardClick = this.handleCardClick.bind(this)
     this.handleBuyClick = this.handleBuyClick.bind(this)
@@ -50,6 +57,9 @@ class DevCardBtn extends Component {
     this.handleKnightInputChange = this.handleKnightInputChange.bind(this)
     this.handleMonopolyChange = this.handleMonopolyChange.bind(this)
     this.handleMonopolySubmit = this.handleMonopolySubmit.bind(this)
+    this.handlePlentyChange = this.handlePlentyChange.bind(this)
+    this.handlePlentySubmit = this.handlePlentySubmit.bind(this)
+    this.handlePlentyAdd = this.handlePlentyAdd.bind(this)
   }
 
   componentDidMount() {
@@ -118,7 +128,35 @@ class DevCardBtn extends Component {
       })
     }
     //player + String(this.props.user.playerNum)
-    purchaseDevCard('player1', gameId)
+    let num = purchaseDevCard('player1', gameId)
+    console.log(num)
+    if (num === 1) {
+      this.setState({
+        knight: this.state.knight + 1
+      })
+    }
+    if (num === 2) {
+      this.setState({
+        monopoly: this.state.monopoly + 1
+      })
+    }
+    if (num === 3) {
+      this.setState({
+        roadBuild: this.state.roadBuild + 1
+      })
+    }
+    if (num === 4) {
+      this.setState({
+        plenty: this.state.plenty + 1
+      })
+    }
+    if (num === 5) {
+      //...user not '1'
+      victoryPointCard('1', gameId)
+      this.setState({
+        vPoint: this.state.vPoint + 1
+      })
+    }
   }
 
   handleCardClick(e, num) {
@@ -146,12 +184,8 @@ class DevCardBtn extends Component {
     }
     if (num === 4) {
       this.setState({
+        plentyMode: true,
         plenty: this.state.plenty - 1
-      })
-    }
-    if (num === 5) {
-      this.setState({
-        vPoint: this.state.vPoint - 1
       })
     }
     deleteSpecificDevCard(num, 'player1', gameId)
@@ -204,7 +238,6 @@ class DevCardBtn extends Component {
 
   handleMonopolyChange(e, data) {
     e.preventDefault()
-    //I need victim, currentPlayer, and thats it
     let monopolyResource = data.value
     //user...
     let monopolyPlayer = '1'
@@ -226,14 +259,57 @@ class DevCardBtn extends Component {
     e.preventDefault()
   }
 
-  handleMonopolySubmit(e, data) {
+  handleRoadBuildSubmit(e, data) {
     let gameId = window.location.href.slice(-20)
-    monopolize(gameId, this.state.monopolyResource, this.state.monopolyPlayer)
-    let monopolyMode = false
+    //this one i leave for later
+  }
+
+  handlePlentyChange(e, data) {
+    e.preventDefault()
+    console.log(data.value)
+    let plentyResource = data.value
+    //user...
+    let plentyPlayer = '1'
     this.setState({
-      monopolyMode
+      plentyResource,
+      plentyPlayer
     })
   }
+
+  handlePlentyAdd(e, data) {
+    let resourceChoice = this.state.plentyResource
+    this.setState({
+      plentyResourceChoices: [
+        ...this.state.plentyResourceChoices,
+        resourceChoice
+      ]
+    })
+    console.log(resourceChoice, this.state.plentyResourceChoices)
+  }
+
+  handlePlentySubmit(e, data) {
+    let gameId = window.location.href.slice(-20)
+    let plentyMode = false
+    addTwoSelectedResources(
+      gameId,
+      this.state.plentyResourceChoices,
+      this.state.plentyPlayer
+    )
+    this.setState({
+      plentyMode,
+      plentyResourceChoices: []
+    })
+  }
+
+  // handleVpointClick(e) {
+  //   e.preventDefault()
+  //   let gameId = window.location.href.slice(-20)
+
+  //   this.setState({
+  //     vPoint: this.state.vPoint - 1
+  //   })
+  //   deleteSpecificDevCard(5, 'player1', gameId)
+  // }
 
   render() {
     return (
@@ -246,11 +322,11 @@ class DevCardBtn extends Component {
           Purchase a card?
         </h1>
         {this.state.canOrCannotBuyCard ? (
-          <Button fluid onClick={e => this.handleBuyClick(e)}>
+          <Button color="green" fluid onClick={e => this.handleBuyClick(e)}>
             Purchase a Card
           </Button>
         ) : (
-          <Button disabled fluid>
+          <Button color="green" disabled fluid>
             Purchase a Card
           </Button>
         )}
@@ -296,43 +372,73 @@ class DevCardBtn extends Component {
             {' '}
             <Button.Group size="medium">
               {this.state.knight === 0 ? (
-                <Button disabled>Use</Button>
+                <Button color="red" disabled>
+                  Use
+                </Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 1)}>Use</Button>
+                <Button color="red" onClick={e => this.handleCardClick(e, 1)}>
+                  Use
+                </Button>
               )}
-              <Button disabled>{this.state.knight}</Button>
+              <Button color="red" disabled>
+                {this.state.knight}
+              </Button>
             </Button.Group>
             <Button.Group size="medium">
               {this.state.monopoly === 0 ? (
-                <Button disabled>Use</Button>
+                <Button color="orange" disabled>
+                  Use
+                </Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 2)}>Use</Button>
+                <Button color="orange" onClick={e => this.handleCardClick(e, 2)}>
+                  Use
+                </Button>
               )}
-              <Button disabled>{this.state.monopoly}</Button>
+              <Button color="orange" disabled>
+                {this.state.monopoly}
+              </Button>
             </Button.Group>
             <Button.Group size="medium">
               {this.state.roadBuild === 0 ? (
-                <Button disabled>Use</Button>
+                <Button color="purple" disabled>
+                  Use
+                </Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 3)}>Use</Button>
+                <Button
+                  color="purple"
+                  onClick={e => this.handleCardClick(e, 3)}
+                >
+                  Use
+                </Button>
               )}
-              <Button disabled>{this.state.roadBuild}</Button>
+              <Button color="purple" disabled>
+                {this.state.roadBuild}
+              </Button>
             </Button.Group>
             <Button.Group size="medium">
               {this.state.plenty === 0 ? (
-                <Button disabled>Use</Button>
+                <Button color="yellow" disabled>
+                  Use
+                </Button>
               ) : (
-                <Button onClick={e => this.handleCardClick(e, 4)}>Use</Button>
+                <Button
+                  color="yellow"
+                  onClick={e => this.handleCardClick(e, 4)}
+                >
+                  Use
+                </Button>
               )}
-              <Button disabled>{this.state.plenty}</Button>
+              <Button color="yellow" disabled>
+                {this.state.plenty}
+              </Button>
             </Button.Group>
             <Button.Group size="medium">
-              {this.state.vPoint === 0 ? (
-                <Button disabled>Use</Button>
-              ) : (
-                <Button onClick={e => this.handleCardClick(e, 5)}>Use</Button>
-              )}
-              <Button disabled>{this.state.vPoint}</Button>
+              <Button color="blue" disabled>
+                +++
+              </Button>
+              <Button color="blue" disabled>
+                {this.state.vPoint}
+              </Button>
             </Button.Group>
           </div>
           {this.state.knightMode && (
@@ -374,6 +480,33 @@ class DevCardBtn extends Component {
                 />
               </Menu.Item>
               <Button onClick={this.handleMonopolySubmit}>Submit</Button>
+            </Menu>
+          )}
+          {this.state.plentyMode && (
+            <Menu vertical>
+              <Menu.Item header>Select a resource</Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  //`{ text: '', value: '' }`
+                  options={[
+                    { text: 'Ore', value: 'ore' },
+                    { text: 'Wheat', value: 'wheat' },
+                    { text: 'Wood', value: 'wood' },
+                    { text: 'Brick', value: 'brick' },
+                    { text: 'Sheep', value: 'sheep' }
+                  ]}
+                  placeholder="Pick one"
+                  fluid
+                  selection
+                  onChange={this.handlePlentyChange}
+                />
+              </Menu.Item>
+              <Button onClick={this.handlePlentyAdd}>Add</Button>
+              {this.state.plentyResourceChoices.length === 2 ? (
+                <Button onClick={this.handlePlentySubmit}>Submit</Button>
+              ) : (
+                <Button disabled>Submit</Button>
+              )}
             </Menu>
           )}
         </Modal.Content>
