@@ -10,7 +10,7 @@ class BuildBtnInit extends Component {
     this.state = {
       open: false,
       buildRoadDisabled: false,
-      buildSettlementDisabled: false,
+      buildSettlementDisabled: true,
       // buildRoad and buildSettlement is only allowed once per turn
     }
     this.handleClose = this.handleClose.bind(this)
@@ -34,7 +34,7 @@ class BuildBtnInit extends Component {
             disabled={this.state.buildRoadDisabled}
             onClick={e => {
             turnRoadsOnInit(currentGame.game.currentPlayer, gameId, currentGame.roadNodes)
-            this.setState({buildRoadDisabled: true})
+            this.setState({buildRoadDisabled: true, buildSettlementDisabled: false})
             this.handleClose()
           }}>
             Build Road
