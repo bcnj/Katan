@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Header, Image, Modal, Grid, Dropdown} from 'semantic-ui-react'
+import { Button, Modal, Grid, Dropdown} from 'semantic-ui-react'
 import wheat from '../images/wheat.jpg'
 import brick from '../images/brick.jpg'
 import sheep from '../images/sheep.jpg'
@@ -78,7 +78,7 @@ class TradeBtn extends Component {
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
                 <Grid.Column key={idx}>
-                  <img src={images[idx]} style={{ width: '70%' }} />
+                  <img src={images[idx]} style={{ width: '70%' }} alt='' />
                   <Dropdown
                     fluid
                     placeholder='0'
@@ -97,7 +97,7 @@ class TradeBtn extends Component {
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
                 <Grid.Column key={idx}>
-                  <img src={images[idx]} style={{ width: '70%' }} />
+                  <img src={images[idx]} style={{ width: '70%' }} alt='' />
                   <br/>
                   <Dropdown
                     fluid

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'
 import { turnRoadsOnInit, turnSettlementOnInit } from '../utils'
 
@@ -86,7 +86,7 @@ class BuildBtnInit extends Component {
                 </Button>
               </Modal.Actions>
               <Modal.Content>
-                <img src={buildImage} style={{ height: '100' }} />
+                <img src={buildImage} style={{ height: '100' }} alt=''/>
               </Modal.Content>
             </Modal>
           )}
