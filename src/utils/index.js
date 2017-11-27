@@ -334,6 +334,8 @@ export const setRobberOnTile = (currentGame, tileId) => {
     .doc(currentGame)
     .update(setRobberOnTileUpdate)
 //updates message start property - used so as to have only 13 messages at a time
+}
+
 export const updateMessageStart = () => {
   const gameId = window.location.href.slice(-20)
   const game = db.collection('games').doc(gameId)
