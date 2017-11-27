@@ -9,9 +9,6 @@ import dummyData from '../dummyData'
 // import * as actions from '../actions'
 
 class Welcome extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     return (
@@ -22,10 +19,10 @@ class Welcome extends Component {
             <Link to={'/lobby'}>
               <Button secondary> Join Game </Button>
             </Link>
-            <Button secondary onClick={this.props.handleCreate}>
-              {' '}
-              Create Game{' '}
-            </Button>
+            { this.props.user && this.props.user.name &&
+            <Button secondary onClick={() => this.props.handleCreate(this.props.user.name)}>
+              Create Game
+            </Button>}
           </div>
         </div>
       </div>
@@ -36,15 +33,26 @@ class Welcome extends Component {
 const mapStateToProps = state => {
   return {
     allGames: state.game,
-    tiles: state.tiles
+    tiles: state.tiles,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleCreate: () => {
+    handleCreate: (username) => {
       db.collection('games').add(dummyData)
-      ownProps.history.push('/lobby')
+      .then(game =>{
+        let playerUpdate = {}
+        playerUpdate[`players.player1.name`] = username
+        playerUpdate['game.playerCount'] = 1
+        db
+          .collection('games')
+          .doc(`${game.id}`)
+          .update(playerUpdate)
+        localStorage.setItem(`${game.id}`, 'player1')
+        ownProps.history.push(`/game/wait/${game.id}`)
+      })
     }
   }
 }
