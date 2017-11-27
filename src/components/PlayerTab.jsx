@@ -18,7 +18,7 @@ const PlayerTab = ({ currentGame, gameId }) => {
               meta={
                 currentGame.game.currentPlayer === `player${num}`
                   ? 'playing'
-                  : ''
+                  : 'waiting'
               }
               description={`${
                 currentGame.players[`player${num}`].score
