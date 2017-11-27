@@ -23,9 +23,6 @@ class BuildBtn extends Component {
   render() {
     const {
       gameId,
-      handleSettlement,
-      handleCity,
-      handleRoad,
       currentGame
     } = this.props
     let playerResource
@@ -102,7 +99,7 @@ class BuildBtn extends Component {
                 </Button>
               </Modal.Actions>
               <Modal.Content>
-                <img src={buildImage} style={{ height: '100' }} />
+                <img src={buildImage} style={{ height: '100' }} alt='' />
               </Modal.Content>
             </Modal>
           )}

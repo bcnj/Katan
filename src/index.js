@@ -8,7 +8,6 @@ import { createLogger } from 'redux-logger'
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import reducers from './reducers'
 
 const middleware = composeWithDevTools(

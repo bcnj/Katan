@@ -3,9 +3,6 @@ import { Circle } from 'react-konva'
 import { buildCity, buildSettlement } from '../utils'
 
 class Intersection extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     const { id, x, y, color, type, currentGame, gameId } = this.props

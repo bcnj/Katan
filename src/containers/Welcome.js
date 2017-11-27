@@ -9,9 +9,6 @@ import dummyData from '../dummyData'
 // import * as actions from '../actions'
 
 class Welcome extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     return (
