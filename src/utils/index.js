@@ -26,8 +26,6 @@ export const turnRoadsOn = (currentPlayer, gameId, roadNodes) => {
     .collection('games')
     .doc(`${gameId}`)
     .update(roadUpdate)
-<<<<<<< HEAD
-=======
 }
 
 export const turnRoadsOnInit = (currentPlayer, gameId, roadNodes, intersectionNodes) =>{
@@ -45,19 +43,11 @@ export const turnRoadsOnInit = (currentPlayer, gameId, roadNodes, intersectionNo
   roadUpdate[`players.${currentPlayer}.trade`] = false
   db.collection('games').doc(`${gameId}`)
   .update(roadUpdate)
->>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
 }
 
 export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame) => {
   const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
-<<<<<<< HEAD
-  db
-    .collection('games')
-    .doc(`${gameId}`)
-    .update(roadUpdate)
-  buildRoadResource(currentPlayer, gameId)
-=======
   db.collection('games').doc(`${gameId}`)
   .update(roadUpdate)
   if ( turn >= 8){
@@ -68,7 +58,6 @@ export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame) => {
       distributeResourcesInit(gameId, currentGame.tileNodes, currentGame.intersectionNodes,currentGame.players)
     }
   }
->>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
   turnRoadsOff(gameId)
 }
 
@@ -89,19 +78,6 @@ export const turnSettlementOn = (
   intersectionNodes,
   roadNodes
 ) => {
-<<<<<<< HEAD
-  const settlementUpdate = {}
-  for (let i = 1; i <= 54; i++) {
-    if (
-      intersectionNodes[i].player === '0' &&
-      !intersectionNodes[i].neighbors.find(
-        n => intersectionNodes[n].player !== '0'
-      ) &&
-      intersectionNodes[i].roadNeighbors.find(
-        n => roadNodes[n].player === currentPlayer
-      )
-    ) {
-=======
   const settlementUpdate = {}
   for (let i = 1; i <= 54; i++) {
     if (
@@ -126,7 +102,6 @@ export const turnSettlementOnInit = (currentPlayer, gameId, intersectionNodes, r
   const settlementUpdate = {}
   for (let i =1; i<=54; i++){
     if(intersectionNodes[i].player === '0' && !intersectionNodes[i].neighbors.find(n => intersectionNodes[n].player !== '0')){
->>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
       settlementUpdate[`intersectionNodes.${i}.active`] = true
     }
   }
@@ -157,13 +132,6 @@ export const buildSettlement = (currentPlayer, gameId, intersectionId, turn) => 
   const settlementUpdate = {}
   settlementUpdate[`intersectionNodes.${intersectionId}.player`] = currentPlayer
   settlementUpdate[`intersectionNodes.${intersectionId}.settlement`] = true
-<<<<<<< HEAD
-  db
-    .collection('games')
-    .doc(`${gameId}`)
-    .update(settlementUpdate)
-  buildSettlementResource(currentPlayer, gameId)
-=======
   db.collection('games').doc(`${gameId}`)
   .update(settlementUpdate)
   if ( turn >= 8){
@@ -183,7 +151,6 @@ export const buildSettlement = (currentPlayer, gameId, intersectionId, turn) => 
         game.update(updatedPlayerData)
       })
   }
->>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
   turnIntersectionOff(gameId)
 }
 
@@ -500,49 +467,6 @@ export const setRobberOnTile = (currentGame, tileId) => {
     .update(setRobberOnTileUpdate)
 }
 
-<<<<<<< HEAD
-export const checkForWinner = currentGame => {
-  console.log(currentGame)
-  let score1 = currentGame.players.player1.score,
-    score2 = currentGame.players.player2.score,
-    score3 = currentGame.players.player3.score
-  //should check if 3 or four players
-  // score4 = currentGame.players.player4.score
-  //should be name rather then player1 or player2 but not important
-  // let name1 = currentGame.players.player1.name,
-  //  name2 = currentGame.players.player2.name,
-  //  name3 = currentGame.players.player3.name,
-  //  name4 = currentGame.players.player4.name
-  if (score1 >= 10) {
-    return [true, '1']
-  }
-  if (score2 >= 10) {
-    return [true, '2']
-  }
-  if (score3 >= 10) {
-    return [true, '3']
-  }
-  // if(score4>=10) {
-  //   return [true, '4']
-  // }
-  return [false]
-}
-
-export const updateScoreToCloseModal = (e, winner) => {
-  e.preventDefault()
-  let currentGameId = window.location.href.slice(27) //or -20
-  const game = db.collection('games').doc(currentGameId)
-  let player = 'player' + winner
-
-  game.get().then(() => {
-    let updateGameToInactive = {}
-    let updateScoreToCloseModal = {}
-    updateGameToInactive[`game.active`] = false
-    updateScoreToCloseModal[`players.${player}.score`] = 0
-    game.update(updateScoreToCloseModal)
-    game.update(updateGameToInactive)
-=======
->>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
 //updates message start property - used so as to have only 13 messages at a time
 export const updateMessageStart = () => {
   const gameId = window.location.href.slice(-20)
@@ -554,8 +478,6 @@ export const updateMessageStart = () => {
     updateMessageStartData[`game.messageStart`] = messageStart
     game.update(updateMessageStartData)
   })
-<<<<<<< HEAD
-=======
 }
 
 export const robberDivideCardsInHalf = (gameId, player, resources) => {
@@ -654,5 +576,46 @@ export const getOptions = (game, currentPlayerId) => {
     options.push(option)
   }
   return options
->>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
+}
+export const checkForWinner = currentGame => {
+  console.log(currentGame)
+  let score1 = currentGame.players.player1.score,
+    score2 = currentGame.players.player2.score,
+    score3 = currentGame.players.player3.score
+  //should check if 3 or four players
+  // score4 = currentGame.players.player4.score
+  //should be name rather then player1 or player2 but not important
+  // let name1 = currentGame.players.player1.name,
+  //  name2 = currentGame.players.player2.name,
+  //  name3 = currentGame.players.player3.name,
+  //  name4 = currentGame.players.player4.name
+  if (score1 >= 10) {
+    return [true, '1']
+  }
+  if (score2 >= 10) {
+    return [true, '2']
+  }
+  if (score3 >= 10) {
+    return [true, '3']
+  }
+  // if(score4>=10) {
+  //   return [true, '4']
+  // }
+  return [false]
+}
+
+export const updateScoreToCloseModal = (e, winner) => {
+  e.preventDefault()
+  let currentGameId = window.location.href.slice(27) //or -20
+  const game = db.collection('games').doc(currentGameId)
+  let player = 'player' + winner
+
+  game.get().then(() => {
+    let updateGameToInactive = {}
+    let updateScoreToCloseModal = {}
+    updateGameToInactive[`game.active`] = false
+    updateScoreToCloseModal[`players.${player}.score`] = 0
+    game.update(updateScoreToCloseModal)
+    game.update(updateGameToInactive)
+  }
 }
