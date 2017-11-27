@@ -18,7 +18,6 @@ class MessageTab extends Component {
   handleMessageChange = (e, { message, value }) =>
     this.setState({ [message]: value })
 
-
   handleMessageSubmit = () => {
     const gameId = window.location.href.slice(-20)
     const game = db.collection('games').doc(gameId)

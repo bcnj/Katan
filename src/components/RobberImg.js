@@ -21,8 +21,10 @@ class RobberPiece extends Component {
   }
 
   render() {
-    {/* draggable="true" definitely a stretch goal*/}
-    const { id, x, y } = this.props;
+    {
+      /* draggable="true" definitely a stretch goal*/
+    }
+    const { id, x, y } = this.props
     return (
       <ReactKonva.Image
         x={x}
