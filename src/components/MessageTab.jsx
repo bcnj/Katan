@@ -127,4 +127,10 @@ class MessageTab extends Component {
   }
 }
 
-export default connect()(MessageTab)
+const mapStateToProps = (state, ownProps) => {
+  return {
+      currentGame: state.currentGame,
+  }
+}
+
+export default connect(mapStateToProps)(MessageTab)
