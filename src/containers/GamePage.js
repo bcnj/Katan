@@ -160,8 +160,6 @@ class GamePage extends Component {
                 </Button>
               )}
               <EndTurnBtn gameId={gameId} />
-              <DevCardBtn />
-              <EndTurnBtn gameId={gameId} />
               {currentGame &&
                 currentGame.game &&
                 currentGame.game.diceRoll === 7 && (

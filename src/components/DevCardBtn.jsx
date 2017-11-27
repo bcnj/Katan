@@ -250,6 +250,7 @@ class DevCardBtn extends Component {
     e.preventDefault()
     let monopolyResource = data.value
     //user...
+    console.log(data.value)
     let monopolyPlayer = '1'
     this.setState({
       monopolyResource,
@@ -472,10 +473,10 @@ class DevCardBtn extends Component {
                   //`{ text: '', value: '' }`
                   options={[
                     { text: 'Ore', value: 'ore' },
-                    { text: 'Wheat', value: 'WHEAT' },
-                    { text: 'Wood', value: 'WOOD' },
-                    { text: 'Brick', value: 'BRICK' },
-                    { text: 'Sheep', value: 'SHEEP' }
+                    { text: 'Wheat', value: 'wheat' },
+                    { text: 'Wood', value: 'wood' },
+                    { text: 'Brick', value: 'brick' },
+                    { text: 'Sheep', value: 'sheep' }
                   ]}
                   placeholder="Pick one"
                   fluid

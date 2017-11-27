@@ -1,4 +1,5 @@
 import { db } from '../firebase'
+import {createDevCards, shuffle} from '../helpers.js'
 
 export const turnRoadsOff = gameId => {
   const roadUpdate = {}
@@ -711,6 +712,8 @@ export const victoryPointCard = (player, gameId) => {
     updateScore[`players.player${player}.score`] = incrementedPlayerScore
     game.update(updateScore)
   })
+}
+
 export const robberDivideCardsInHalf = (gameId, player, resources) => {
   const game = db.collection('games').doc(gameId)
 
@@ -737,74 +740,4 @@ export const robberDivideCardsInHalf = (gameId, player, resources) => {
     game.update(updateWood)
     game.update(updateDice)
   })
-}
-
-export const getOptions = (game, currentPlayerId) => {
-  var intersections = game.intersectionNodes
-  var tiles = game.tileNodes
-  var intersectionKeyPlayerValue = {}
-  for (let intersection in intersections) {
-    if (intersections[intersection].player !== '0') {
-      intersectionKeyPlayerValue[intersection] =
-        intersections[intersection].player
-    }
-  }
-  //checkForTileWithIntersectionKey
-  var options = [],
-    tileObj = {
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: [],
-      10: [],
-      11: [],
-      12: [],
-      13: [],
-      14: [],
-      15: [],
-      16: [],
-      17: [],
-      18: [],
-      19: []
-    },
-    option = {},
-    tempTile = '',
-    tempPlayer = ''
-  for (let tile in tiles) {
-    tiles[tile].children.forEach(child => {
-      for (let intersection in intersectionKeyPlayerValue) {
-        if (child === intersection) {
-          option = {}
-          option[intersectionKeyPlayerValue[intersection]] = intersection
-          tileObj[tile].push(option)
-        }
-      }
-    })
-  }
-  for (let tile in tileObj) {
-    let playerKey = []
-    option = {}
-    option.value = {}
-    option.value.tile = tile
-    option.value.players = tileObj[tile]
-    if (tileObj[tile].length > 1) {
-      option.text = 'Tile: ' + tile + ' ' + 'Players: '
-      tileObj[tile].forEach(player => {
-        playerKey = Object.keys(player)
-        option.text += playerKey[0] + ' '
-      })
-    } else if (tileObj[tile].length === 1) {
-      playerKey = Object.keys(tileObj[tile][0])
-      option.text = 'Tile: ' + tile + ' ' + 'Players: ' + playerKey[0]
-    } else {
-      option.text = 'Tile: ' + tile + ' ' + 'No players'
-    }
-    options.push(option)
-  }
-  return options
 }
