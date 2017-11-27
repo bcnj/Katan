@@ -108,6 +108,19 @@ export const buildSettlement = (currentPlayer, gameId, intersectionId, turn) => 
   if ( turn >= 8){
     buildSettlementResource(currentPlayer, gameId)
     //trigger nextTurn button
+  } else {
+    let playerData
+    const game = db.collection('games').doc(gameId)
+    game
+      .get()
+      .then(doc => {
+        playerData = doc.data().players[currentPlayer]
+      })
+      .then(() => {
+        let updatedPlayerData = {}
+        updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
+        game.update(updatedPlayerData)
+      })
   }
   turnIntersectionOff(gameId)
 }
@@ -326,6 +339,7 @@ export const buildSettlementResource = ( currentPlayer, gameId ) => {
         game.update(updatedPlayerData)
       })
 }
+
 
 /* BUILD CITY FROM BUY PAGE */
 export const buildCityResource = ( currentPlayer, gameId ) => {
