@@ -28,28 +28,6 @@ export const getTilesThunk = () => {
   }
 }
 
-export const setRobberThunk = (tileId, tF) => {
-  if (tF === true) {
-    return dispatch => {
-      let robberUpdate = {}
-      robberUpdate[`tileNodes.${tileId}.robber`] = false
-      db
-        .collection('testGames')
-        .doc(currentGame)
-        .update(robberUpdate)
-    }
-  } else {
-    return dispatch => {
-      let robberUpdate = {}
-      robberUpdate[`tileNodes.${tileId}.robber`] = true
-      db
-        .collection('testGames')
-        .doc('X59pZQsmXTNxoXNiTEke')
-        .update(robberUpdate)
-    }
-  }
-}
-
 const tilesReducer = function(tiles = [], action) {
   switch (action.type) {
     case GET_TILES:

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react'
 import { connect } from 'react-redux';
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'
 import { turnRoadsOn, turnSettlementOn, turnCityOn } from '../utils'
 
