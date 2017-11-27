@@ -14,13 +14,22 @@ class TradePrompt extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: this.props.currentGame.players[localStorage.getItem(`${this.props.gameId}`)].trade || false,
+      open: props.currentGame.players[localStorage.getItem(props.gameId)].trade || false,
+      acceptDisabled: true
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleOpen = this.handleOpen.bind(this)
   }
-  handleOpen(){this.setState({ open: true })}
 
+  componentDidMount(){
+    let localPlayer = this.props.currentGame.players[localStorage.getItem(this.props.gameId)]
+    let exchangeResource = this.props.currentGame.trade.exchange
+    if (!Object.keys(exchangeResource).find(key => {
+      exchangeResource[key] > localPlayer[key]
+    })){ this.setState({ acceptDisabled: false })}
+  }
+
+  handleOpen(){this.setState({ open: true })}
   handleClose(){this.setState({ open: false })}
 
   render(){
@@ -36,11 +45,8 @@ class TradePrompt extends Component {
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
                 <Grid.Column key={idx}>
                   <img src={images[idx]} style={{ width: '70%' }} />
-                  <Dropdown
-                    fluid
-                    placeholder={currentGame.trade.offer[resource] || '0'}
-                    selection
-                    disabled/>
+                  { currentGame &&
+                    <h3 style={{textAlign: 'center'}}>{currentGame.trade.offer[resource] ?  currentGame.trade.offer[resource] : '0'}</h3> }
                 </Grid.Column>
               ))}
             </Grid.Row>
@@ -51,18 +57,15 @@ class TradePrompt extends Component {
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
                 <Grid.Column key={idx}>
                   <img src={images[idx]} style={{ width: '70%' }} />
-                  <br/>
-                  <Dropdown
-                    fluid
-                    placeholder={currentGame.trade.exchange[resource] || '0'}
-                    selection
-                    disabled/>
+                  { currentGame &&
+                  <h3 style={{textAlign: 'center'}}>{currentGame.trade.exchange[resource] ?  currentGame.trade.exchange[resource] : '0'}</h3>
+                  }
                 </Grid.Column>
               ))}
             </Grid.Row>
           </Grid>
           <Modal.Actions>
-            <Button color='blue' disabled={this.state.submitDisabled} inverted onClick={() => {
+            <Button color='blue' disabled={this.state.acceptDisabled} inverted onClick={() => {
               initiateTrade(currentGame.game.currentPlayer, localStorage.getItem(gameId), this.props.offer, this.props.exchange, gameId)
               this.handleClose()
               }

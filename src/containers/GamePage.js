@@ -114,7 +114,7 @@ class GamePage extends Component {
                   </Grid.Column>
               </Grid.Row>
               { currentGame && currentGame.players && currentGame.players[localStorage.getItem(gameId)].trade &&
-              <TradePrompt/>
+              <TradePrompt currentGame={currentGame} gameId={gameId}/>
               }
           </Grid>
       )

@@ -382,7 +382,8 @@ export const turnTradeOff = (gameId) => {
 
 export const tradeInfo=(offer, exchange, gameId)=>{
   const tradeUpdate = {}
-  tradeUpdate['trade'] = { offer: {offer}, exchange: {exchange}}
+  console.log("!!!!", offer, exchange)
+  tradeUpdate['trade'] = { offer, exchange}
   db.collection('games').doc(gameId)
   .update(tradeUpdate)
 }

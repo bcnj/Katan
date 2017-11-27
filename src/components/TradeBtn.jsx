@@ -20,7 +20,7 @@ class TradeBtn extends Component {
     this.state = {
       open: false,
       offer: {},
-      exchange: [],
+      exchange: {},
       submitDisabled: false // diable submit if currentPlayer don't have enough resources
     }
     this.handleClose = this.handleClose.bind(this)
@@ -51,11 +51,13 @@ class TradeBtn extends Component {
     }
   }
 
-  handleExChange(e, {name, value}){
-    if (!this.state.offer.length){
-      this.setState({ exchange: [{[name]: value}] })
+  handleExChange(e, {value}, resource){
+    if (!this.state.offer){
+      this.setState({ exchange: {[resource]: value} })
     } else {
-      this.setState({ exchange: [...this.state.offer, {[name]: value}] })
+      let currentOffer = {...this.state.exchange}
+      currentOffer[resource] = value
+      this.setState({ exchange: {...currentOffer} })
     }
   }
 
@@ -63,6 +65,7 @@ class TradeBtn extends Component {
     //check if i have enough resources before send this to other players
     turnTradeOn(currentPlayer, gameId)
     tradeInfo(this.state.offer, this.state.exchange, gameId)
+    this.handleClose()
   }
 
   render(){
@@ -98,7 +101,8 @@ class TradeBtn extends Component {
                     fluid
                     placeholder='0'
                     selection
-                    options={qtyOptions}/>
+                    options={qtyOptions}
+                    onChange={(e, {value}) => this.handleExChange(e, {value}, resource)}/>
                 </Grid.Column>
               ))}
             </Grid.Row>
