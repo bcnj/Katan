@@ -17,7 +17,6 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
           <Grid>
             <Grid.Column width={3}>
               <Card style={{ height: '167%', width: '100%' }}>
-                <Image src="//insert image url" />
                 <Card.Content>
                   <Card.Header>{user.name}</Card.Header>
                   <Card.Description>
