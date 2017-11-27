@@ -68,14 +68,13 @@ class TradeBtn extends Component {
     this.handleClose()
   }
 
-  render(){
+  render() {
     return (
-      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Trade
-        <Modal
-          open={this.state.open}
-          onClose={this.handleClose}>
+      <Button onClick={this.handleOpen} style={{ width: '49%', height: '75%' }}>
+        Trade
+        <Modal open={this.state.open} onClose={this.handleClose}>
           <h1 style={{ textAlign: 'center' }}> I am offering </h1>
-          <Grid divided='vertically'>
+          <Grid divided="vertically">
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
                 <Grid.Column key={idx}>
@@ -90,7 +89,10 @@ class TradeBtn extends Component {
               ))}
             </Grid.Row>
             <div style={{ width: '100%' }}>
-              <h1 style={{ textAlign: 'center' }} width={'100%'}> In exchange for </h1>
+              <h1 style={{ textAlign: 'center' }} width={'100%'}>
+                {' '}
+                In exchange for{' '}
+              </h1>
             </div>
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
@@ -110,14 +112,14 @@ class TradeBtn extends Component {
           <Modal.Actions>
             <Button color='blue' disabled={this.state.submitDisabled} inverted onClick={() => this.handleSubmit(this.props.currentGame.game.currentPlayer, this.props.gameId)}>
               Submit
-        </Button>
-            <Button color='blue' inverted onClick={this.handleClose}>
+            </Button>
+            <Button color="blue" inverted onClick={this.handleClose}>
               Cancel
-        </Button>
+            </Button>
           </Modal.Actions>
         </Modal>
       </Button>
     )
   }
 }
-export default connect()(TradeBtn);
+export default connect()(TradeBtn)

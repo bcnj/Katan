@@ -42,56 +42,56 @@ var randomizeTiles = () => {
       'T3',
       'T2',
       'T1'
-    ];
+    ]
 
   rollNumbers = rollNumbers.sort(function(a, b) {
-    return 0.5 - Math.random();
-  });
+    return 0.5 - Math.random()
+  })
 
   resources = resources.sort(function(a, b) {
-    return 0.5 - Math.random();
-  });
+    return 0.5 - Math.random()
+  })
 
   for (let i = 0; i < 19; i++) {
-    let randomTileId = tileIds.pop();
-    let resource = resources.pop();
+    let randomTileId = tileIds.pop()
+    let resource = resources.pop()
     if (resource !== 'DESERT') {
-      let rollNumber = rollNumbers.pop();
-      randomizedTiles[randomTileId] = {};
-      randomizedTiles[randomTileId].id = randomTileId;
-      randomizedTiles[randomTileId].rollNumber = rollNumber;
-      randomizedTiles[randomTileId].resource = resource;
-      randomizedTiles[randomTileId].robber = false;
-      randomizedTiles[randomTileId].players = {};
+      let rollNumber = rollNumbers.pop()
+      randomizedTiles[randomTileId] = {}
+      randomizedTiles[randomTileId].id = randomTileId
+      randomizedTiles[randomTileId].rollNumber = rollNumber
+      randomizedTiles[randomTileId].resource = resource
+      randomizedTiles[randomTileId].robber = false
+      randomizedTiles[randomTileId].players = {}
     } else {
-      randomizedTiles[randomTileId] = {};
-      randomizedTiles[randomTileId].id = randomTileId;
-      randomizedTiles[randomTileId].resource = resource;
-      randomizedTiles[randomTileId].robber = true;
-      randomizedTiles[randomTileId].players = {};
+      randomizedTiles[randomTileId] = {}
+      randomizedTiles[randomTileId].id = randomTileId
+      randomizedTiles[randomTileId].resource = resource
+      randomizedTiles[randomTileId].robber = true
+      randomizedTiles[randomTileId].players = {}
     }
   }
-  return randomizedTiles;
-};
-
-function createCards () {
-  let bricks = new cardsay(19);
-  bricks.fill('BRICK');
-  let wheats = new Array(19);
-  wheats.fill('WHEAT');
-  let ores = new Array(19);
-  ores.fill('ORE');
-  let sheeps = new Array(19);
-  sheeps.fill('SHEEP');
-  let lumber = new Array(19);
-  lumber.fill('LUMBER');
-  let arr = [...wheats, ...ores,...sheeps,...lumber,...bricks];
-
-  return arr;
+  return randomizedTiles
 }
 
-function shuffleCards (cards) {
+function createCards() {
+  let bricks = new cardsay(19)
+  bricks.fill('BRICK')
+  let wheats = new Array(19)
+  wheats.fill('WHEAT')
+  let ores = new Array(19)
+  ores.fill('ORE')
+  let sheeps = new Array(19)
+  sheeps.fill('SHEEP')
+  let lumber = new Array(19)
+  lumber.fill('LUMBER')
+  let arr = [...wheats, ...ores, ...sheeps, ...lumber, ...bricks]
+
+  return arr
+}
+
+function shuffleCards(cards) {
   return cards.sort(function(a, b) {
-    return 0.5 - Math.random();
-  });
+    return 0.5 - Math.random()
+  })
 }

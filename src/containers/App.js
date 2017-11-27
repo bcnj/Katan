@@ -18,24 +18,26 @@ const auth = firebase.auth()
 auth.onAuthStateChanged(user => user || auth.signInAnonymously())
 
 export default () => (
-
   <Router>
-    <div style={{
-      width: '100vw',
-      height: '100vh',
-      backgroundImage: 'url(' + Background + ')',
-      backgroundSize: 'cover',
-      overflow: 'hidden',
-      position: 'absolute',
-      zIndex: '0'}}>
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        backgroundImage: 'url(' + Background + ')',
+        backgroundSize: 'cover',
+        overflow: 'hidden',
+        position: 'absolute',
+        zIndex: '0'
+      }}
+    >
       <nav>
         <WhoAmI auth={auth} />
       </nav>
       <Switch>
-        <Route exact path='/' component={Welcome} />
-        <Route path='/lobby' component={Lobby} />
-        <Route path='/game/wait/:gameId' component={Wait} />
-        <Route path='/game/:gameId' component={GamePage} />
+        <Route exact path="/" component={Welcome} />
+        <Route path="/lobby" component={Lobby} />
+        <Route path="/game/wait/:gameId" component={Wait} />
+        <Route path="/game/:gameId" component={GamePage} />
       </Switch>
     </div>
   </Router>
