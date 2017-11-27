@@ -23,9 +23,6 @@ class BuildBtnInit extends Component {
   render() {
     const {
       gameId,
-      handleSettlement,
-      handleCity,
-      handleRoad,
       currentGame
     } = this.props
 
