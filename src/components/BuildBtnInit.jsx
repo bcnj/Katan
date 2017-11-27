@@ -9,8 +9,8 @@ class BuildBtnInit extends Component {
     super(props)
     this.state = {
       open: false,
-      buildRoadDisabled: false,
-      buildSettlementDisabled: true,
+      buildRoadDisabled: true,
+      buildSettlementDisabled: false,
       // buildRoad and buildSettlement is only allowed once per turn
     }
     this.handleClose = this.handleClose.bind(this)
@@ -24,8 +24,8 @@ class BuildBtnInit extends Component {
   const {gameId, handleSettlement, handleCity, handleRoad, currentGame} = this.props
 
   return (
-      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
-        { currentGame && currentGame.game && currentGame.roadNodes &&
+      <Button disabled={currentGame.game.currentPlayer !== localStorage.getItem(gameId)} onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
+        { currentGame && currentGame.game && currentGame.roadNodes && currentGame.players &&
       <Modal
         open={this.state.open}
         onClose={this.handleClose}>
@@ -33,8 +33,8 @@ class BuildBtnInit extends Component {
           <Button color='blue' inverted
             disabled={this.state.buildRoadDisabled}
             onClick={e => {
-            turnRoadsOnInit(currentGame.game.currentPlayer, gameId, currentGame.roadNodes)
-            this.setState({buildRoadDisabled: true, buildSettlementDisabled: false})
+            turnRoadsOnInit(currentGame.game.currentPlayer, gameId, currentGame.roadNodes, currentGame.intersectionNodes)
+            this.setState({buildSettlementDisabled: false, buildRoadDisabled: true})
             this.handleClose()
           }}>
             Build Road
@@ -43,7 +43,7 @@ class BuildBtnInit extends Component {
             disabled={this.state.buildSettlementDisabled}
             onClick={e => {
             turnSettlementOnInit(currentGame.game.currentPlayer, gameId, currentGame.intersectionNodes, currentGame.roadNodes)
-            this.setState({buildRoadDisabled: false})
+            this.setState({buildSettlementDisabled: true, buildRoadDisabled: false})
             this.handleClose()
           }}>
             Build Settlement

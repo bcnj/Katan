@@ -16,11 +16,14 @@ import TradeBtn from '../components/TradeBtn'
 import PlayerTable from '../components/PlayerTable'
 import { connect } from 'react-redux'
 
+import Robber from '../components/Robber.jsx'
+
 class GamePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'players'
+      activeItem: 'players',
+      now: Date.now()
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
   }
@@ -61,7 +64,6 @@ class GamePage extends Component {
     //local state governing current panel selection
     const { activeItem } = this.state
     const { user, currentGame, gameId } = this.props
-    console.log(localStorage.getItem(`${gameId}`))
 
     return (
       <Grid padded>
@@ -158,6 +160,13 @@ class GamePage extends Component {
                 </Button>
               )}
               <EndTurnBtn gameId={gameId} />
+              <DevCardBtn />
+              <EndTurnBtn gameId={gameId} />
+              {currentGame &&
+                currentGame.game &&
+                currentGame.game.diceRoll === 7 && (
+                  <Robber currentGame={currentGame} user={user} />
+                )}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

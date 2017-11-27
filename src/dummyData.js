@@ -10,6 +10,7 @@ const dummyData = {
     "messageStart": 1,
     "turn": 0, // Add for each turn
     "robber": '10',
+    "robberBuild": false
   },
   "messages": {
     "1": {
@@ -32,7 +33,7 @@ const dummyData = {
       "color": 'red',
       "build": true,
       "trade": false
-    },
+      },
     "player2": {
       "id": 2,
       "name": "",
@@ -201,7 +202,7 @@ const dummyData = {
     },
     '10': {
       "children": ['24', '19', '25', '30', '31', '36'],
-      "resource": "dessert",
+      "resource": "desert",
       "rollNumber": 0
     },
     '11': {

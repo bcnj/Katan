@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import { db } from '../firebase'
-import { endTurn } from '../utils'
+import { endTurn, distributeResourcesInit } from '../utils'
 
 const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
 

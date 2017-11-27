@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react'
 import { connect } from 'react-redux';
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'
 import { turnRoadsOn, turnSettlementOn, turnCityOn } from '../utils'
 
@@ -28,7 +28,7 @@ class BuildBtn extends Component {
   }
 
   return (
-      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
+    <Button disabled={currentGame.game.currentPlayer !== localStorage.getItem(gameId)} onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
         { currentGame && currentGame.game && currentGame.roadNodes && playerResource &&
       <Modal
         open={this.state.open}
