@@ -28,7 +28,7 @@ class BuildBtn extends Component {
   }
 
   return (
-      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
+    <Button disabled={currentGame.game.currentPlayer !== localStorage.getItem(gameId)} onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
         { currentGame && currentGame.game && currentGame.roadNodes && playerResource &&
       <Modal
         open={this.state.open}
