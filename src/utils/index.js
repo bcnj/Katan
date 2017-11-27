@@ -457,47 +457,74 @@ export const buildCityResource = (currentPlayer, gameId) => {
     })
 }
 
-// /* INITIATE TRADE
-//   Parameters types:
-//     initiator & receiver: integers
-//     offer & exchange: objects containing card types and quantity
-// */
-// export const initiateTrade = (initiator, receiver, offer, exchange) => {
-//   let initiatorPlayer = 'player' + initiator
-//   let receiverPlayer = 'player' + receiver
-//   let initiatorData,
-//     receiverData,
-//     updatedInitiatorData = {},
-//     updatedReceiverData = {}
-//   const game = db.collection(testCollection).doc(testDoc)
-//   return function() {
-//     game
-//       .get()
-//       .then(function(doc) {
-//         initiatorData = doc.data().players[initiatorPlayer]
-//         receiverData = doc.data().players[receiverPlayer]
-//       })
-//       .then(() => {
-//         console.log('initiatorData', initiatorData)
-//         console.log('receiverData', receiverData)
-//       })
-//       .then(() => {
-//         let offerKey = Object.keys(offer)
-//         offerKey.forEach(function(type) {
-//           updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
-//             initiatorData[type] - offer[type] + exchange[type]
-//           updatedReceiverData[`players.${receiverPlayer}.${type}`] =
-//             receiverData[type] + offer[type] - exchange[type]
-//         })
-//       })
-//       .then(() =>
-//         Promise.all([
-//           game.update(updatedInitiatorData),
-//           game.update(updatedReceiverData)
-//         ])
-//       )
-//   }
-// }
+export const turnTradeOn = (currentPlayer, gameId) => {
+  const tradeUpdate = {}
+  const playerArr = ['player1', 'player2', 'player3', 'player4']
+  playerArr.filter(player => player !== currentPlayer).forEach( player => {
+    tradeUpdate[`players.${player}.trade`] = true
+  })
+  db.collection('games').doc(gameId)
+  .update(tradeUpdate)
+}
+
+export const turnTradeOff = (gameId) => {
+  const tradeUpdate = {}
+  const playerArr = ['player1', 'player2', 'player3', 'player4']
+  playerArr.forEach( player => {
+    tradeUpdate[`players.${player}.trade`] = false
+  })
+  db.collection('games').doc(gameId)
+  .update(tradeUpdate)
+}
+
+export const tradeInfo=(offer, exchange, gameId)=>{
+  const tradeUpdate = {}
+  tradeUpdate['trade'] = { offer, exchange}
+  db.collection('games').doc(gameId)
+  .update(tradeUpdate)
+}
+
+/* INITIATE TRADE
+  Parameters types:
+    initiator & receiver: 'player1'
+    offer & exchange: objects containing card types and quantity;{ore: 2}
+*/
+export const initiateTrade = (initiatorPlayer, receiverPlayer, offer, exchange, gameId) => {
+  let initiatorData,
+    receiverData,
+    updatedInitiatorData = {},
+    updatedReceiverData = {}
+    turnTradeOff(gameId)
+  const game = db.collection('games').doc(gameId)
+    game
+      .get()
+      .then(function(doc) {
+        initiatorData = doc.data().players[initiatorPlayer]
+        receiverData = doc.data().players[receiverPlayer]
+      })
+      .then(() => {
+        console.log('initiatorData', initiatorData)
+        console.log('receiverData', receiverData)
+      })
+      .then(() => {
+        let offerKey = Object.keys(offer)
+        let exchangeKey = Object.keys(exchange)
+        let resources = offerKey.concat(exchangeKey)
+        console.log('keys', resources)
+        resources.forEach(function(type) {
+         offer[type] = offer[type] ? offer[type] : 0
+         exchange[type] = exchange[type] ? exchange[type] : 0
+          updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
+            (+initiatorData[type]) - (+offer[type]) + (+exchange[type])
+          updatedReceiverData[`players.${receiverPlayer}.${type}`] =
+            (+receiverData[type]) + (+offer[type]) - (+exchange[type])
+        })
+      })
+      .then(() => {
+          game.update(updatedInitiatorData)
+          game.update(updatedReceiverData)
+      })
+}
 
 export const setRobberBuild = (currentGameId, setTrueFalse) => {
   if (setTrueFalse === true) {
