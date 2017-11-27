@@ -8,9 +8,6 @@ import Ore from '../images/mountain.png'
 import Sheep from '../images/pasture.png'
 import { db } from '../firebase'
 
-import { setRobberBuild, setRobberOnTile } from '../utils/index.js'
-
-
 class Tile extends Component {
   constructor(props) {
     super(props)
@@ -49,13 +46,6 @@ class Tile extends Component {
   isOccupied() {} // Returns BOOL
 
   handleClick(event) {
-    //if robberBuild is in place user can click to set robber in place... the robber renders on the screen but oddly it needs a hard refresh.
-    let currentGameId = window.location.href.slice(27)
-    let robberBuild = this.props.robberBuild
-    if (robberBuild === true) {
-      setRobberOnTile(currentGameId, this.props.id)
-      setRobberBuild(currentGameId, false)
-    }
   }
 
   render() {

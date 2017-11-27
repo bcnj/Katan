@@ -21,7 +21,8 @@ class GamePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'players'
+      activeItem: 'players',
+      now: Date.now()
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
   }
@@ -69,7 +70,6 @@ class GamePage extends Component {
             {currentGame &&
               currentGame.game && (
                 <Board
-                  robberBuild={currentGame.game.robberBuild}
                   currentPlayer={currentGame.game.currentPlayer}
                   gameId={gameId}
                 />
@@ -138,10 +138,11 @@ class GamePage extends Component {
               <DevCardBtn />
               <EndTurnBtn gameId={gameId} />
               {currentGame &&
-                currentGame.game &&
-                currentGame.game.diceRoll === 7 && (
+              currentGame.game &&
+              currentGame.game.diceRoll === 7 && (
                   <Robber currentGame={currentGame} user={user} />
                 )}
+                <div>{this.props.now}</div>
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

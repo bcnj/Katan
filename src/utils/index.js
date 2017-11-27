@@ -1,75 +1,106 @@
 import { db } from '../firebase'
 
-export const turnRoadsOff = (gameId) => {
+export const turnRoadsOff = gameId => {
   const roadUpdate = {}
-  for (let i = 1; i<= 72; i++){
+  for (let i = 1; i <= 72; i++) {
     roadUpdate[`roadNodes.${i}.active`] = false
   }
-  db.collection('games').doc(`${gameId}`)
-  .update(roadUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(roadUpdate)
 }
 
-export const turnRoadsOn = (currentPlayer, gameId, roadNodes) =>{
+export const turnRoadsOn = (currentPlayer, gameId, roadNodes) => {
   const roadUpdate = {}
-  for (let i = 1; i<= 72; i++){
-    if(roadNodes[i].player === currentPlayer){
-      roadNodes[i].roadNeighbors.forEach( int => {
-        if(roadNodes[int].player === '0'){
+  for (let i = 1; i <= 72; i++) {
+    if (roadNodes[i].player === currentPlayer) {
+      roadNodes[i].roadNeighbors.forEach(int => {
+        if (roadNodes[int].player === '0') {
           roadUpdate[`roadNodes.${int}.active`] = true
         }
       })
     }
   }
-  db.collection('games').doc(`${gameId}`)
-  .update(roadUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(roadUpdate)
 }
 
 export const buildRoad = (currentPlayer, gameId, roadId) => {
   const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
-  db.collection('games').doc(`${gameId}`)
-  .update(roadUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(roadUpdate)
   buildRoadResource(currentPlayer, gameId)
   turnRoadsOff(gameId)
 }
 
-export const turnIntersectionOff = (gameId) => {
+export const turnIntersectionOff = gameId => {
   const intersectionUpdate = {}
-  for (let i = 1; i<= 72; i++){
+  for (let i = 1; i <= 72; i++) {
     intersectionUpdate[`intersectionNodes.${i}.active`] = false
   }
-  db.collection('games').doc(`${gameId}`)
-  .update(intersectionUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(intersectionUpdate)
 }
 
-export const turnSettlementOn = (currentPlayer, gameId, intersectionNodes, roadNodes) =>{
+export const turnSettlementOn = (
+  currentPlayer,
+  gameId,
+  intersectionNodes,
+  roadNodes
+) => {
   const settlementUpdate = {}
-  for (let i =1; i<=54; i++){
-    if(intersectionNodes[i].player === '0' && !intersectionNodes[i].neighbors.find(n => intersectionNodes[n].player !== '0') && intersectionNodes[i].roadNeighbors.find(n => roadNodes[n].player === currentPlayer)){
+  for (let i = 1; i <= 54; i++) {
+    if (
+      intersectionNodes[i].player === '0' &&
+      !intersectionNodes[i].neighbors.find(
+        n => intersectionNodes[n].player !== '0'
+      ) &&
+      intersectionNodes[i].roadNeighbors.find(
+        n => roadNodes[n].player === currentPlayer
+      )
+    ) {
       settlementUpdate[`intersectionNodes.${i}.active`] = true
     }
   }
-  db.collection('games').doc(`${gameId}`)
-  .update(settlementUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(settlementUpdate)
 }
 
-export const turnCityOn = (currentPlayer, gameId, intersectionNodes) =>{
+export const turnCityOn = (currentPlayer, gameId, intersectionNodes) => {
   const cityUpdate = {}
-  for (let i =1; i<=54; i++){
-    if(intersectionNodes[i].player === currentPlayer && intersectionNodes[i].city === false && intersectionNodes[i].settlement === true){
+  for (let i = 1; i <= 54; i++) {
+    if (
+      intersectionNodes[i].player === currentPlayer &&
+      intersectionNodes[i].city === false &&
+      intersectionNodes[i].settlement === true
+    ) {
       cityUpdate[`intersectionNodes.${i}.active`] = true
     }
   }
-  db.collection('games').doc(`${gameId}`)
-  .update(cityUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(cityUpdate)
 }
 
 export const buildSettlement = (currentPlayer, gameId, intersectionId) => {
   const settlementUpdate = {}
   settlementUpdate[`intersectionNodes.${intersectionId}.player`] = currentPlayer
   settlementUpdate[`intersectionNodes.${intersectionId}.settlement`] = true
-  db.collection('games').doc(`${gameId}`)
-  .update(settlementUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(settlementUpdate)
   buildSettlementResource(currentPlayer, gameId)
   turnIntersectionOff(gameId)
 }
@@ -77,63 +108,79 @@ export const buildSettlement = (currentPlayer, gameId, intersectionId) => {
 export const buildCity = (currentPlayer, gameId, intersectionId) => {
   const cityUpdate = {}
   cityUpdate[`intersectionNodes.${intersectionId}.city`] = true
-  db.collection('games').doc(`${gameId}`)
-  .update(cityUpdate)
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(cityUpdate)
   buildCityResource(currentPlayer, gameId)
   turnIntersectionOff(gameId)
 }
 
-
 export const rollDice = (diceSum, gameId) => {
-    const diceRoll = {}
-    diceRoll[`game.diceRoll`] = diceSum
-    db.collection('games').doc(`${gameId}`)
-      .update(diceRoll)
-      .then(() => console.log('Dice has been rolled'))
-      .catch(err => console.log('Error has occured for rolling dice: ', err))
+  const diceRoll = {}
+  diceRoll[`game.diceRoll`] = diceSum
+  db
+    .collection('games')
+    .doc(`${gameId}`)
+    .update(diceRoll)
+    .then(() => console.log('Dice has been rolled'))
+    .catch(err => console.log('Error has occured for rolling dice: ', err))
 }
 
-export const distributeResources = (diceCount, gameId, tileNodes, intersectionNodes) => {
+export const distributeResources = (
+  diceCount,
+  gameId,
+  tileNodes,
+  intersectionNodes
+) => {
   // const resourceUpdate = {}
   let playerData
-  for (let i = 1; i<= 19; i++){
-    if(tileNodes[i].rollNumber === diceCount && tileNodes[i].resource !== 'dessert'){
-    tileNodes[i].children.forEach(n => {
-      let intersection = intersectionNodes[n]
-      let currentTile = tileNodes[i]
-      // has a city
-      if (intersection.city){
-        console.log('iam HERE')
-        let game = db.collection('games').doc(gameId)
-        game
-        .get()
-        .then(doc => {
-          playerData = doc.data().players[intersection.player]
-        })
-        .then(() => {
-          let updateResourceForCity = {}
-          updateResourceForCity[`players.${intersection.player}.${currentTile.resource}`] = playerData[`${currentTile.resource}`] + 2 // Add 2 resources
-          game.update(updateResourceForCity)
-        })
-      }
-      // has a settlement
-      else if (intersection.settlement){
-        let game = db.collection('games').doc(gameId)
-        game
-        .get()
-        .then(doc => {
-          playerData = doc.data().players[intersection.player]
-        })
-        .then(() => {
-          let updateResourceForSet = {}
-          updateResourceForSet[`players.${intersection.player}.${currentTile.resource}`] = playerData[currentTile.resource] + 1 // Add 2 resources
-          game.update(updateResourceForSet)
-        })
-      }
-    })
+  for (let i = 1; i <= 19; i++) {
+    if (
+      tileNodes[i].rollNumber === diceCount &&
+      tileNodes[i].resource !== 'dessert'
+    ) {
+      tileNodes[i].children.forEach(n => {
+        let intersection = intersectionNodes[n]
+        let currentTile = tileNodes[i]
+        // has a city
+        if (intersection.city) {
+          console.log('iam HERE')
+          let game = db.collection('games').doc(gameId)
+          game
+            .get()
+            .then(doc => {
+              playerData = doc.data().players[intersection.player]
+            })
+            .then(() => {
+              let updateResourceForCity = {}
+              updateResourceForCity[
+                `players.${intersection.player}.${currentTile.resource}`
+              ] =
+                playerData[`${currentTile.resource}`] + 2 // Add 2 resources
+              game.update(updateResourceForCity)
+            })
+        } else if (intersection.settlement) {
+          // has a settlement
+          let game = db.collection('games').doc(gameId)
+          game
+            .get()
+            .then(doc => {
+              playerData = doc.data().players[intersection.player]
+            })
+            .then(() => {
+              let updateResourceForSet = {}
+              updateResourceForSet[
+                `players.${intersection.player}.${currentTile.resource}`
+              ] =
+                playerData[currentTile.resource] + 1 // Add 2 resources
+              game.update(updateResourceForSet)
+            })
+        }
+      })
+    }
   }
-}}
-
+}
 
 // /* END TURN
 //   Player ends turn, switches to next player
@@ -226,44 +273,44 @@ export const buildRoadResource = (currentPlayer, gameId) => {
 
 /* BUILD SETTLEMENT FROM BUY PAGE
 */
-export const buildSettlementResource = ( currentPlayer, gameId ) => {
+export const buildSettlementResource = (currentPlayer, gameId) => {
   let playerData
   const game = db.collection('games').doc(gameId)
   game
-      .get()
-      .then(doc => {
-        playerData = doc.data().players[currentPlayer]
-      })
-      .then(() => {
-        let updatedPlayerData = {}
-        // Reduce player resources
-        updatedPlayerData[`players.${currentPlayer}.brick`] = playerData.brick - 1
-        updatedPlayerData[`players.${currentPlayer}.wood`] = playerData.wood - 1
-        updatedPlayerData[`players.${currentPlayer}.wheat`] = playerData.wheat - 1
-        updatedPlayerData[`players.${currentPlayer}.sheep`] = playerData.sheep - 1
-        updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
-        game.update(updatedPlayerData)
-      })
+    .get()
+    .then(doc => {
+      playerData = doc.data().players[currentPlayer]
+    })
+    .then(() => {
+      let updatedPlayerData = {}
+      // Reduce player resources
+      updatedPlayerData[`players.${currentPlayer}.brick`] = playerData.brick - 1
+      updatedPlayerData[`players.${currentPlayer}.wood`] = playerData.wood - 1
+      updatedPlayerData[`players.${currentPlayer}.wheat`] = playerData.wheat - 1
+      updatedPlayerData[`players.${currentPlayer}.sheep`] = playerData.sheep - 1
+      updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
+      game.update(updatedPlayerData)
+    })
 }
 
 /* BUILD CITY FROM BUY PAGE */
-export const buildCityResource = ( currentPlayer, gameId ) => {
+export const buildCityResource = (currentPlayer, gameId) => {
   let playerData
   const game = db.collection('games').doc(gameId)
   game
-      .get()
-      .then(doc => {
-        playerData = doc.data().players[currentPlayer]
-      })
-      .then(() => {
-        let updatedPlayerData = {}
-        // Reduce player resources
-        updatedPlayerData[`players.${currentPlayer}.wheat`] = playerData.wheat - 2
-        updatedPlayerData[`players.${currentPlayer}.ore`] = playerData.ore - 3
-        updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
-        // Update Firebase
-        game.update(updatedPlayerData)
-      })
+    .get()
+    .then(doc => {
+      playerData = doc.data().players[currentPlayer]
+    })
+    .then(() => {
+      let updatedPlayerData = {}
+      // Reduce player resources
+      updatedPlayerData[`players.${currentPlayer}.wheat`] = playerData.wheat - 2
+      updatedPlayerData[`players.${currentPlayer}.ore`] = playerData.ore - 3
+      updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
+      // Update Firebase
+      game.update(updatedPlayerData)
+    })
 }
 
 // /* INITIATE TRADE
@@ -308,7 +355,7 @@ export const buildCityResource = ( currentPlayer, gameId ) => {
 //   }
 // }
 
-export const setRobberBuild = (currentGameId,setTrueFalse) => {
+export const setRobberBuild = (currentGameId, setTrueFalse) => {
   if (setTrueFalse === true) {
     let robberBuildUpdate = {}
     robberBuildUpdate[`game.robberBuild`] = true
@@ -333,9 +380,9 @@ export const setRobberOnTile = (currentGame, tileId) => {
     .collection('games')
     .doc(currentGame)
     .update(setRobberOnTileUpdate)
-//updates message start property - used so as to have only 13 messages at a time
 }
 
+//updates message start property - used so as to have only 13 messages at a time
 export const updateMessageStart = () => {
   const gameId = window.location.href.slice(-20)
   const game = db.collection('games').doc(gameId)
@@ -346,4 +393,102 @@ export const updateMessageStart = () => {
     updateMessageStartData[`game.messageStart`] = messageStart
     game.update(updateMessageStartData)
   })
+}
+
+export const robberDivideCardsInHalf = (gameId, player, resources) => {
+  const game = db.collection('games').doc(gameId)
+
+  game.get().then(() => {
+    let updateSheep = {},
+      updateBrick = {},
+      updateWood = {},
+      updateOre = {},
+      updateWheat = {},
+      updateDice = {}
+
+    updateBrick[`players.player${player}.brick`] = resources.brick
+    updateWood[`players.player${player}.wood`] = resources.wood
+    updateOre[`players.player${player}.ore`] = resources.ore
+    updateSheep[`players.player${player}.sheep`] = resources.sheep
+    updateWheat[`players.player${player}.wheat`] = resources.wheat
+
+    updateDice[`game.diceRoll`] = 0
+
+    game.update(updateBrick)
+    game.update(updateOre)
+    game.update(updateSheep)
+    game.update(updateWheat)
+    game.update(updateWood)
+    game.update(updateDice)
+  })
+}
+
+export const getOptions = (game, currentPlayerId) => {
+  var intersections = game.intersectionNodes
+  var tiles = game.tileNodes
+  var intersectionKeyPlayerValue = {}
+  for (let intersection in intersections) {
+    if (intersections[intersection].player !== '0') {
+      intersectionKeyPlayerValue[intersection] =
+        intersections[intersection].player
+    }
+  }
+  //checkForTileWithIntersectionKey
+  var options = [],
+    tileObj = {
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+      7: [],
+      8: [],
+      9: [],
+      10: [],
+      11: [],
+      12: [],
+      13: [],
+      14: [],
+      15: [],
+      16: [],
+      17: [],
+      18: [],
+      19: []
+    },
+    option = {},
+    tempTile = '',
+    tempPlayer = ''
+  for (let tile in tiles) {
+    tiles[tile].children.forEach(child => {
+      for (let intersection in intersectionKeyPlayerValue) {
+        if (child === intersection) {
+          option = {}
+          option[intersectionKeyPlayerValue[intersection]] = intersection
+          tileObj[tile].push(option)
+        }
+      }
+    })
+  }
+  for (let tile in tileObj) {
+    let playerKey = []
+    option = {}
+    option.value = {}
+    option.value.tile = tile
+    option.value.players = tileObj[tile]
+    if (tileObj[tile].length > 1) {
+      option.text = 'Tile: ' + tile + ' ' + 'Players: '
+      tileObj[tile].forEach(player => {
+        playerKey = Object.keys(player)
+        option.text += playerKey[0] + ' '
+      })
+    } else if (tileObj[tile].length === 1) {
+      playerKey = Object.keys(tileObj[tile][0])
+      option.text = 'Tile: ' + tile + ' ' + 'Players: ' + playerKey[0]
+    } else {
+      option.text = 'Tile: ' + tile + ' ' + 'No players'
+    }
+    options.push(option)
+  }
+  return options
 }

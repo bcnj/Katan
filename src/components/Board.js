@@ -1017,10 +1017,9 @@ class Board extends Component {
   }
 
   renderTiles() {
-    let robberBuild = this.props.robberBuild
     return this.state.tiles.map(function (tile) {
       const { id, x, y, resourceType } = tile;
-      return <Tile robberBuild={robberBuild} id={id} x={x} y={y} resourceType={resourceType} key={id}/>;
+      return <Tile id={id} x={x} y={y} resourceType={resourceType} key={id}/>;
     });
   }
   renderIntersections(intersectionNodes,  currentGame, gameId) {
