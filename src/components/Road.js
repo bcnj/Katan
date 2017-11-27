@@ -19,7 +19,7 @@ class Road extends Component {
         rotation={rotation}
         fill={color} // Pull in color depending on game current player
         shadowBlur={5}
-        onClick={(e) => buildRoad(currentGame.game.currentPlayer, gameId, id)}
+        onClick={(e) => buildRoad(currentGame.game.currentPlayer, gameId, id, currentGame.game.turn, currentGame)}
         listening={currentGame.roadNodes[id].active}
       />
     );

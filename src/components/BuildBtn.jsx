@@ -4,8 +4,8 @@ import { Button, Header, Image, Modal } from 'semantic-ui-react'
 import buildImage from '../images/build.png'
 import { turnRoadsOn, turnSettlementOn, turnCityOn } from '../utils'
 
-class BuildBtn extends Component{
-  constructor(props){
+class BuildBtn extends Component {
+  constructor(props) {
     super(props)
     this.state = {
       open: false,
@@ -17,8 +17,8 @@ class BuildBtn extends Component{
     this.handleOpen = this.handleOpen.bind(this)
   }
 
-  handleOpen = () => this.setState({open: true})
-  handleClose = () => this.setState({open: false})
+  handleOpen = () => this.setState({ open: true })
+  handleClose = () => this.setState({ open: false })
 
   render(){
   const {gameId, handleSettlement, handleCity, handleRoad, currentGame} = this.props
@@ -28,8 +28,7 @@ class BuildBtn extends Component{
   }
 
   return (
-    <div>
-      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build</Button>
+    <Button disabled={currentGame.game.currentPlayer !== localStorage.getItem(gameId)} onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
         { currentGame && currentGame.game && currentGame.roadNodes && playerResource &&
       <Modal
         open={this.state.open}
@@ -60,15 +59,14 @@ class BuildBtn extends Component{
             }}>
               Build City
           </Button>
-        </Modal.Actions>
-        <Modal.Content>
-            <img src={buildImage} style={{height: '100'}}/>
-        </Modal.Content>
-      </Modal>}
-    </div>
-  )
-}
+            </Modal.Actions>
+            <Modal.Content>
+              <img src={buildImage} style={{ height: '100' }} />
+            </Modal.Content>
+          </Modal>}
+        </Button>
+    )
+  }
 }
 
 export default connect()(BuildBtn);
-

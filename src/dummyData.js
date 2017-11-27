@@ -2,13 +2,14 @@ const dummyData = {
   "game": {
     "diceRoll": 2,
     "currentPlayer": "player1",
+    "diceRollCount": 0,
     "active": false,
     "playerCount": 0,
     "setup": true, // Setup will remain true until turn > totalPlayerCount * 2
     "messageCount": 2,
     "messageStart": 1,
     "turn": 0, // Add for each turn
-    "robber": '10'
+    "robber": '10',
   },
   "messages": {
     "1": {
@@ -151,97 +152,97 @@ const dummyData = {
   "tileNodes": {
    '1': {
       "children": ['1', '4', '5', '8', '9', '13'],
-      "resource": "ORE",
+      "resource": "ore",
       "rollNumber": 10
     },
    '2': {
       "children": ['2', '5', '6', '9', '10', '14'],
-      "resource": "SHEEP",
+      "resource": "sheep",
       "rollNumber": 2
     },
    '3': {
       "children": ['3', '6', '7', '10', '11', '15'],
-      "resource": "WOOD",
+      "resource": "wood",
       "rollNumber": 9
     },
    '4': {
       "children": ['12', '8', '13', '17', '18', '23'],
-      "resource": "WHEAT",
+      "resource": "wheat",
       "rollNumber": 12
     },
    '5': {
       "children": ['13', '9', '14', '18', '19', '24'],
-      "resource": "BRICK",
+      "resource": "brick",
       "rollNumber": 6
     },
    '6': {
       "children": ['14', '10', '15', '19', '20', '25'],
-      "resource": "SHEEP",
+      "resource": "sheep",
       "rollNumber": 4
     },
    '7': {
       "children": ['15', '11', '16', '20', '21', '26'],
-      "resource": "BRICK",
+      "resource": "brick",
       "rollNumber": 10
     },
    '8': {
       "children": ['22', '17', '23', '28', '29', '34'],
-      "resource": "WHEAT",
+      "resource": "wheat",
       "rollNumber": 9
     },
    '9': {
       "children": ['23', '18', '24', '29', '30', '35'],
-      "resource": "WOOD",
+      "resource": "wood",
       "rollNumber": 11
     },
     '10': {
       "children": ['24', '19', '25', '30', '31', '36'],
-      "resource": "DESERT",
+      "resource": "desert",
       "rollNumber": 0
     },
     '11': {
       "children": ['25', '20', '26', '31', '32', '37'],
-      "resource": "WOOD",
+      "resource": "wood",
       "rollNumber": 3
     },
     '12': {
       "children": ['26', '21', '27', '32', '33', '38'],
-      "resource": "ORE",
+      "resource": "ore",
       "rollNumber": 8
     },
     '13': {
       "children": ['34', '29', '35', '39', '40', '44'],
-      "resource": "WOOD",
+      "resource": "wood",
       "rollNumber": 8
     },
     '14': {
       "children": ['35', '30', '36', '40', '41', '45'],
-      "resource": "ORE",
+      "resource": "ore",
       "rollNumber": 3
     },
     '15': {
       "children": ['36', '31', '37', '41', '42', '46'],
-      "resource": "WHEAT",
+      "resource": "wheat",
       "rollNumber": 4
     },
     '16': {
       "children": ['37', '32', '38', '42', '43', '47'],
-      "resource": "SHEEP",
+      "resource": "sheep",
       "rollNumber": 5
     },
     '17': {
       "children": ['44', '40', '45', '48', '49', '52'],
-      "resource": "BRICK",
+      "resource": "brick",
       "rollNumber": 5
     },
     '18': {
       "children": ['45', '41', '46', '49', '50', '53'],
-      "resource": "WHEAT",
+      "resource": "wheat",
       "rollNumber": 6
     },
     '19': {
       "children": ['46', '42', '47', '48', '59', '54'],
-      "resource": "SHEEP",
+      "resource": "sheep",
       "rollNumber": 11
     }
   },
