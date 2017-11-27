@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Segment } from 'semantic-ui-react'
 
 const LogTab = props => {
@@ -11,15 +10,4 @@ const LogTab = props => {
   )
 }
 
-// const mapState = (state) => {
-//     return {
-//     };
-// };
-
-// const mapDispatch = (dispatch) => {
-//     return {
-//     };
-// };
-
-// export default connect(mapState, mapDispatch)(LogTab);
 export default LogTab

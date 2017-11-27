@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import { Layer, Rect, Stage, Group, RegularPolygon, Image } from 'react-konva'
+import { RegularPolygon } from 'react-konva'
 import Wheat from '../images/field.png'
 import Desert from '../images/desert.png'
 import Wood from '../images/forest.png'
 import Brick from '../images/hill.png'
 import Ore from '../images/mountain.png'
 import Sheep from '../images/pasture.png'
-import { db } from '../firebase'
 
 class Tile extends Component {
   constructor(props) {
@@ -39,11 +38,6 @@ class Tile extends Component {
       })
     }
   }
-
-  addSettlement() {} // Adds city to intersection
-  addCity() {} // Adds city to intersection
-  getNeighbors() {} // Returns an array of player ID's
-  isOccupied() {} // Returns BOOL
 
   handleClick(event) {}
 

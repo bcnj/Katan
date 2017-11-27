@@ -3,7 +3,6 @@ import React from 'react'
 import firebase from '../firebase'
 
 const google = new firebase.auth.GoogleAuthProvider()
-const email = new firebase.auth.EmailAuthProvider()
 
 // If you want to request additional permissions, you'd do it
 // like so:

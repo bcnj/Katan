@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Container } from 'semantic-ui-react'
 
 import Welcome from './Welcome'
 import Lobby from './Lobby'

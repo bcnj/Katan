@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import firebase from 'APP/fire'
 import 'firebase/firestore'
 import { connect } from 'react-redux'
-import { Header, Button, Dropdown, Menu } from 'semantic-ui-react'
+import { Header, Button } from 'semantic-ui-react'
 import { fetchSingleGame } from '../actions'
 import { Container } from 'semantic-ui-react'
 

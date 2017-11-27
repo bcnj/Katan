@@ -3,9 +3,6 @@ import { Ellipse } from 'react-konva'
 import { buildRoad } from '../utils'
 
 class Road extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     const { x, y, rotation, id, color, currentGame, gameId } = this.props

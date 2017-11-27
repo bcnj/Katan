@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Grid, Card, Segment } from 'semantic-ui-react'
 
 const PlayerTable = ({ user, currentGame, gameId }) => {

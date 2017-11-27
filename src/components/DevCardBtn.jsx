@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Modal, Grid, Menu, Dropdown, Input } from 'semantic-ui-react'
-import { db } from '../firebase'
+import { Button, Modal, Menu, Dropdown, Input } from 'semantic-ui-react'
 
 import KnightImg from '../images/knight.jpg'
 import MonopolyImg from '../images/monopoly.JPG'
@@ -65,7 +64,6 @@ class DevCardBtn extends Component {
   componentDidMount() {
     //grab all resources and dev cards to display in component
     let currentPlayerData = this.props.currentGame.players.player1,
-      currentPlayer = this.props.currentGame.game.currentPlayer,
       brick = currentPlayerData.brick,
       ore = currentPlayerData.ore,
       sheep = currentPlayerData.sheep,
@@ -271,10 +269,10 @@ class DevCardBtn extends Component {
     e.preventDefault()
   }
 
-  handleRoadBuildSubmit(e, data) {
-    let gameId = window.location.href.slice(-20)
-    //this one i leave for later
-  }
+  // handleRoadBuildSubmit(e, data) {
+  //   let gameId = window.location.href.slice(-20)
+  //   this one i leave for later
+  // }
 
   handlePlentyChange(e, data) {
     e.preventDefault()
@@ -340,6 +338,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
+              alt=''
             />
             <img
               src={MonopolyImg}
@@ -347,6 +346,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
+              alt=''
             />
             <img
               src={RoadBuildingImg}
@@ -354,6 +354,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
+              alt=''
             />
             <img
               src={YearOfPlentyImg}
@@ -361,6 +362,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
+              alt=''
             />
             <img
               src={VictoryPointImg}
@@ -368,6 +370,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
+              alt=''
             />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -525,4 +528,3 @@ class DevCardBtn extends Component {
 }
 
 export default connect()(DevCardBtn)
-// export default DevCardBtn;

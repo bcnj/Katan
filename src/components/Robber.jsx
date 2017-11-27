@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Button, Modal, Menu, Dropdown } from 'semantic-ui-react'
 import brickImage from '../images/brick.jpg'
 import wheatImage from '../images/wheat.jpg'
 import woodImage from '../images/wood.jpg'
 import sheepImage from '../images/sheep.jpg'
 import oreImage from '../images/ore.jpg'
-import { db } from '../firebase'
 import {
   setRobberOnTile,
   robberDivideCardsInHalf,
@@ -45,7 +43,6 @@ class Robber extends Component {
   componentDidMount() {
     //insert massive data into state, again when user works this must be fixed, as in currentPlayer and currentPlayerData, the if/else relates to if the user should be able to move the robber
     let currentPlayerData = this.props.currentGame.players.player1,
-      currentPlayer = this.props.currentGame.game.currentPlayer,
       brick = currentPlayerData.brick,
       ore = currentPlayerData.ore,
       sheep = currentPlayerData.sheep,
@@ -56,12 +53,8 @@ class Robber extends Component {
       sheepStart = currentPlayerData.sheep,
       woodStart = currentPlayerData.wood,
       wheatStart = currentPlayerData.wheat,
-      tempTotalCards =
-        brickStart + oreStart + sheepStart + woodStart + wheatStart,
-      totalCards,
       options = getOptions(this.props.currentGame, '1')
-    console.log(options)
-    // if(this.props.currentGame.game.currentUser === `player${this.props.user.playerNum}`){
+
     this.setState({
       brick,
       ore,
@@ -79,24 +72,7 @@ class Robber extends Component {
       options,
       userMoveTile: true
     })
-    // else{
-    //   //moveRobber does not change, only specific user has access to that state
-    //   this.setState({
-    //     brick,
-    //     ore,
-    //     sheep,
-    //     wood,
-    //     wheat,
-    //     brickStart,
-    //     sheepStart,
-    //     woodStart,
-    //     wheatStart,
-    //     oreStart,
-    //     tempTotalCards:
-    //       brickStart + oreStart + sheepStart + woodStart + wheatStart,
-    //     totalCards: brick + wheat + ore + sheep + wood
-    //   })
-    // }
+    
   }
   upOrDown(event, type, direction) {
     event.preventDefault()
@@ -161,8 +137,6 @@ class Robber extends Component {
   handleSubmit(e) {
     e.preventDefault()
     //when multiple users works...
-    // let currentPlayerNum = this.props.user.playerNum
-    // let currentPlayer = `player${currentPlayerNum}`
     let player = '1', //for now
       gameId = window.location.href.slice(-20),
       brick = this.state.brickStart - this.state.brick,
@@ -192,7 +166,6 @@ class Robber extends Component {
   handleTileSubmit(e, data) {
     e.preventDefault()
     let gameId = window.location.href.slice(-20)
-    console.log(this.state.tile)
     setRobberOnTile(gameId, this.state.tile)
   }
 
@@ -232,6 +205,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={wheatImage}
@@ -239,6 +213,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={woodImage}
@@ -246,6 +221,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={oreImage}
@@ -253,6 +229,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={sheepImage}
@@ -260,6 +237,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                 </div>
                 <div

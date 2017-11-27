@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Header, Image, Modal, Grid, Dropdown} from 'semantic-ui-react'
+import { Button, Modal, Grid } from 'semantic-ui-react'
 import wheat from '../images/wheat.jpg'
 import brick from '../images/brick.jpg'
 import sheep from '../images/sheep.jpg'
@@ -44,7 +44,7 @@ class TradePrompt extends Component {
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
                 <Grid.Column key={idx}>
-                  <img src={images[idx]} style={{ width: '70%' }} />
+                  <img src={images[idx]} style={{ width: '70%' }} alt=''/>
                   { currentGame &&
                     <h3 style={{textAlign: 'center'}}>{currentGame.trade.offer[resource] ?  currentGame.trade.offer[resource] : '0'}</h3> }
                 </Grid.Column>
@@ -56,7 +56,7 @@ class TradePrompt extends Component {
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
                 <Grid.Column key={idx}>
-                  <img src={images[idx]} style={{ width: '70%' }} />
+                  <img src={images[idx]} style={{ width: '70%' }} alt=''/>
                   { currentGame &&
                   <h3 style={{textAlign: 'center'}}>{currentGame.trade.exchange[resource] ?  currentGame.trade.exchange[resource] : '0'}</h3>
                   }
