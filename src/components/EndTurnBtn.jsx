@@ -10,7 +10,7 @@ const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
       <Button onClick={e => {
         e.preventDefault()
         endTurn(currentGame.game.turn, currentGame.game.currentPlayer, gameId)
-        { currentGame.game.turn == 7 ? distributeResourcesInit(gameId, currentGame.tileNodes, currentGame.intersectionNodes) : 'hello'}
+        { currentGame.game.turn == 7 ? distributeResourcesInit(gameId, currentGame.tileNodes, currentGame.intersectionNodes,currentGame.players) : ''}
         }} style={{width: '49%', height: '75%'}}>
           End Turn
       </Button>
