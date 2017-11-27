@@ -15,11 +15,11 @@ const PlayerTab = ({ currentGame, gameId }) => {
               fluid
               key={num}
               header={currentGame.players[`player${num}`].name}
-              meta={
-                currentGame.game.currentPlayer === `player${num}`
-                  ? 'playing'
-                  : ''
-              }
+              meta={<div><strong>
+                {currentGame.game.currentPlayer === `player${num}`
+                  ? 'playing...'
+                  : ''}
+                  </strong></div>}
               description={`${
                 currentGame.players[`player${num}`].score
               } VP Points`}
