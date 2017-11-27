@@ -11,6 +11,22 @@ const dummyData = {
     "turn": 0, // Add for each turn
     "robber": '10',
   },
+  "trade": {
+    "offer" : {
+      "wood": 0,
+      "ore": 0,
+      "sheep": 0,
+      "wheat": 0,
+      "brick":0,
+    },
+    "exchange": {
+      "wood": 0,
+      "ore": 0,
+      "sheep": 0,
+      "wheat": 0,
+      "brick":0,
+    }
+  },
   "messages": {
     "1": {
       "player": "admin",

@@ -134,7 +134,6 @@ export const buildCity = (currentPlayer, gameId, intersectionId) => {
   turnIntersectionOff(gameId)
 }
 
-
 export const rollDice = (diceSum, gameId) => {
     const diceRoll = {}
     diceRoll[`game.diceRoll`] = diceSum
@@ -361,47 +360,72 @@ export const buildCityResource = ( currentPlayer, gameId ) => {
       })
 }
 
-// /* INITIATE TRADE
-//   Parameters types:
-//     initiator & receiver: integers
-//     offer & exchange: objects containing card types and quantity
-// */
-// export const initiateTrade = (initiator, receiver, offer, exchange) => {
-//   let initiatorPlayer = 'player' + initiator
-//   let receiverPlayer = 'player' + receiver
-//   let initiatorData,
-//     receiverData,
-//     updatedInitiatorData = {},
-//     updatedReceiverData = {}
-//   const game = db.collection(testCollection).doc(testDoc)
-//   return function() {
-//     game
-//       .get()
-//       .then(function(doc) {
-//         initiatorData = doc.data().players[initiatorPlayer]
-//         receiverData = doc.data().players[receiverPlayer]
-//       })
-//       .then(() => {
-//         console.log('initiatorData', initiatorData)
-//         console.log('receiverData', receiverData)
-//       })
-//       .then(() => {
-//         let offerKey = Object.keys(offer)
-//         offerKey.forEach(function(type) {
-//           updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
-//             initiatorData[type] - offer[type] + exchange[type]
-//           updatedReceiverData[`players.${receiverPlayer}.${type}`] =
-//             receiverData[type] + offer[type] - exchange[type]
-//         })
-//       })
-//       .then(() =>
-//         Promise.all([
-//           game.update(updatedInitiatorData),
-//           game.update(updatedReceiverData)
-//         ])
-//       )
-//   }
-// }
+export const turnTradeOn = (currentPlayer, gameId) => {
+  const tradeUpdate = {}
+  const playerArr = ['player1', 'player2', 'player3', 'player4']
+  playerArr.filter(player => player !== currentPlayer).forEach( player => {
+    tradeUpdate[`players.${player}.trade`] = true
+  })
+  db.collection('games').doc(gameId)
+  .update(tradeUpdate)
+}
+
+export const turnTradeOff = (gameId) => {
+  const tradeUpdate = {}
+  const playerArr = ['player1', 'player2', 'player3', 'player4']
+  playerArr.forEach( player => {
+    tradeUpdate[`players.${player}.trade`] = true
+  })
+  db.collection('games').doc(gameId)
+  .update(tradeUpdate)
+}
+
+export const tradeInfo=(offer, exchange, gameId)=>{
+  const tradeUpdate = {}
+  tradeUpdate['trade'] = { offer: {offer}, exchange: {exchange}}
+  db.collection('games').doc(gameId)
+  .update(tradeUpdate)
+}
+
+/* INITIATE TRADE
+  Parameters types:
+    initiator & receiver: 'player1'
+    offer & exchange: objects containing card types and quantity;{ore: 2}
+*/
+export const initiateTrade = (initiatorPlayer, receiverPlayer, offer, exchange, gameId) => {
+  let initiatorData,
+    receiverData,
+    updatedInitiatorData = {},
+    updatedReceiverData = {}
+  const game = db.collection('games').doc(gameId)
+  return function() {
+    game
+      .get()
+      .then(function(doc) {
+        initiatorData = doc.data().players[initiatorPlayer]
+        receiverData = doc.data().players[receiverPlayer]
+      })
+      .then(() => {
+        console.log('initiatorData', initiatorData)
+        console.log('receiverData', receiverData)
+      })
+      .then(() => {
+        let offerKey = Object.keys(offer)
+        offerKey.forEach(function(type) {
+          updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
+            initiatorData[type] - offer[type] + exchange[type]
+          updatedReceiverData[`players.${receiverPlayer}.${type}`] =
+            receiverData[type] + offer[type] - exchange[type]
+        })
+      })
+      .then(() =>
+        Promise.all([
+          game.update(updatedInitiatorData),
+          game.update(updatedReceiverData)
+        ])
+      )
+  }
+}
 
 //updates message start property - used so as to have only 13 messages at a time
 export const updateMessageStart = () => {

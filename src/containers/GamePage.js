@@ -12,7 +12,7 @@ import BuildBtnInit from '../components/BuildBtnInit'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
-
+import TradePrompt from '../components/TradePrompt'
 import PlayerTable from '../components/PlayerTable'
 import { connect } from 'react-redux'
 
@@ -104,7 +104,7 @@ class GamePage extends Component {
                         { currentGame && currentGame.game && (currentGame.game.turn >= 8 ?
                           <BuildBtn gameId={gameId} currentGame={currentGame}/> : <BuildBtnInit gameId={gameId} currentGame={currentGame}/>
                         )}
-                          <TradeBtn />
+                          <TradeBtn currentGame={currentGame} gameId={gameId}/>
                       </Grid.Row>
 
                       <Grid.Row style={{ height: '50%' }}>
@@ -113,6 +113,9 @@ class GamePage extends Component {
                       </Grid.Row>
                   </Grid.Column>
               </Grid.Row>
+              { currentGame && currentGame.players && currentGame.players[localStorage.getItem(gameId)].trade &&
+              <TradePrompt/>
+              }
           </Grid>
       )
   }
