@@ -1,4 +1,5 @@
 import { db } from '../firebase'
+import {createDevCards, shuffle} from '../helpers.js'
 
 export const turnRoadsOff = gameId => {
   const roadUpdate = {}
@@ -526,71 +527,76 @@ export const initiateTrade = (initiatorPlayer, receiverPlayer, offer, exchange, 
       })
 }
 
-export const setRobberBuild = (currentGameId, setTrueFalse) => {
-  if (setTrueFalse === true) {
-    let robberBuildUpdate = {}
-    robberBuildUpdate[`game.robberBuild`] = true
-    db
-      .collection('games')
-      .doc(currentGameId)
-      .update(robberBuildUpdate)
-  } else {
-    let robberBuildUpdate = {}
-    robberBuildUpdate[`game.robberBuild`] = false
-    db
-      .collection('games')
-      .doc(currentGameId)
-      .update(robberBuildUpdate)
-  }
-}
-
-export const setRobberOnTile = (currentGame, tileId) => {
-  let setRobberOnTileUpdate = {}
-  setRobberOnTileUpdate[`game.robber`] = String(tileId)
-  db
-    .collection('games')
-    .doc(currentGame)
-    .update(setRobberOnTileUpdate)
-}
-
-//updates message start property - used so as to have only 13 messages at a time
-export const updateMessageStart = () => {
-  const gameId = window.location.href.slice(-20)
+export const purchaseDevCard = (player, gameId) => {
   const game = db.collection('games').doc(gameId)
-  let updateMessageStartData = {}
+  let resourceUpdate = {}
+
+  let devCards = createDevCards(),
+    shuffledDevCards = shuffle(devCards)
+
   game.get().then(doc => {
-    let messageStart = doc.data().game.messageStart
-    messageStart = messageStart + 1
-    updateMessageStartData[`game.messageStart`] = messageStart
-    game.update(updateMessageStartData)
+    let prevOre = doc.data().players[player].ore,
+      prevWheat = doc.data().players[player].wheat,
+      prevSheep = doc.data().players[player].sheep
+    resourceUpdate[`players.${player}.ore`] = prevOre - 1
+    resourceUpdate[`players.${player}.sheep`] = prevSheep - 1
+    resourceUpdate[`players.${player}.wheat`] = prevWheat - 1
+    game.update(resourceUpdate)
+
+    let prevDevCards = doc.data().players[player].devCards,
+      newDevCards = [shuffledDevCards[0], ...prevDevCards]
+
+    let devCardUpdate = {}
+    devCardUpdate[`players.${player}.devCards`] = newDevCards
+    game.update(devCardUpdate)
+  })
+  return shuffledDevCards[0]
+}
+
+export const deleteSpecificDevCard = (cardId, player, gameId) => {
+  const game = db.collection('games').doc(gameId)
+  let deleteDevCard = {}
+  game.get().then(doc => {
+    let devCards = doc.data().players[player].devCards,
+      count = 0,
+      newDevCards = []
+    devCards.forEach(card => {
+      if (count === 0 && card === cardId) {
+        count++
+      } else newDevCards.push(card)
+    })
+    deleteDevCard[`players.${player}.devCards`] = newDevCards
+    game.update(deleteDevCard)
   })
 }
 
-export const robberDivideCardsInHalf = (gameId, player, resources) => {
+export const useKnightTakeCard = (gameId, taker, victim) => {
   const game = db.collection('games').doc(gameId)
-
-  game.get().then(() => {
-    let updateSheep = {},
-      updateBrick = {},
-      updateWood = {},
-      updateOre = {},
-      updateWheat = {},
-      updateDice = {}
-
-    updateBrick[`players.player${player}.brick`] = resources.brick
-    updateWood[`players.player${player}.wood`] = resources.wood
-    updateOre[`players.player${player}.ore`] = resources.ore
-    updateSheep[`players.player${player}.sheep`] = resources.sheep
-    updateWheat[`players.player${player}.wheat`] = resources.wheat
-
-    updateDice[`game.diceRoll`] = 0
-
-    game.update(updateBrick)
-    game.update(updateOre)
-    game.update(updateSheep)
-    game.update(updateWheat)
-    game.update(updateWood)
-    game.update(updateDice)
+  game.get().then(doc => {
+    let cards = ['ore', 'sheep', 'wheat', 'wood', 'brick'],
+      shuffled = shuffle(cards),
+      check = true,
+      i = 0
+    while (check) {
+      if (doc.data().players[`player${victim}`][cards[i]] > 0) {
+        check = false
+      } else {
+        i++
+      }
+      if (i === shuffled.length) check = false
+    }
+    if (i !== shuffled.length) {
+      let victimLoseCard = doc.data().players[`player${victim}`][cards[i]] - 1,
+        takerGetCard = doc.data().players[`player${taker}`][cards[i]] + 1,
+        victimLoseCardUpdate = {}
+      victimLoseCardUpdate[
+        `players.player${victim}.${cards[i]}`
+      ] = victimLoseCard
+      let takerGetCardUpdate = {}
+      takerGetCardUpdate[`players.player${taker}.${cards[i]}`] = takerGetCard
+      game.update(victimLoseCardUpdate)
+      game.update(takerGetCardUpdate)
+    }
   })
 }
 
@@ -604,6 +610,7 @@ export const getOptions = (game, currentPlayerId) => {
         intersections[intersection].player
     }
   }
+  console.log(intersectionKeyPlayerValue)
   //checkForTileWithIntersectionKey
   var options = [],
     tileObj = {
@@ -662,4 +669,163 @@ export const getOptions = (game, currentPlayerId) => {
     options.push(option)
   }
   return options
+}
+export const setRobberBuild = (currentGameId, setTrueFalse) => {
+  if (setTrueFalse === true) {
+    let robberBuildUpdate = {}
+    robberBuildUpdate[`game.robberBuild`] = true
+    db
+      .collection('games')
+      .doc(currentGameId)
+      .update(robberBuildUpdate)
+  } else {
+    let robberBuildUpdate = {}
+    robberBuildUpdate[`game.robberBuild`] = false
+    db
+      .collection('games')
+      .doc(currentGameId)
+      .update(robberBuildUpdate)
+  }
+}
+
+export const setRobberOnTile = (currentGame, tileId) => {
+  let setRobberOnTileUpdate = {}
+  setRobberOnTileUpdate[`game.robber`] = String(tileId)
+  db
+    .collection('games')
+    .doc(currentGame)
+    .update(setRobberOnTileUpdate)
+}
+
+//updates message start property - used so as to have only 13 messages at a time
+export const updateMessageStart = () => {
+  const gameId = window.location.href.slice(-20)
+  const game = db.collection('games').doc(gameId)
+  let updateMessageStartData = {}
+  game.get().then(doc => {
+    let messageStart = doc.data().game.messageStart
+    messageStart = messageStart + 1
+    updateMessageStartData[`game.messageStart`] = messageStart
+    game.update(updateMessageStartData)
+  })
+}
+
+//convoluted grabbing all resources of other player and giving them to the right player
+export const monopolize = (gameId, resource, player) => {
+  const game = db.collection('games').doc(gameId)
+  game.get().then(doc => {
+    let player1Resource = doc.data().players.player1[resource],
+      player2Resource = doc.data().players.player2[resource],
+      player3Resource = doc.data().players.player3[resource],
+      player4Resource = doc.data().players.player4[resource]
+    if (player === '1') {
+      player1Resource += player2Resource + player3Resource + player4Resource
+      player2Resource = 0
+      player3Resource = 0
+      player4Resource = 0
+    }
+    if (player === '2') {
+      player2Resource += player1Resource + player3Resource + player4Resource
+      player1Resource = 0
+      player3Resource = 0
+      player4Resource = 0
+    }
+    if (player === '3') {
+      player3Resource += player2Resource + player1Resource + player4Resource
+      player2Resource = 0
+      player1Resource = 0
+      player4Resource = 0
+    }
+    if (player === '4') {
+      player4Resource += player2Resource + player3Resource + player1Resource
+      player2Resource = 0
+      player3Resource = 0
+      player1Resource = 0
+    }
+    let player1Update = {},
+      player2Update = {},
+      player3Update = {},
+      player4Update = {}
+
+    player1Update[`players.player1.${resource}`] = player1Resource
+    player2Update[`players.player2.${resource}`] = player2Resource
+    player3Update[`players.player3.${resource}`] = player3Resource
+    player4Update[`players.player4.${resource}`] = player4Resource
+    game.update(player1Update)
+    game.update(player2Update)
+    game.update(player3Update)
+    game.update(player4Update)
+  })
+}
+
+export const addTwoSelectedResources = (gameId, resources, player) => {
+  const game = db.collection('games').doc(gameId)
+  game.get().then(doc => {
+    let firstResource = resources[0]
+    let currentFirstResource = doc.data().players[`player${player}`][
+      firstResource
+    ]
+
+    if (resources[0] === resources[1]) {
+      let firstResourceUpdate = {}
+      firstResourceUpdate[`players.player${player}.${firstResource}`] =
+        currentFirstResource + 2
+
+      game.update(firstResourceUpdate)
+    } else {
+      let firstResourceUpdate = {}
+      firstResourceUpdate[`players.player${player}.${firstResource}`] =
+        currentFirstResource + 1
+
+      game.update(firstResourceUpdate)
+
+      let secondResource = resources[1],
+        currentSecondResource = doc.data().players[`player${player}`][
+          secondResource
+        ],
+        secondResourceUpdate = {}
+      secondResourceUpdate[`players.player${player}.${secondResource}`] =
+        currentSecondResource + 1
+
+      game.update(secondResourceUpdate)
+    }
+  })
+}
+
+export const victoryPointCard = (player, gameId) => {
+  const game = db.collection('games').doc(gameId)
+  game.get().then(doc => {
+    let incrementedPlayerScore = doc.data().players[`player${player}`].score+1
+    let updateScore = {}
+    updateScore[`players.player${player}.score`] = incrementedPlayerScore
+    game.update(updateScore)
+  })
+}
+
+export const robberDivideCardsInHalf = (gameId, player, resources) => {
+  const game = db.collection('games').doc(gameId)
+
+  game.get().then(() => {
+    let updateSheep = {},
+      updateBrick = {},
+      updateWood = {},
+      updateOre = {},
+      updateWheat = {},
+      updateDice = {}
+
+    updateBrick[`players.player${player}.brick`] = resources.brick
+    updateWood[`players.player${player}.wood`] = resources.wood
+    updateOre[`players.player${player}.ore`] = resources.ore
+    updateSheep[`players.player${player}.sheep`] = resources.sheep
+    updateWheat[`players.player${player}.wheat`] = resources.wheat
+
+    updateDice[`game.diceRoll`] = 0
+
+    game.update(updateBrick)
+    game.update(updateOre)
+    game.update(updateSheep)
+    game.update(updateWheat)
+    game.update(updateWood)
+    game.update(updateDice)
+  })
 }

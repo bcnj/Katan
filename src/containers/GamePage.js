@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Menu } from 'semantic-ui-react'
+import { Grid, Menu, Button } from 'semantic-ui-react'
 import { fetchSingleGame } from '../actions'
 
 import Board from '../components/Board'
@@ -151,7 +151,16 @@ class GamePage extends Component {
             </Grid.Row>
 
             <Grid.Row style={{ height: '50%' }}>
-              <DevCardBtn />
+              {currentGame &&
+              currentGame.game &&
+              localStorage.getItem(`${gameId}`) ===
+                currentGame.game.currentPlayer ? (
+                <DevCardBtn currentGame={currentGame} />
+              ) : (
+                <Button disabled style={{ width: '49%', height: '75%' }}>
+                  Dev Cards
+                </Button>
+              )}
               <EndTurnBtn gameId={gameId} />
               {currentGame &&
                 currentGame.game &&
