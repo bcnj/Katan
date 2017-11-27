@@ -14,9 +14,9 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
         currentGame &&
         currentGame.players &&
         player && (
-          <Grid container={true} style={{ height: '106%' }}>
+          <Grid>
             <Grid.Column width={3}>
-              <Card style={{ height: '100%', width: '100%' }}>
+              <Card style={{ height: '167%', width: '100%' }}>
                 <Image src="//insert image url" />
                 <Card.Content>
                   <Card.Header>{user.name}</Card.Header>
@@ -27,7 +27,7 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
               </Card>
             </Grid.Column>
             <Grid.Column width={13}>
-              <Segment style={{ height: '100%', width: '100%' }}>
+              <Segment style={{ height: '167%', width: '100%' }}>
                 <Grid columns={5}>
                   <Grid.Row>
                     <Grid.Column>
@@ -60,15 +60,4 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
   )
 }
 
-// const mapState = (state) => {
-//     return {
-//     };
-// };
-
-// const mapDispatch = (dispatch) => {
-//     return {
-//     };
-// };
-
-// export default connect(mapState, mapDispatch)(PlayerTable);
 export default PlayerTable
