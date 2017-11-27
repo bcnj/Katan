@@ -10,9 +10,9 @@ if(currentGame && gameId){
 return (
     <div>
       { user && currentGame && currentGame.players && player &&
-      <Grid container={true} style={{ height: '106%' }}>
+      <Grid>
           <Grid.Column width={3}>
-              <Card style={{ height: '100%', width: '100%' }}>
+              <Card style={{ height: '180%', width: '100%' }}>
                   <Image src='//insert image url' />
                   <Card.Content>
                       <Card.Header>
@@ -25,7 +25,7 @@ return (
               </Card>
           </Grid.Column>
           <Grid.Column width={13} >
-            <Segment style={{ height: '100%', width: '100%' }} >
+            <Segment style={{ height: '180%', width: '100%' }} >
               <Grid columns={5}>
                 <Grid.Row>
                   <Grid.Column> Brick: { currentGame.players[`${player}`].brick } </Grid.Column>
