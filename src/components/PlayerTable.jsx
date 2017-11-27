@@ -19,7 +19,8 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
                 <Card.Content>
                   <Card.Header>{user.name}</Card.Header>
                   <Card.Description>
-                    VP Points: {currentGame.players[player].score}
+                    VP: {currentGame.players[player].score}
+                    <div><strong>{currentGame.game.currentPlayer === player ? 'playing...': ''}</strong></div>
                   </Card.Description>
                 </Card.Content>
               </Card>
@@ -29,24 +30,19 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
                 <Grid columns={5}>
                   <Grid.Row>
                     <Grid.Column>
-                      {' '}
-                      Brick: {currentGame.players[`${player}`].brick}{' '}
+                      Brick: {currentGame.players[`${player}`].brick}
                     </Grid.Column>
                     <Grid.Column>
-                      {' '}
-                      Wood: {currentGame.players[player].wood}{' '}
+                      Wood: {currentGame.players[player].wood}
                     </Grid.Column>
                     <Grid.Column>
-                      {' '}
-                      Sheep: {currentGame.players[player].sheep}{' '}
+                      Sheep: {currentGame.players[player].sheep}
                     </Grid.Column>
                     <Grid.Column>
-                      {' '}
-                      Wheat: {currentGame.players[player].wheat}{' '}
+                      Wheat: {currentGame.players[player].wheat}
                     </Grid.Column>
                     <Grid.Column>
-                      {' '}
-                      Ore: {currentGame.players[player].ore}{' '}
+                      Ore: {currentGame.players[player].ore}
                     </Grid.Column>
                   </Grid.Row>
                 </Grid>
@@ -58,4 +54,4 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
   )
 }
 
-export default PlayerTable
+export default connect()(PlayerTable)
