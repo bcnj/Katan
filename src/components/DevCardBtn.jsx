@@ -217,7 +217,7 @@ class DevCardBtn extends Component {
     let count = 0
     let gameId = window.location.href.slice(-20)
     if (this.state.knightValuePosPlayers.length === 0) {
-      //when robber is merged
+      // when robber is merged
       // setRobberOnTile(this.state.knightValueTile)
     } else {
       this.state.knightValuePosPlayers.forEach(player => {
@@ -239,11 +239,11 @@ class DevCardBtn extends Component {
         )
         //...robber
         // setRobberOnTile(this.state.knightValueTile)
+        this.setState({
+          knightMode: false
+        })
       }
     }
-    this.setState({
-      knightMode: false
-    })
   }
 
   handleMonopolyChange(e, data) {
