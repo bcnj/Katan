@@ -7,12 +7,13 @@ import { fetchSingleGame } from '../actions'
 import { Container } from 'semantic-ui-react'
 
 class Wait extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   componentDidMount() {
-    this.props.fetchSingleGame(this.props.gameId)
+    this.cancel = this.props.fetchSingleGame(this.props.gameId)
+  }
+
+  componentWillUnmount(){
+    this.cancel()
   }
 
   render() {
