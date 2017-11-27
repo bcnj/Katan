@@ -617,5 +617,5 @@ export const updateScoreToCloseModal = (e, winner) => {
     updateScoreToCloseModal[`players.${player}.score`] = 0
     game.update(updateScoreToCloseModal)
     game.update(updateGameToInactive)
-  }
+  })
 }
