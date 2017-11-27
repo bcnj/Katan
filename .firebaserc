@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "catan-45cf4"
+    "default": "catan-45cf4",
+    "katan": "catan-45cf4"
   }
 }

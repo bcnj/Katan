@@ -8,6 +8,7 @@ import PlayerTab from '../components/PlayerTab'
 import MessageTab from '../components/MessageTab'
 import LogTab from '../components/LogTab'
 import BuildBtn from '../components/BuildBtn'
+import BuildBtnInit from '../components/BuildBtnInit'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
@@ -36,9 +37,16 @@ class GamePage extends Component {
   }
 
   render() {
+    //controls which panel tab appears based on menu selection
     let section
+
     if (this.state.activeItem === 'players') {
-      section = <PlayerTab currentGame={this.props.currentGame} />
+      section = (
+        <PlayerTab
+          currentGame={this.props.currentGame}
+          gameId={this.props.gameId}
+        />
+      )
     }
     if (this.state.activeItem === 'messages') {
       section = (
@@ -130,7 +138,13 @@ class GamePage extends Component {
           {/* action buttons column */}
           <Grid.Column width={5}>
             <Grid.Row style={{ height: '50%' }}>
-              <BuildBtn gameId={gameId} currentGame={currentGame} />
+              {currentGame &&
+                currentGame.game &&
+                (currentGame.game.turn >= 8 ? (
+                  <BuildBtn gameId={gameId} currentGame={currentGame} />
+                ) : (
+                  <BuildBtnInit gameId={gameId} currentGame={currentGame} />
+                ))}
               <TradeBtn />
             </Grid.Row>
 
@@ -138,11 +152,10 @@ class GamePage extends Component {
               <DevCardBtn />
               <EndTurnBtn gameId={gameId} />
               {currentGame &&
-              currentGame.game &&
-              currentGame.game.diceRoll === 7 && (
+                currentGame.game &&
+                currentGame.game.diceRoll === 7 && (
                   <Robber currentGame={currentGame} user={user} />
                 )}
-                <div>{this.props.now}</div>
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>

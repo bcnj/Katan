@@ -198,7 +198,7 @@ const dummyData = {
     },
     '10': {
       "children": ['24', '19', '25', '30', '31', '36'],
-      "resource": "dessert",
+      "resource": "desert",
       "rollNumber": 0
     },
     '11': {
