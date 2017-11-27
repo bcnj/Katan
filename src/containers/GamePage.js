@@ -8,6 +8,7 @@ import PlayerTab from '../components/PlayerTab'
 import MessageTab from '../components/MessageTab'
 import LogTab from '../components/LogTab'
 import BuildBtn from '../components/BuildBtn'
+import BuildBtnInit from '../components/BuildBtnInit'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
@@ -24,7 +25,8 @@ class GamePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'players'
+      activeItem: 'players',
+      now: Date.now()
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
   }
@@ -40,17 +42,32 @@ class GamePage extends Component {
   render() {
     //controls which panel tab appears based on menu selection
     let section
+
     if (this.state.activeItem === 'players') {
-      section = <PlayerTab currentGame={this.props.currentGame} />
+      section = (
+        <PlayerTab
+          currentGame={this.props.currentGame}
+          gameId={this.props.gameId}
+        />
+      )
     }
     if (this.state.activeItem === 'messages') {
-      section = <MessageTab />
+      section = (
+        <MessageTab
+          players={this.props.currentGame.players}
+          messageCount={this.props.currentGame.game.messageCount}
+          messageStart={this.props.currentGame.game.messageStart}
+        />
+      )
     }
     if (this.state.activeItem === 'log') {
       section = <LogTab />
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
     //local state governing current panel selection
     const { activeItem } = this.state
     const { user, currentGame, gameId } = this.props
@@ -68,7 +85,6 @@ class GamePage extends Component {
             {currentGame &&
               currentGame.game && (
                 <Board
-                  robberBuild={currentGame.game.robberBuild}
                   currentPlayer={currentGame.game.currentPlayer}
                   gameId={gameId}
                 />
@@ -128,15 +144,27 @@ class GamePage extends Component {
 
           {/* action buttons column */}
           <Grid.Column width={5}>
-            <Grid.Row style={{ height: '50%', verticalAlign: 'top' }}>
-              <BuildBtn gameId={gameId} currentGame={currentGame} />
+            <Grid.Row style={{ height: '50%' }}>
+              {currentGame &&
+                currentGame.game &&
+                (currentGame.game.turn >= 8 ? (
+                  <BuildBtn gameId={gameId} currentGame={currentGame} />
+                ) : (
+                  <BuildBtnInit gameId={gameId} currentGame={currentGame} />
+                ))}
               <TradeBtn />
             </Grid.Row>
 
             <Grid.Row style={{ height: '50%' }}>
               <DevCardBtn />
               <EndTurnBtn gameId={gameId} />
+              {currentGame &&
+                currentGame.game &&
+                currentGame.game.diceRoll === 7 && (
+                  <Robber currentGame={currentGame} user={user} />
+                )}
             </Grid.Row>
+<<<<<<< HEAD
             {/*Right now it immidiately pops up when a 7 is rolled, and after finishing using the component*/}
             {currentGame &&
               currentGame.game &&
@@ -146,10 +174,13 @@ class GamePage extends Component {
             {currentGame &&
               currentGame.game &&
               (checkForWinner(currentGame)[0] && <Winning winner={checkForWinner(currentGame)[1]} />)}
+=======
+>>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
           </Grid.Column>
         </Grid.Row>
       </Grid>
     )
+<<<<<<< HEAD
 =======
       //controls which panel tab appears based on menu selection
       let section;
@@ -228,6 +259,8 @@ class GamePage extends Component {
           </Grid>
       )
 >>>>>>> cd97b92451aedf69047ebcb448dc0880c25e1585
+=======
+>>>>>>> 90884e79f802f75f10e3fbbea69e3a159642ed6a
   }
 }
 

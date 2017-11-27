@@ -974,11 +974,6 @@ class Board extends Component {
           x: 450,
           y: 490,
         }],
-        robber:{
-          id:null,
-          x: 335,
-          y: 300
-        },
       currentPlayer: null,
       players: [],
       active: true,
@@ -1017,13 +1012,12 @@ class Board extends Component {
   }
 
   renderTiles() {
-    let robberBuild = this.props.robberBuild
     return this.state.tiles.map(function (tile) {
       const { id, x, y, resourceType } = tile;
-      return <Tile robberBuild={robberBuild} id={id} x={x} y={y} resourceType={resourceType} key={id}/>;
+      return <Tile id={id} x={x} y={y} resourceType={resourceType} key={id} />;
     });
   }
-  renderIntersections(intersectionNodes,  currentGame, gameId) {
+  renderIntersections(intersectionNodes, currentGame, gameId) {
     return this.state.intersections.map(function (intersection) {
       const { idx, x, y } = intersection;
       let color;
@@ -1043,7 +1037,7 @@ class Board extends Component {
       if (intersectionNodes[idx].player === 'player4' && intersectionNodes[idx].city === true) { color = 'blue'; type = 'city' }
       else if (intersectionNodes[idx].player === 'player4') { color = 'blue'; type = 'settlement' }
 
-      return <Intersection key={idx} x={x} y={y} id={idx} color={color} type={type}  gameId={gameId} currentGame={currentGame}/>;
+      return <Intersection key={idx} x={x} y={y} id={idx} color={color} type={type} gameId={gameId} currentGame={currentGame} />;
     });
   }
   renderRoads(roadNodes, currentGame, gameId) {
@@ -1069,27 +1063,12 @@ class Board extends Component {
       return <Number key={id} id={id} x={x} y={y} />;
     });
   }
-  renderRobber(){
-    const { id, x, y} = this.state.robber;
-    return <RobberPiece key={id} x={x} y={y} />;
-  }
-
-  componentDidMount() {
-    let tileCoords = {},
-    robberId = parseInt(this.props.currentGame.game.robber)
-    this.state.tiles.forEach((tile) => {
-      if(tile.id === robberId) {
-        tileCoords.x = tile.x+10
-        tileCoords.y = tile.y-20
-      }
-    })
-    this.setState({
-      robber: {
-        id: robberId,
-        x: tileCoords.x,
-        y: tileCoords.y
-      }
-    })
+  renderRobber() {
+    let robberTileId = this.props.currentGame.game.robber
+    let { x, y, id } = this.state.tiles[robberTileId - 1]
+    let robberX = x + 10
+    let robberY = y - 20
+    return <RobberPiece key={id} x={robberX} y={robberY} />;
   }
 
   render() {
@@ -1110,7 +1089,7 @@ class Board extends Component {
           <Layer>
             {this.renderTiles()}
             {this.renderRoads(this.props.currentGame.roadNodes, this.props.currentGame, this.props.gameId)}
-            {this.renderIntersections(this.props.currentGame.intersectionNodes,this.props.currentGame, this.props.gameId )}
+            {this.renderIntersections(this.props.currentGame.intersectionNodes, this.props.currentGame, this.props.gameId)}
             {this.renderNumbers()}
             {this.renderRobber()}
           </Layer>
