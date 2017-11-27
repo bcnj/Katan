@@ -41,7 +41,7 @@ export const turnRoadsOnInit = (currentPlayer, gameId, roadNodes, intersectionNo
   .update(roadUpdate)
 }
 
-export const buildRoad = (currentPlayer, gameId, roadId, turn) => {
+export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame) => {
   const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
   db.collection('games').doc(`${gameId}`)
@@ -50,6 +50,9 @@ export const buildRoad = (currentPlayer, gameId, roadId, turn) => {
     buildRoadResource(currentPlayer, gameId)
   } else {
     endTurn(turn, currentPlayer, gameId)
+    if(turn == 7){
+      distributeResourcesInit(gameId, currentGame.tileNodes, currentGame.intersectionNodes,currentGame.players)
+    }
   }
   turnRoadsOff(gameId)
 }

@@ -24,7 +24,7 @@ class BuildBtnInit extends Component {
   const {gameId, handleSettlement, handleCity, handleRoad, currentGame} = this.props
 
   return (
-      <Button onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
+      <Button disabled={currentGame.game.currentPlayer !== localStorage.getItem(gameId)} onClick={this.handleOpen} style={{width: '49%', height: '75%'}}>Build
         { currentGame && currentGame.game && currentGame.roadNodes && currentGame.players &&
       <Modal
         open={this.state.open}
@@ -34,6 +34,7 @@ class BuildBtnInit extends Component {
             disabled={this.state.buildRoadDisabled}
             onClick={e => {
             turnRoadsOnInit(currentGame.game.currentPlayer, gameId, currentGame.roadNodes, currentGame.intersectionNodes)
+            this.setState({buildSettlementDisabled: false, buildRoadDisabled: true})
             this.handleClose()
           }}>
             Build Road
