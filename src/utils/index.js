@@ -374,7 +374,7 @@ export const turnTradeOff = (gameId) => {
   const tradeUpdate = {}
   const playerArr = ['player1', 'player2', 'player3', 'player4']
   playerArr.forEach( player => {
-    tradeUpdate[`players.${player}.trade`] = true
+    tradeUpdate[`players.${player}.trade`] = false
   })
   db.collection('games').doc(gameId)
   .update(tradeUpdate)
@@ -382,7 +382,6 @@ export const turnTradeOff = (gameId) => {
 
 export const tradeInfo=(offer, exchange, gameId)=>{
   const tradeUpdate = {}
-  console.log("!!!!", offer, exchange)
   tradeUpdate['trade'] = { offer, exchange}
   db.collection('games').doc(gameId)
   .update(tradeUpdate)
@@ -398,8 +397,8 @@ export const initiateTrade = (initiatorPlayer, receiverPlayer, offer, exchange, 
     receiverData,
     updatedInitiatorData = {},
     updatedReceiverData = {}
+    turnTradeOff(gameId)
   const game = db.collection('games').doc(gameId)
-  return function() {
     game
       .get()
       .then(function(doc) {
@@ -412,20 +411,22 @@ export const initiateTrade = (initiatorPlayer, receiverPlayer, offer, exchange, 
       })
       .then(() => {
         let offerKey = Object.keys(offer)
-        offerKey.forEach(function(type) {
+        let exchangeKey = Object.keys(exchange)
+        let resources = offerKey.concat(exchangeKey)
+        console.log('keys', resources)
+        resources.forEach(function(type) {
+         offer[type] = offer[type] ? offer[type] : 0
+         exchange[type] = exchange[type] ? exchange[type] : 0
           updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
-            initiatorData[type] - offer[type] + exchange[type]
+            (+initiatorData[type]) - (+offer[type]) + (+exchange[type])
           updatedReceiverData[`players.${receiverPlayer}.${type}`] =
-            receiverData[type] + offer[type] - exchange[type]
+            (+receiverData[type]) + (+offer[type]) - (+exchange[type])
         })
       })
-      .then(() =>
-        Promise.all([
-          game.update(updatedInitiatorData),
+      .then(() => {
+          game.update(updatedInitiatorData)
           game.update(updatedReceiverData)
-        ])
-      )
-  }
+      })
 }
 
 //updates message start property - used so as to have only 13 messages at a time
