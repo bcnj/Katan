@@ -15,8 +15,10 @@ class MessageTab extends Component {
     this.renderChat = this.renderChat.bind(this)
   }
 
-  handleMessageChange = (e, { message, value }) =>
+  handleMessageChange = (e, { message, value }) => {
     this.setState({ [message]: value })
+    this.renderChat()
+  }
 
 
   handleMessageSubmit = () => {
@@ -28,7 +30,7 @@ class MessageTab extends Component {
     let messageCountUpdate = {}
     //player should be grabbed from user, so hardcoded for now
     messageUpdate[`messages.${this.props.messageCount}`] = {
-      player: 'Scott',
+      player: `${localStorage.getItem(`${gameId}`)}`,
       time: time,
       content: this.state.message,
       loadMessages: 1
@@ -125,4 +127,4 @@ class MessageTab extends Component {
   }
 }
 
-export default MessageTab
+export default connect()(MessageTab)
