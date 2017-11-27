@@ -1,27 +1,29 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Button } from 'semantic-ui-react';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Button } from 'semantic-ui-react'
 import { db } from '../firebase'
 import { endTurn, distributeResourcesInit } from '../utils'
 
 const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
-
   return (
-      <Button onClick={e => {
+    <Button
+      onClick={e => {
         e.preventDefault()
         endTurn(currentGame.game.turn, currentGame.game.currentPlayer, gameId)
-        }} style={{width: '49%', height: '75%'}}>
-          End Turn
-      </Button>
-  );
-};
+      }}
+      style={{ width: '49%', height: '75%' }}
+    >
+      End Turn
+    </Button>
+  )
+}
 
 const mapState = (state, ownProps) => {
-    return {
-      currentGame: state.currentGame,
-      gameId: ownProps.gameId,
-    };
-};
+  return {
+    currentGame: state.currentGame,
+    gameId: ownProps.gameId
+  }
+}
 
 // const mapDispatch = (dispatch) => {
 //     return {
@@ -50,5 +52,4 @@ const mapState = (state, ownProps) => {
 //   };
 // };
 
-export default connect(mapState)(EndTurnBtn);
-
+export default connect(mapState)(EndTurnBtn)

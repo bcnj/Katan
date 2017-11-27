@@ -45,8 +45,7 @@ class Tile extends Component {
   getNeighbors() {} // Returns an array of player ID's
   isOccupied() {} // Returns BOOL
 
-  handleClick(event) {
-  }
+  handleClick(event) {}
 
   render() {
     const resources = {

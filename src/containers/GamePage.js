@@ -12,7 +12,7 @@ import BuildBtnInit from '../components/BuildBtnInit'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
-
+import TradePrompt from '../components/TradePrompt'
 import PlayerTable from '../components/PlayerTable'
 import { connect } from 'react-redux'
 
@@ -38,6 +38,7 @@ class GamePage extends Component {
 
   render() {
     //controls which panel tab appears based on menu selection
+
     let section
 
     if (this.state.activeItem === 'players') {
@@ -57,6 +58,7 @@ class GamePage extends Component {
         />
       )
     }
+
     if (this.state.activeItem === 'log') {
       section = <LogTab />
     }
@@ -145,7 +147,7 @@ class GamePage extends Component {
                 ) : (
                   <BuildBtnInit gameId={gameId} currentGame={currentGame} />
                 ))}
-              <TradeBtn />
+              <TradeBtn currentGame={currentGame} gameId={gameId} />
             </Grid.Row>
 
             <Grid.Row style={{ height: '50%' }}>
@@ -159,6 +161,11 @@ class GamePage extends Component {
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>
+        {currentGame &&
+          currentGame.players &&
+          currentGame.players[localStorage.getItem(gameId)].trade && (
+            <TradePrompt currentGame={currentGame} gameId={gameId} />
+          )}
       </Grid>
     )
   }
