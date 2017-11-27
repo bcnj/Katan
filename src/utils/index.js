@@ -452,7 +452,7 @@ export const deleteSpecificDevCard = (cardId, player, gameId) => {
 export const useKnightTakeCard = (gameId, taker, victim) => {
   const game = db.collection('games').doc(gameId)
   game.get().then(doc => {
-    let cards = ['ORE', 'SHEEP', 'WHEAT', 'WOOD', 'BRICK'],
+    let cards = ['ore', 'sheep', 'wheat', 'wood', 'brick'],
       shuffled = shuffle(cards),
       check = true,
       i = 0
@@ -489,6 +489,7 @@ export const getOptions = (game, currentPlayerId) => {
         intersections[intersection].player
     }
   }
+  console.log(intersectionKeyPlayerValue)
   //checkForTileWithIntersectionKey
   var options = [],
     tileObj = {

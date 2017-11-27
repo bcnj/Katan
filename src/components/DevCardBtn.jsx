@@ -231,6 +231,7 @@ class DevCardBtn extends Component {
       if (count === 0) alert('Enter a correct player')
       else {
         //switch card, random card from victims hand given to player, no interaction, simply increment and decrement of resource
+        console.log(this.state.knightValuePlayer,this.state.knightValueVictim)
         useKnightTakeCard(
           gameId,
           this.state.knightValuePlayer,
