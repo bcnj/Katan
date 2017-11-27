@@ -11,7 +11,11 @@ class Lobby extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchGames()
+    this.cancel = this.props.fetchGames()
+  }
+
+  componentWillUnmount(){
+    this.cancel()
   }
 
   render() {
