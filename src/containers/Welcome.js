@@ -9,28 +9,31 @@ import dummyData from '../dummyData'
 // import * as actions from '../actions'
 
 class Welcome extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
   }
 
-  render(){
-    return(
-    <div style={{ textAlign: 'center', marginTop: '40vh' }}>
+  render() {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '40vh' }}>
         <h1> Settlers of Catan </h1>
         <div>
           <div style={{ textAlign: 'around' }}>
             <Link to={'/lobby'}>
               <Button secondary> Join Game </Button>
             </Link>
-              <Button secondary onClick={this.props.handleCreate}> Create Game </Button>
+            <Button secondary onClick={this.props.handleCreate}>
+              {' '}
+              Create Game{' '}
+            </Button>
           </div>
         </div>
-  </div>
-)
-}
+      </div>
+    )
+  }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     allGames: state.game,
     tiles: state.tiles
@@ -39,7 +42,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    handleCreate: ()=> {
+    handleCreate: () => {
       db.collection('games').add(dummyData)
       ownProps.history.push('/lobby')
     }
