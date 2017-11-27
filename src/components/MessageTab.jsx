@@ -20,7 +20,6 @@ class MessageTab extends Component {
     this.renderChat()
   }
 
-
   handleMessageSubmit = () => {
     const gameId = window.location.href.slice(-20)
     const game = db.collection('games').doc(gameId)
