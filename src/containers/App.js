@@ -3,8 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Welcome from './Welcome'
 import Lobby from './Lobby'
-import Wait from './Wait'
-import GamePage from './GamePage'
+import Game from './Game'
 
 import Background from '../images/catan1.jpg'
 
@@ -21,7 +20,7 @@ export default () => (
     <div
       style={{
         minWidth: '1250px',
-        minHeight: '750px',        
+        minHeight: '750px',
         textAlign: 'center',
         width: '100vw',
         height: '100vh',
@@ -38,8 +37,8 @@ export default () => (
       <Switch>
         <Route exact path="/" component={Welcome} />
         <Route path="/lobby" component={Lobby} />
-        <Route path="/game/wait/:gameId" component={Wait} />
-        <Route path="/game/:gameId" component={GamePage} />
+        {/* <Route path="/game/wait/:gameId" component={Wait} /> */}
+        <Route path="/game/:gameId" component={Game} />
       </Switch>
     </div>
   </Router>

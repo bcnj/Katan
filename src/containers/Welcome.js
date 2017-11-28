@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           .doc(`${game.id}`)
           .update(playerUpdate)
         localStorage.setItem(`${game.id}`, 'player1')
-        ownProps.history.push(`/game/wait/${game.id}`)
+        ownProps.history.push(`/game/${game.id}`)
       })
     }
   }
