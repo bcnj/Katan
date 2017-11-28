@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Segment } from 'semantic-ui-react'
-import { Card } from 'semantic-ui-react'
+import { Card, Message } from 'semantic-ui-react'
 import Dice from '../components/Dice'
 
 const PlayerTab = ({ currentGame, gameId }) => {
-
   return (
     <Segment style={{ height: '90%' }}>
       <Card.Group>
@@ -22,14 +21,21 @@ const PlayerTab = ({ currentGame, gameId }) => {
               fluid
               key={num}
               header={currentGame.players[`player${num}`].name}
-              meta={<div><strong>
-                {currentGame.game.currentPlayer === `player${num}`
-                  ? 'playing'
-                  : 'waiting'}
-              </strong></div>}
+              meta={
+                <div>
+                  <strong>
+                    {currentGame.game.currentPlayer === `player${num}` ? (
+                      <Message positive>
+                        <Message.Header>It's your turn to go!</Message.Header>
+                      </Message>
+                    ) : ''
+                    }
+                  </strong>
+                </div>
+              }
               description={`${
                 currentGame.players[`player${num}`].score
-                } VP Points`}
+              } VP Points`}
               color={currentGame.players[`player${num}`].color}
             />
           ))}
