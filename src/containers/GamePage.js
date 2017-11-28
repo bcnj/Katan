@@ -32,7 +32,11 @@ class GamePage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSingleGame(this.props.gameId)
+    this.cancel = this.props.fetchSingleGame(this.props.gameId)
+  }
+
+  componentWillUnmount(){
+    this.cancel()
   }
 
   render() {

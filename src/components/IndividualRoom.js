@@ -1,6 +1,5 @@
 import React from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Button, Card } from 'semantic-ui-react'
 
 export default ({ allGames, handleJoin, handleWatch, user }) => {
   return (

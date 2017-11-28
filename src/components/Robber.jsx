@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Button, Modal, Menu, Dropdown } from 'semantic-ui-react'
 import brickImage from '../images/brick.jpg'
 import wheatImage from '../images/wheat.jpg'
 import woodImage from '../images/wood.jpg'
 import sheepImage from '../images/sheep.jpg'
 import oreImage from '../images/ore.jpg'
-import { db } from '../firebase'
 import {
   setRobberOnTile,
   robberDivideCardsInHalf,
@@ -222,6 +220,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={wheatImage}
@@ -230,6 +229,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={woodImage}
@@ -238,6 +238,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={oreImage}
@@ -246,6 +247,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                   <img
                     src={sheepImage}
@@ -254,6 +256,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
+                    alt=''
                   />
                 </div>
                 <div

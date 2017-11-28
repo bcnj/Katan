@@ -3,15 +3,16 @@ import IndividualRoom from '../components/IndividualRoom'
 import { connect } from 'react-redux'
 import { db } from '../firebase'
 import { Container } from 'semantic-ui-react'
-import { fetchGames, setPlayer } from '../actions'
+import { fetchGames } from '../actions'
 
 class Lobby extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   componentDidMount() {
-    this.props.fetchGames()
+    this.cancel = this.props.fetchGames()
+  }
+
+  componentWillUnmount(){
+    this.cancel()
   }
 
   render() {

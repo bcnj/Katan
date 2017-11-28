@@ -17,7 +17,6 @@ class DiceRoll extends React.Component {
 
   render() {
     const { currentGame, gameId } = this.props
-    const { diceDisplay } = this.state
 
     return (
       <div>

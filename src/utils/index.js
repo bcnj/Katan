@@ -64,7 +64,7 @@ export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame) => {
     buildRoadResource(currentPlayer, gameId)
   } else {
     endTurn(turn, currentPlayer, gameId)
-    if (turn == 7) {
+    if (turn === 7) {
       distributeResourcesInit(
         gameId,
         currentGame.tileNodes,
@@ -288,7 +288,7 @@ export const distributeResourcesInit = (
   players
 ) => {
   let resourceUpdate = {}
-  let game = db.collection('games').doc(gameId)
+  // let game = db.collection('games').doc(gameId)
   for (let i = 1; i <= 19; i++) {
     tileNodes[i].children.forEach(n => {
       let intersection = intersectionNodes[n]
@@ -322,17 +322,17 @@ export const endTurn = (currentTurn, currentPlayer, gameId) => {
   let playerNum = +currentPlayer[6]
   endTurn[`game.turn`] = currentTurn + 1
   endTurn[`game.diceRollCount`] = currentTurn + 1
-  if (currentTurn == 2) {
+  if (currentTurn === 2) {
     endTurn[`game.currentPlayer`] = 'player4'
-  } else if (currentTurn == 3) {
+  } else if (currentTurn === 3) {
     endTurn[`game.currentPlayer`] = 'player4'
-  } else if (currentTurn == 4) {
+  } else if (currentTurn === 4) {
     endTurn[`game.currentPlayer`] = 'player3'
-  } else if (currentTurn == 5) {
+  } else if (currentTurn === 5) {
     endTurn[`game.currentPlayer`] = 'player2'
-  } else if (currentTurn == 6) {
+  } else if (currentTurn === 6) {
     endTurn[`game.currentPlayer`] = 'player1'
-  } else if (currentTurn == 7) {
+  } else if (currentTurn === 7) {
     endTurn[`game.currentPlayer`] = 'player1'
   } else {
     endTurn[`game.currentPlayer`] =
@@ -663,9 +663,8 @@ export const getOptions = (game, currentPlayerId) => {
       18: [],
       19: []
     },
-    option = {},
-    tempTile = '',
-    tempPlayer = ''
+    option = {}
+
   for (let tile in tiles) {
     tiles[tile].children.forEach(child => {
       for (let intersection in intersectionKeyPlayerValue) {
@@ -684,16 +683,16 @@ export const getOptions = (game, currentPlayerId) => {
     option.value.tile = tile
     option.value.players = tileObj[tile]
     if (tileObj[tile].length > 1) {
-      option.text = 'Tile: ' + tile + ' ' + 'Players: '
+      option.text = 'Tile: ' + tile + ' Players: '
       tileObj[tile].forEach(player => {
         playerKey = Object.keys(player)
         option.text += playerKey[0] + ' '
       })
     } else if (tileObj[tile].length === 1) {
       playerKey = Object.keys(tileObj[tile][0])
-      option.text = 'Tile: ' + tile + ' ' + 'Players: ' + playerKey[0]
+      option.text = 'Tile: ' + tile + ' Players: ' + playerKey[0]
     } else {
-      option.text = 'Tile: ' + tile + ' ' + 'No players'
+      option.text = 'Tile: ' + tile + ' No players'
     }
     options.push(option)
   }
