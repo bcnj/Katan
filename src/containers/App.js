@@ -20,12 +20,15 @@ export default () => (
   <Router>
     <div
       style={{
+        minWidth: '1250px',
+        minHeight: '750px',        
+        textAlign: 'center',
         width: '100vw',
         height: '100vh',
         backgroundImage: 'url(' + Background + ')',
         backgroundSize: 'cover',
-        overflow: 'hidden',
-        position: 'absolute',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
         zIndex: '0'
       }}
     >

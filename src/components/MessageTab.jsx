@@ -96,9 +96,25 @@ class MessageTab extends Component {
       )
   }
 
-  componentDidMount() {
-    this.renderChat()
+  componentWillMount() {
+    console.log('Component will mount')
+    const gameId = window.location.href.slice(-20)
+    let chat = db.collection('games').doc(gameId)
+    console.log('chat', chat)
+    chat.onSnapshot(snap => {
+      this.renderChat()
+    })
   }
+
+  // componentDidMount() {
+  //   console.log('Component did mount')
+  //   const gameId = window.location.href.slice(-20)
+  //   let chat = db.collection('games').doc(gameId)
+  //   console.log('chat', chat)
+  //   chat.onSnapshot(snap => {
+  //     this.renderChat()
+  //   })
+  // }
 
   render() {
     const { message, text } = this.state

@@ -51,6 +51,7 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
                     ) : (
                       <strong>Not your turn</strong>
                     )}
+
                   </Card.Description>
                 </Card.Content>
               </Card>
