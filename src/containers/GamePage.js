@@ -136,7 +136,7 @@ class GamePage extends Component {
 
         {/* contains the players table and action buttons */}
         <Grid.Row
-          style={{ height: '20vh' }}
+          style={{ height: '20vh', zIndex: 20 }}
         // color={'yellow'}
         >
           {/* players table column */}
