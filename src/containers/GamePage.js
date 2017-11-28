@@ -22,8 +22,7 @@ class GamePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'players',
-      now: Date.now()
+      activeItem: 'players'
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
   }
@@ -66,6 +65,9 @@ class GamePage extends Component {
     //local state governing current panel selection
     const { activeItem } = this.state
     const { user, currentGame, gameId } = this.props
+
+    if (currentGame.game) {
+    }
 
     return (
       <Grid padded>
@@ -153,7 +155,7 @@ class GamePage extends Component {
             <Grid.Row style={{ height: '50%' }}>
               {currentGame &&
               currentGame.game &&
-              localStorage.getItem(`${gameId}`) ===
+              localStorage.getItem(gameId) ===
                 currentGame.game.currentPlayer ? (
                 <DevCardBtn currentGame={currentGame} />
               ) : (
@@ -164,9 +166,8 @@ class GamePage extends Component {
               <EndTurnBtn gameId={gameId} />
               {currentGame &&
                 currentGame.game &&
-                currentGame.game.diceRoll === 7 && (
-                  <Robber currentGame={currentGame} user={user} />
-                )}
+                currentGame.players[localStorage.getItem(gameId)]
+                  .modalOpen && <Robber currentGame={currentGame} />}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>
