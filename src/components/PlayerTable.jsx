@@ -19,7 +19,7 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
   let player,
     image = player1Image
   if (currentGame && gameId) {
-    player = localStorage.getItem(`${gameId}`)
+    player = localStorage.getItem(gameId)
     if (player === 'player1') image = player1Image
     if (player === 'player2') image = player2Image
     if (player === 'player3') image = player3Image
@@ -64,15 +64,14 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
             >
               <Grid>
                 <Grid.Row columns={5}>
-
-                  {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
+                  {['brick', 'wheat', 'wood', 'sheep', 'ore'].map((resource, idx) => (
                     <Grid.Column key={idx}>
                       <Label
                         color={color[idx]}
                         size={'small'}
                         style={{ width: '50%' }}
                         >
-                        {currentGame.players[`${player}`].brick}
+                        {currentGame.players[`${player}`][resource]}
                       </Label>
                       <Image centered fluid style={{height: '80%', width: 'auto', justifyContent:'center'}} src={images[idx]} alt='' />
                     </Grid.Column>
