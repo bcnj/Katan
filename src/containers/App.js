@@ -27,7 +27,7 @@ export default () => (
         height: '100vh',
         backgroundImage: 'url(' + Background + ')',
         backgroundSize: 'cover',
-        overflowX: 'auto',
+        overflowX: 'hidden',
         overflowY: 'hidden',
         zIndex: '0'
       }}
