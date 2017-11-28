@@ -66,7 +66,7 @@ class Robber extends Component {
       userMoveTile =
         this.props.currentGame.game.currentPlayer ===
         localStorage.getItem(gameId),
-        hasUserMovedTile = userMoveTile ? true : false
+      hasUserMovedTile = userMoveTile ? true : false
 
     this.setState({
       brick,
