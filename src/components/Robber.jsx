@@ -30,6 +30,7 @@ class Robber extends Component {
       sheep: 0,
       ore: 0,
       wheat: 0,
+      userSelectedTile: false,
       userMoveTile: false,
       hasUserMovedTile: false,
       options: [],
@@ -168,7 +169,9 @@ class Robber extends Component {
   handleTileChange(e, data) {
     e.preventDefault()
     let tile = data.value.tile
+    let userSelectedTile = true
     this.setState({
+      userSelectedTile,
       tile
     })
   }
@@ -190,6 +193,7 @@ class Robber extends Component {
 
   render() {
     //massive modal, as I had to create 20 buttons because of the ternary nature of user having enough resources, not gaining more then they had, etc.
+    console.log(this.state.userSelectedTile)
     return (
       <div>
         <Modal open>
@@ -220,7 +224,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt=''
+                    alt="brick"
                   />
                   <img
                     src={wheatImage}
@@ -229,7 +233,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt=''
+                    alt="wheat"
                   />
                   <img
                     src={woodImage}
@@ -238,7 +242,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt=''
+                    alt="wood"
                   />
                   <img
                     src={oreImage}
@@ -247,7 +251,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt=''
+                    alt="ore"
                   />
                   <img
                     src={sheepImage}
@@ -256,7 +260,7 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt=''
+                    alt="sheep"
                   />
                 </div>
                 <div
@@ -407,13 +411,19 @@ class Robber extends Component {
                       onChange={this.handleTileChange}
                     />
                   </Menu.Item>
-                  <Button
-                    color="red"
-                    style={{ flexGrow: '1' }}
-                    onClick={this.handleTileSubmit}
-                  >
-                    Submit
-                  </Button>
+                  {this.state.userSelectedTile ? (
+                    <Button
+                      color="red"
+                      style={{ flexGrow: '1' }}
+                      onClick={this.handleTileSubmit}
+                    >
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled color="red" style={{ flexGrow: '1' }}>
+                      Submit
+                    </Button>
+                  )}
                 </Menu>
               )}
             </div>
@@ -465,13 +475,19 @@ class Robber extends Component {
                       onChange={this.handleTileChange}
                     />
                   </Menu.Item>
-                  <Button
-                    color="red"
-                    style={{ flexGrow: '1' }}
-                    onClick={this.handleTileSubmit}
-                  >
-                    Submit
-                  </Button>
+                  {this.state.userSelectedTile ? (
+                    <Button
+                      color="red"
+                      style={{ flexGrow: '1' }}
+                      onClick={this.handleTileSubmit}
+                    >
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled color="red" style={{ flexGrow: '1' }}>
+                      Submit
+                    </Button>
+                  )}
                 </Menu>
               )}
             </div>
