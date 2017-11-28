@@ -1252,8 +1252,8 @@ class Board extends Component {
         onWheel={e => {
           this.handleWheel(e, this.stage)
         }}
-        width={1250}
-        height={750}
+        width={3000}
+        height={3000}
         draggable={true}
       >
         {this.props.currentGame.roadNodes &&
