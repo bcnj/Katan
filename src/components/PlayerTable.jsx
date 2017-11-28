@@ -26,137 +26,137 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
   }
 
   return (
-    <div>
+    <Grid.Row style={{ height: '100%' }}>
       {user &&
         currentGame &&
         currentGame.players &&
-        player && (
-          <Grid>
-            <Grid.Column width={3}>
-              <Card
-                style={{
-                  height: '100%',
-                  width: '100%'
-                }}
+        player &&
+        <Grid style={{ height: '100%' }}>
+          <Grid.Column width={3}>
+            <Card
+              style={{
+                height: '110%',
+                width: '100%',
+                backgroundImage: 'url(' + image + ')',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center center'
+              }}
+            >
+              <Card.Content>
+                <p style={{ verticalAlign: 'text-bottom' }}>{user.name}</p>
+              </Card.Content>
+            </Card>
+          </Grid.Column>
+          <Grid.Column width={13}>
+            <Segment
+              style={{
+                paddingBottom: '0',
+                margin: '0',
+                height: '28%',
+                width: '100%',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                display: 'flex',
+                justifyContent: 'space-around'
+              }}
+            >
+              <Label
+                circular
+                style={{ width: '10%' }}
+                size="small"
+                color="red"
               >
-                <Image style={{ height: '50%' }} src={image} />
-                <Card.Content>
-                  <Card.Header textAlign="center">{user.name}</Card.Header>
-                  <Card.Description textAlign="center">
-                    <strong>VP: {currentGame.players[player].score}</strong>
-                  </Card.Description>
-                  <Card.Description textAlign="center">
-                    {currentGame.game.currentPlayer === player ? (
-                      <strong>Currently your turn</strong>
-                    ) : (
-                      <strong>Not your turn</strong>
-                    )}
+                {currentGame.players[`${player}`].brick}
+              </Label>
+              <Label
+                circular
+                style={{ width: '10%' }}
+                size="small"
+                color="brown"
+              >
+                {currentGame.players[`${player}`].wood}
+              </Label>
+              <Label
+                circular
+                style={{ width: '10%' }}
+                size="small"
+                color="green"
+              >
+                {currentGame.players[`${player}`].sheep}
+              </Label>
+              <Label
+                circular
+                style={{ width: '10%' }}
+                size="small"
+                color="yellow"
+              >
+                {currentGame.players[`${player}`].wheat}
+              </Label>
+              <Label
+                circular
+                style={{ width: '10%' }}
+                size="small"
+                color="black"
+              >
+                {currentGame.players[`${player}`].ore}
+              </Label>
 
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-            <Grid.Column width={13}>
-              <Segment
+            </Segment>
+            <Segment
+              style={{
+                paddingTop: '0',
+                margin: '0',
+                height: '83%',
+                width: '100%',
+                backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                display: 'flex',
+                justifyContent: 'space-around'
+              }}
+            >
+              <img
+                src={brickImage}
                 style={{
                   height: '100%',
-                  width: '100%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.5)'
+                  width: '13%'
                 }}
-              >
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-around' }}
-                >
-                  <img
-                    src={brickImage}
-                    style={{
-                      height: '15%',
-                      width: '15%'
-                    }}
-                    alt="brick"
-                  />
-                  <img
-                    src={woodImage}
-                    style={{
-                      height: '15%',
-                      width: '15%'
-                    }}
-                    alt="wood"
-                  />
-                  <img
-                    src={sheepImage}
-                    style={{
-                      height: '15%',
-                      width: '15%'
-                    }}
-                    alt="sheep"
-                  />
-                  <img
-                    src={wheatImage}
-                    style={{
-                      height: '15%',
-                      width: '15%'
-                    }}
-                    alt="wheat"
-                  />
-                  <img
-                    src={oreImage}
-                    style={{
-                      height: '15%',
-                      width: '15%'
-                    }}
-                    alt="ore"
-                  />
-                </div>
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-around' }}
-                >
-                  <Label
-                    circular
-                    style={{ width: '10%' }}
-                    size="huge"
-                    color="red"
-                  >
-                    {currentGame.players[`${player}`].brick}
-                  </Label>
-                  <Label
-                    circular
-                    style={{ width: '10%' }}
-                    size="huge"
-                    color="brown"
-                  >
-                    {currentGame.players[`${player}`].wood}
-                  </Label>
-                  <Label
-                    circular
-                    style={{ width: '10%' }}
-                    size="huge"
-                    color="green"
-                  >
-                    {currentGame.players[`${player}`].sheep}
-                  </Label>
-                  <Label
-                    circular
-                    style={{ width: '10%' }}
-                    size="huge"
-                    color="yellow"
-                  >
-                    {currentGame.players[`${player}`].wheat}
-                  </Label>
-                  <Label
-                    circular
-                    style={{ width: '10%' }}
-                    size="huge"
-                    color="black"
-                  >
-                    {currentGame.players[`${player}`].ore}
-                  </Label>
-                </div>
-              </Segment>
-            </Grid.Column>
-          </Grid>
-        )}
-    </div>
+                alt="brick"
+              />
+              <img
+                src={woodImage}
+                style={{
+                  height: '100%',
+                  width: '13%'
+                }}
+                alt="wood"
+              />
+              <img
+                src={sheepImage}
+                style={{
+                  height: '100%',
+                  width: '13%'
+                }}
+                alt="sheep"
+              />
+              <img
+                src={wheatImage}
+                style={{
+                  height: '100%',
+                  width: '13%'
+                }}
+                alt="wheat"
+              />
+              <img
+                src={oreImage}
+                style={{
+                  height: '100%',
+                  width: '13%'
+                }}
+                alt="ore"
+              />
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      }
+    </Grid.Row >
   )
 }
 
