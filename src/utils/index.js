@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import {createDevCards, shuffle} from '../helpers.js'
+import { createDevCards, shuffle } from '../helpers.js'
 
 export const turnRoadsOff = gameId => {
   const roadUpdate = {}
@@ -207,6 +207,24 @@ export const rollDice = (diceSum, gameId) => {
     .update(diceRoll)
     .then(() => console.log('Dice has been rolled'))
     .catch(err => console.log('Error has occured for rolling dice: ', err))
+
+  //I need to work here to update for close modal with robber
+  if (diceSum === 7) {
+    const game = db.collection('games').doc(gameId)
+    let player1UpdateModalOpen = {},
+      player2UpdateModalOpen = {},
+      player3UpdateModalOpen = {},
+      player4UpdateModalOpen = {}
+
+    player1UpdateModalOpen[`players.player1.modalOpen`] = true
+    player2UpdateModalOpen[`players.player2.modalOpen`] = true
+    player3UpdateModalOpen[`players.player3.modalOpen`] = true
+    player4UpdateModalOpen[`players.player4.modalOpen`] = true
+    game.update(player1UpdateModalOpen)
+    game.update(player2UpdateModalOpen)
+    game.update(player3UpdateModalOpen)
+    game.update(player4UpdateModalOpen)
+  }
 }
 
 export const distributeResources = (
@@ -461,28 +479,34 @@ export const buildCityResource = (currentPlayer, gameId) => {
 export const turnTradeOn = (currentPlayer, gameId) => {
   const tradeUpdate = {}
   const playerArr = ['player1', 'player2', 'player3', 'player4']
-  playerArr.filter(player => player !== currentPlayer).forEach( player => {
+  playerArr.filter(player => player !== currentPlayer).forEach(player => {
     tradeUpdate[`players.${player}.trade`] = true
   })
-  db.collection('games').doc(gameId)
-  .update(tradeUpdate)
+  db
+    .collection('games')
+    .doc(gameId)
+    .update(tradeUpdate)
 }
 
-export const turnTradeOff = (gameId) => {
+export const turnTradeOff = gameId => {
   const tradeUpdate = {}
   const playerArr = ['player1', 'player2', 'player3', 'player4']
-  playerArr.forEach( player => {
+  playerArr.forEach(player => {
     tradeUpdate[`players.${player}.trade`] = false
   })
-  db.collection('games').doc(gameId)
-  .update(tradeUpdate)
+  db
+    .collection('games')
+    .doc(gameId)
+    .update(tradeUpdate)
 }
 
-export const tradeInfo=(offer, exchange, gameId)=>{
+export const tradeInfo = (offer, exchange, gameId) => {
   const tradeUpdate = {}
-  tradeUpdate['trade'] = { offer, exchange}
-  db.collection('games').doc(gameId)
-  .update(tradeUpdate)
+  tradeUpdate['trade'] = { offer, exchange }
+  db
+    .collection('games')
+    .doc(gameId)
+    .update(tradeUpdate)
 }
 
 /* INITIATE TRADE
@@ -490,41 +514,47 @@ export const tradeInfo=(offer, exchange, gameId)=>{
     initiator & receiver: 'player1'
     offer & exchange: objects containing card types and quantity;{ore: 2}
 */
-export const initiateTrade = (initiatorPlayer, receiverPlayer, offer, exchange, gameId) => {
+export const initiateTrade = (
+  initiatorPlayer,
+  receiverPlayer,
+  offer,
+  exchange,
+  gameId
+) => {
   let initiatorData,
     receiverData,
     updatedInitiatorData = {},
     updatedReceiverData = {}
-    turnTradeOff(gameId)
+  turnTradeOff(gameId)
   const game = db.collection('games').doc(gameId)
-    game
-      .get()
-      .then(function(doc) {
-        initiatorData = doc.data().players[initiatorPlayer]
-        receiverData = doc.data().players[receiverPlayer]
+  game
+    .get()
+    .then(function(doc) {
+      initiatorData = doc.data().players[initiatorPlayer]
+      receiverData = doc.data().players[receiverPlayer]
+    })
+    .then(() => {
+      console.log('initiatorData', initiatorData)
+      console.log('receiverData', receiverData)
+    })
+    .then(() => {
+      let offerKey = Object.keys(offer)
+      let exchangeKey = Object.keys(exchange)
+      let resources = offerKey.concat(exchangeKey)
+      console.log('keys', resources)
+      resources.forEach(function(type) {
+        offer[type] = offer[type] ? offer[type] : 0
+        exchange[type] = exchange[type] ? exchange[type] : 0
+        updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
+          +initiatorData[type] - +offer[type] + +exchange[type]
+        updatedReceiverData[`players.${receiverPlayer}.${type}`] =
+          +receiverData[type] + +offer[type] - +exchange[type]
       })
-      .then(() => {
-        console.log('initiatorData', initiatorData)
-        console.log('receiverData', receiverData)
-      })
-      .then(() => {
-        let offerKey = Object.keys(offer)
-        let exchangeKey = Object.keys(exchange)
-        let resources = offerKey.concat(exchangeKey)
-        console.log('keys', resources)
-        resources.forEach(function(type) {
-         offer[type] = offer[type] ? offer[type] : 0
-         exchange[type] = exchange[type] ? exchange[type] : 0
-          updatedInitiatorData[`players.${initiatorPlayer}.${type}`] =
-            (+initiatorData[type]) - (+offer[type]) + (+exchange[type])
-          updatedReceiverData[`players.${receiverPlayer}.${type}`] =
-            (+receiverData[type]) + (+offer[type]) - (+exchange[type])
-        })
-      })
-      .then(() => {
-          game.update(updatedInitiatorData)
-          game.update(updatedReceiverData)
-      })
+    })
+    .then(() => {
+      game.update(updatedInitiatorData)
+      game.update(updatedReceiverData)
+    })
 }
 
 export const purchaseDevCard = (player, gameId) => {
@@ -610,7 +640,6 @@ export const getOptions = (game, currentPlayerId) => {
         intersections[intersection].player
     }
   }
-  console.log(intersectionKeyPlayerValue)
   //checkForTileWithIntersectionKey
   var options = [],
     tileObj = {
@@ -794,7 +823,7 @@ export const addTwoSelectedResources = (gameId, resources, player) => {
 export const victoryPointCard = (player, gameId) => {
   const game = db.collection('games').doc(gameId)
   game.get().then(doc => {
-    let incrementedPlayerScore = doc.data().players[`player${player}`].score+1
+    let incrementedPlayerScore = doc.data().players[`player${player}`].score + 1
     let updateScore = {}
     updateScore[`players.player${player}.score`] = incrementedPlayerScore
     game.update(updateScore)
@@ -809,8 +838,7 @@ export const robberDivideCardsInHalf = (gameId, player, resources) => {
       updateBrick = {},
       updateWood = {},
       updateOre = {},
-      updateWheat = {},
-      updateDice = {}
+      updateWheat = {}
 
     updateBrick[`players.player${player}.brick`] = resources.brick
     updateWood[`players.player${player}.wood`] = resources.wood
@@ -818,13 +846,17 @@ export const robberDivideCardsInHalf = (gameId, player, resources) => {
     updateSheep[`players.player${player}.sheep`] = resources.sheep
     updateWheat[`players.player${player}.wheat`] = resources.wheat
 
-    updateDice[`game.diceRoll`] = 0
-
     game.update(updateBrick)
     game.update(updateOre)
     game.update(updateSheep)
     game.update(updateWheat)
     game.update(updateWood)
-    game.update(updateDice)
   })
+}
+
+export const updateCloseModalForPlayer = (gameId, player) => {
+  const game = db.collection('games').doc(gameId)
+  let updatePlayerCloseModal = {}
+  updatePlayerCloseModal[`players.${player}.modalOpen`] = false
+  game.update(updatePlayerCloseModal)
 }

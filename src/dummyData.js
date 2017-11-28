@@ -12,85 +12,89 @@ const dummyData = {
     robber: '10',
     robberBuild: false
   },
-  "trade": {
-    "offer" : {
-      "wood": 0,
-      "ore": 0,
-      "sheep": 0,
-      "wheat": 0,
-      "brick":0,
+  trade: {
+    offer: {
+      wood: 0,
+      ore: 0,
+      sheep: 0,
+      wheat: 0,
+      brick: 0
     },
-    "exchange": {
-      "wood": 0,
-      "ore": 0,
-      "sheep": 0,
-      "wheat": 0,
-      "brick":0,
+    exchange: {
+      wood: 0,
+      ore: 0,
+      sheep: 0,
+      wheat: 0,
+      brick: 0
     }
   },
-  "messages": {
-    "1": {
-      "player": "admin",
-      "time": "the past",
-      "content": "Welcome to the game!!!!"
+  messages: {
+    '1': {
+      player: 'admin',
+      time: 'the past',
+      content: 'Welcome to the game!!!!'
     }
   },
-  "players": {
-    "player1": {
-      "id": 1,
-      "name": "",
-      "score": 0,
-      "wood": 0,
-      "brick": 0,
-      "wheat": 0,
-      "sheep": 0,
-      "ore": 0,
-      "devCards": [],
-      "color": 'red',
-      "build": true,
-      "trade": false
-      },
-    "player2": {
-      "id": 2,
-      "name": "",
-      "score": 0,
-      "wood": 0,
-      "brick": 0,
-      "wheat": 0,
-      "sheep": 0,
-      "ore": 0,
-      "devCards": [],
-      "color": 'white',
-      "build": true,
-      "trade": false
+  players: {
+    player1: {
+      id: 1,
+      name: '',
+      score: 0,
+      wood: 0,
+      brick: 0,
+      wheat: 0,
+      sheep: 0,
+      ore: 0,
+      devCards: [],
+      color: 'red',
+      build: true,
+      trade: false,
+      modalOpen: false
     },
-    "player3": {
-      "id": 3,
-      "name": "",
-      "score": 0,
-      "wood": 0,
-      "brick": 0,
-      "wheat": 0,
-      "sheep": 0,
-      "ore": 0,
-      "devCards": [],
-      "color": "green",
-      "build": true,
-      "trade": false
+    player2: {
+      id: 2,
+      name: '',
+      score: 0,
+      wood: 0,
+      brick: 0,
+      wheat: 0,
+      sheep: 0,
+      ore: 0,
+      devCards: [],
+      color: 'white',
+      build: true,
+      trade: false,
+      modalOpen: false
     },
-    "player4": {
-      "id": 4,
-      "name": "",
-      "score": 0,
-      "wood": 0,
-      "brick": 0,
-      "wheat": 0,
-      "sheep": 0,
-      "ore": 0,
-      "devCards": [],
-      "color": "blue",
-      "build": true,
-      "trade": false
+    player3: {
+      id: 3,
+      name: '',
+      score: 0,
+      wood: 0,
+      brick: 0,
+      wheat: 0,
+      sheep: 0,
+      ore: 0,
+      devCards: [],
+      color: 'green',
+      build: true,
+      trade: false,
+      modalOpen: false
+    },
+    player4: {
+      id: 4,
+      name: '',
+      score: 0,
+      wood: 0,
+      brick: 0,
+      wheat: 0,
+      sheep: 0,
+      ore: 0,
+      devCards: [],
+      color: 'blue',
+      build: true,
+      trade: false,
+      modalOpen: false
     }
   },
   devCards: {

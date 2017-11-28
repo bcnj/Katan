@@ -9,7 +9,7 @@ import {
   setRobberOnTile,
   robberDivideCardsInHalf,
   getOptions,
-  rollDice
+  updateCloseModalForPlayer
 } from '../utils/index.js'
 
 class Robber extends Component {
@@ -31,9 +31,11 @@ class Robber extends Component {
       ore: 0,
       wheat: 0,
       userMoveTile: false,
+      hasUserMovedTile: false,
       options: [],
       tile: ''
     }
+
     this.upOrDown = this.upOrDown.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTileChange = this.handleTileChange.bind(this)
@@ -42,7 +44,9 @@ class Robber extends Component {
 
   componentDidMount() {
     //insert massive data into state, again when user works this must be fixed, as in currentPlayer and currentPlayerData, the if/else relates to if the user should be able to move the robber
-    let currentPlayerData = this.props.currentGame.players.player1,
+    let gameId = window.location.href.slice(-20),
+      currentPlayer = localStorage.getItem(gameId),
+      currentPlayerData = this.props.currentGame.players[currentPlayer],
       brick = currentPlayerData.brick,
       ore = currentPlayerData.ore,
       sheep = currentPlayerData.sheep,
@@ -53,7 +57,14 @@ class Robber extends Component {
       sheepStart = currentPlayerData.sheep,
       woodStart = currentPlayerData.wood,
       wheatStart = currentPlayerData.wheat,
-      options = getOptions(this.props.currentGame, '1')
+      tempTotalCards =
+        brickStart + oreStart + sheepStart + woodStart + wheatStart,
+      totalCards = brick + wheat + ore + sheep + wood,
+      options = getOptions(this.props.currentGame),
+      userMoveTile =
+        this.props.currentGame.game.currentPlayer ===
+        localStorage.getItem(gameId),
+      hasUserMovedTile = userMoveTile ? true : false
 
     this.setState({
       brick,
@@ -66,14 +77,14 @@ class Robber extends Component {
       woodStart,
       wheatStart,
       oreStart,
-      tempTotalCards:
-        brickStart + oreStart + sheepStart + woodStart + wheatStart,
-      totalCards: brick + wheat + ore + sheep + wood,
+      tempTotalCards,
+      totalCards,
       options,
-      userMoveTile: true
+      userMoveTile,
+      hasUserMovedTile
     })
-    
   }
+
   upOrDown(event, type, direction) {
     event.preventDefault()
     //up or down as in the component each resource can be increased or decreased based upon what is logically able to be done
@@ -136,9 +147,8 @@ class Robber extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    //when multiple users works...
-    let player = '1', //for now
-      gameId = window.location.href.slice(-20),
+    let gameId = window.location.href.slice(-20),
+      player = localStorage.getItem(gameId),
       brick = this.state.brickStart - this.state.brick,
       wheat = this.state.wheatStart - this.state.wheat,
       sheep = this.state.sheepStart - this.state.sheep,
@@ -167,11 +177,15 @@ class Robber extends Component {
     e.preventDefault()
     let gameId = window.location.href.slice(-20)
     setRobberOnTile(gameId, this.state.tile)
+    this.setState({
+      hasUserMovedTile: false
+    })
   }
 
   handleClose(e, data) {
-    let gameId = window.location.href.slice(-20)
-    rollDice(10, gameId)
+    let gameId = window.location.href.slice(-20),
+      player = localStorage.getItem(gameId)
+    updateCloseModalForPlayer(gameId, player, false)
   }
 
   render() {
@@ -201,6 +215,7 @@ class Robber extends Component {
                 >
                   <img
                     src={brickImage}
+                    alt="brick"
                     style={{
                       height: '15%',
                       width: '15%'
@@ -209,6 +224,7 @@ class Robber extends Component {
                   />
                   <img
                     src={wheatImage}
+                    alt="wheat"
                     style={{
                       height: '15%',
                       width: '15%'
@@ -217,6 +233,7 @@ class Robber extends Component {
                   />
                   <img
                     src={woodImage}
+                    alt="wood"
                     style={{
                       height: '15%',
                       width: '15%'
@@ -225,6 +242,7 @@ class Robber extends Component {
                   />
                   <img
                     src={oreImage}
+                    alt="ore"
                     style={{
                       height: '15%',
                       width: '15%'
@@ -233,6 +251,7 @@ class Robber extends Component {
                   />
                   <img
                     src={sheepImage}
+                    alt="sheep"
                     style={{
                       height: '15%',
                       width: '15%'
@@ -333,7 +352,7 @@ class Robber extends Component {
                 <br />
               </Modal.Content>
               {Math.floor(this.state.tempTotalCards / 2) ===
-                this.state.totalCards && !this.state.moveRobber ? (
+              this.state.totalCards ? (
                 <Button
                   fluid
                   color="violet"
@@ -343,11 +362,26 @@ class Robber extends Component {
                     this.handleSubmit(e)
                   }}
                 >
-                  Finish
+                  Delete Cards
                 </Button>
               ) : (
                 <Button disabled fluid color="violet" size="huge" inverted>
                   Finish
+                </Button>
+              )}
+              {this.state.hasUserMovedTile ? (
+                <Button disabled fluid color="red" size="huge" inverted>
+                  Close
+                </Button>
+              ) : (
+                <Button
+                  onClick={this.handleClose}
+                  fluid
+                  color="violet"
+                  size="huge"
+                  inverted
+                >
+                  Close
                 </Button>
               )}
               {this.state.userMoveTile && (
@@ -392,15 +426,21 @@ class Robber extends Component {
                   current player, select a location to move the Robber.
                 </h1>
                 <br />
-                <Button
-                  onClick={this.handleClose}
-                  fluid
-                  color="violet"
-                  size="huge"
-                  inverted
-                >
-                  Close
-                </Button>
+                {this.state.hasUserMovedTile ? (
+                  <Button disabled fluid color="red" size="huge" inverted>
+                    Close
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={this.handleClose}
+                    fluid
+                    color="violet"
+                    size="huge"
+                    inverted
+                  >
+                    Close
+                  </Button>
+                )}
               </div>
               {this.state.userMoveTile && (
                 <Menu style={{ display: 'flex' }}>
