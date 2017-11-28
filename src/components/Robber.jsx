@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Button, Modal, Menu, Dropdown } from 'semantic-ui-react'
 import brickImage from '../images/brick.jpg'
 import wheatImage from '../images/wheat.jpg'
 import woodImage from '../images/wood.jpg'
 import sheepImage from '../images/sheep.jpg'
 import oreImage from '../images/ore.jpg'
-import { db } from '../firebase'
 import {
   setRobberOnTile,
   robberDivideCardsInHalf,
   getOptions,
-  rollDice
+  updateCloseModalForPlayer
 } from '../utils/index.js'
 
 class Robber extends Component {
@@ -32,10 +30,13 @@ class Robber extends Component {
       sheep: 0,
       ore: 0,
       wheat: 0,
+      userSelectedTile: false,
       userMoveTile: false,
+      hasUserMovedTile: false,
       options: [],
       tile: ''
     }
+
     this.upOrDown = this.upOrDown.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTileChange = this.handleTileChange.bind(this)
@@ -44,8 +45,9 @@ class Robber extends Component {
 
   componentDidMount() {
     //insert massive data into state, again when user works this must be fixed, as in currentPlayer and currentPlayerData, the if/else relates to if the user should be able to move the robber
-    let currentPlayerData = this.props.currentGame.players.player1,
-      currentPlayer = this.props.currentGame.game.currentPlayer,
+    let gameId = window.location.href.slice(-20),
+      currentPlayer = localStorage.getItem(gameId),
+      currentPlayerData = this.props.currentGame.players[currentPlayer],
       brick = currentPlayerData.brick,
       ore = currentPlayerData.ore,
       sheep = currentPlayerData.sheep,
@@ -58,10 +60,13 @@ class Robber extends Component {
       wheatStart = currentPlayerData.wheat,
       tempTotalCards =
         brickStart + oreStart + sheepStart + woodStart + wheatStart,
-      totalCards,
-      options = getOptions(this.props.currentGame, '1')
-    console.log(options)
-    // if(this.props.currentGame.game.currentUser === `player${this.props.user.playerNum}`){
+      totalCards = brick + wheat + ore + sheep + wood,
+      options = getOptions(this.props.currentGame),
+      userMoveTile =
+        this.props.currentGame.game.currentPlayer ===
+        localStorage.getItem(gameId),
+      hasUserMovedTile = userMoveTile ? true : false
+
     this.setState({
       brick,
       ore,
@@ -73,31 +78,14 @@ class Robber extends Component {
       woodStart,
       wheatStart,
       oreStart,
-      tempTotalCards:
-        brickStart + oreStart + sheepStart + woodStart + wheatStart,
-      totalCards: brick + wheat + ore + sheep + wood,
+      tempTotalCards,
+      totalCards,
       options,
-      userMoveTile: true
+      userMoveTile,
+      hasUserMovedTile
     })
-    // else{
-    //   //moveRobber does not change, only specific user has access to that state
-    //   this.setState({
-    //     brick,
-    //     ore,
-    //     sheep,
-    //     wood,
-    //     wheat,
-    //     brickStart,
-    //     sheepStart,
-    //     woodStart,
-    //     wheatStart,
-    //     oreStart,
-    //     tempTotalCards:
-    //       brickStart + oreStart + sheepStart + woodStart + wheatStart,
-    //     totalCards: brick + wheat + ore + sheep + wood
-    //   })
-    // }
   }
+
   upOrDown(event, type, direction) {
     event.preventDefault()
     //up or down as in the component each resource can be increased or decreased based upon what is logically able to be done
@@ -160,11 +148,8 @@ class Robber extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    //when multiple users works...
-    // let currentPlayerNum = this.props.user.playerNum
-    // let currentPlayer = `player${currentPlayerNum}`
-    let player = '1', //for now
-      gameId = window.location.href.slice(-20),
+    let gameId = window.location.href.slice(-20),
+      player = localStorage.getItem(gameId),
       brick = this.state.brickStart - this.state.brick,
       wheat = this.state.wheatStart - this.state.wheat,
       sheep = this.state.sheepStart - this.state.sheep,
@@ -184,7 +169,9 @@ class Robber extends Component {
   handleTileChange(e, data) {
     e.preventDefault()
     let tile = data.value.tile
+    let userSelectedTile = true
     this.setState({
+      userSelectedTile,
       tile
     })
   }
@@ -192,17 +179,21 @@ class Robber extends Component {
   handleTileSubmit(e, data) {
     e.preventDefault()
     let gameId = window.location.href.slice(-20)
-    console.log(this.state.tile)
     setRobberOnTile(gameId, this.state.tile)
+    this.setState({
+      hasUserMovedTile: false
+    })
   }
 
   handleClose(e, data) {
-    let gameId = window.location.href.slice(-20)
-    rollDice(10, gameId)
+    let gameId = window.location.href.slice(-20),
+      player = localStorage.getItem(gameId)
+    updateCloseModalForPlayer(gameId, player, false)
   }
 
   render() {
     //massive modal, as I had to create 20 buttons because of the ternary nature of user having enough resources, not gaining more then they had, etc.
+    console.log(this.state.userSelectedTile)
     return (
       <div>
         <Modal open>
@@ -228,38 +219,48 @@ class Robber extends Component {
                 >
                   <img
                     src={brickImage}
+                    alt="brick"
                     style={{
                       height: '15%',
                       width: '15%'
                     }}
+                    alt="brick"
                   />
                   <img
                     src={wheatImage}
+                    alt="wheat"
                     style={{
                       height: '15%',
                       width: '15%'
                     }}
+                    alt="wheat"
                   />
                   <img
                     src={woodImage}
+                    alt="wood"
                     style={{
                       height: '15%',
                       width: '15%'
                     }}
+                    alt="wood"
                   />
                   <img
                     src={oreImage}
+                    alt="ore"
                     style={{
                       height: '15%',
                       width: '15%'
                     }}
+                    alt="ore"
                   />
                   <img
                     src={sheepImage}
+                    alt="sheep"
                     style={{
                       height: '15%',
                       width: '15%'
                     }}
+                    alt="sheep"
                   />
                 </div>
                 <div
@@ -355,7 +356,7 @@ class Robber extends Component {
                 <br />
               </Modal.Content>
               {Math.floor(this.state.tempTotalCards / 2) ===
-                this.state.totalCards && !this.state.moveRobber ? (
+              this.state.totalCards ? (
                 <Button
                   fluid
                   color="violet"
@@ -365,11 +366,26 @@ class Robber extends Component {
                     this.handleSubmit(e)
                   }}
                 >
-                  Finish
+                  Delete Cards
                 </Button>
               ) : (
                 <Button disabled fluid color="violet" size="huge" inverted>
                   Finish
+                </Button>
+              )}
+              {this.state.hasUserMovedTile ? (
+                <Button disabled fluid color="red" size="huge" inverted>
+                  Close
+                </Button>
+              ) : (
+                <Button
+                  onClick={this.handleClose}
+                  fluid
+                  color="violet"
+                  size="huge"
+                  inverted
+                >
+                  Close
                 </Button>
               )}
               {this.state.userMoveTile && (
@@ -395,13 +411,19 @@ class Robber extends Component {
                       onChange={this.handleTileChange}
                     />
                   </Menu.Item>
-                  <Button
-                    color="red"
-                    style={{ flexGrow: '1' }}
-                    onClick={this.handleTileSubmit}
-                  >
-                    Submit
-                  </Button>
+                  {this.state.userSelectedTile ? (
+                    <Button
+                      color="red"
+                      style={{ flexGrow: '1' }}
+                      onClick={this.handleTileSubmit}
+                    >
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled color="red" style={{ flexGrow: '1' }}>
+                      Submit
+                    </Button>
+                  )}
                 </Menu>
               )}
             </div>
@@ -414,15 +436,21 @@ class Robber extends Component {
                   current player, select a location to move the Robber.
                 </h1>
                 <br />
-                <Button
-                  onClick={this.handleClose}
-                  fluid
-                  color="violet"
-                  size="huge"
-                  inverted
-                >
-                  Close
-                </Button>
+                {this.state.hasUserMovedTile ? (
+                  <Button disabled fluid color="red" size="huge" inverted>
+                    Close
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={this.handleClose}
+                    fluid
+                    color="violet"
+                    size="huge"
+                    inverted
+                  >
+                    Close
+                  </Button>
+                )}
               </div>
               {this.state.userMoveTile && (
                 <Menu style={{ display: 'flex' }}>
@@ -447,13 +475,19 @@ class Robber extends Component {
                       onChange={this.handleTileChange}
                     />
                   </Menu.Item>
-                  <Button
-                    color="red"
-                    style={{ flexGrow: '1' }}
-                    onClick={this.handleTileSubmit}
-                  >
-                    Submit
-                  </Button>
+                  {this.state.userSelectedTile ? (
+                    <Button
+                      color="red"
+                      style={{ flexGrow: '1' }}
+                      onClick={this.handleTileSubmit}
+                    >
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled color="red" style={{ flexGrow: '1' }}>
+                      Submit
+                    </Button>
+                  )}
                 </Menu>
               )}
             </div>

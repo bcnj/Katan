@@ -15,9 +15,10 @@ class MessageTab extends Component {
     this.renderChat = this.renderChat.bind(this)
   }
 
-  handleMessageChange = (e, { message, value }) =>
+  handleMessageChange = (e, { message, value }) => {
     this.setState({ [message]: value })
-
+    this.renderChat()
+  }
 
   handleMessageSubmit = () => {
     const gameId = window.location.href.slice(-20)
@@ -28,7 +29,7 @@ class MessageTab extends Component {
     let messageCountUpdate = {}
     //player should be grabbed from user, so hardcoded for now
     messageUpdate[`messages.${this.props.messageCount}`] = {
-      player: 'Scott',
+      player: `${localStorage.getItem(`${gameId}`)}`,
       time: time,
       content: this.state.message,
       loadMessages: 1
@@ -95,14 +96,30 @@ class MessageTab extends Component {
       )
   }
 
-  componentDidMount() {
-    this.renderChat()
+  componentWillMount() {
+    console.log('Component will mount')
+    const gameId = window.location.href.slice(-20)
+    let chat = db.collection('games').doc(gameId)
+    console.log('chat', chat)
+    chat.onSnapshot(snap => {
+      this.renderChat()
+    })
   }
+
+  // componentDidMount() {
+  //   console.log('Component did mount')
+  //   const gameId = window.location.href.slice(-20)
+  //   let chat = db.collection('games').doc(gameId)
+  //   console.log('chat', chat)
+  //   chat.onSnapshot(snap => {
+  //     this.renderChat()
+  //   })
+  // }
 
   render() {
     const { message, text } = this.state
     return (
-      <Container style={{ height: '90%' }}>
+      <Container style={{ height: '90%'}}>
         <Segment.Group>{text}</Segment.Group>
         <Form
           style={{ height: '20%' }}
@@ -125,4 +142,10 @@ class MessageTab extends Component {
   }
 }
 
-export default MessageTab
+const mapStateToProps = (state, ownProps) => {
+  return {
+      currentGame: state.currentGame,
+  }
+}
+
+export default connect(mapStateToProps)(MessageTab)

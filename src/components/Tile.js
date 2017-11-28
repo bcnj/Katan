@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Layer, Rect, Stage, Group, RegularPolygon, Image } from 'react-konva'
+import { RegularPolygon } from 'react-konva'
 import Wheat from '../images/field.png'
 import Desert from '../images/desert.png'
 import Wood from '../images/forest.png'
 import Brick from '../images/hill.png'
 import Ore from '../images/mountain.png'
 import Sheep from '../images/pasture.png'
-import { db } from '../firebase'
+import Water from '../images/sea.png'
+
 
 class Tile extends Component {
   constructor(props) {
@@ -22,12 +23,16 @@ class Tile extends Component {
     const brick = new window.Image()
     const ore = new window.Image()
     const sheep = new window.Image()
+    const water = new window.Image()
+    
     wheat.src = Wheat
     desert.src = Desert
     wood.src = Wood
     brick.src = Brick
     ore.src = Ore
     sheep.src = Sheep
+    water.src = Water
+    
     wheat.onload = () => {
       this.setState({
         wheat,
@@ -35,18 +40,13 @@ class Tile extends Component {
         wood,
         brick,
         ore,
-        sheep
+        sheep,
+        water
       })
     }
   }
 
-  addSettlement() {} // Adds city to intersection
-  addCity() {} // Adds city to intersection
-  getNeighbors() {} // Returns an array of player ID's
-  isOccupied() {} // Returns BOOL
-
-  handleClick(event) {
-  }
+  handleClick(event) {}
 
   render() {
     const resources = {
@@ -74,16 +74,26 @@ class Tile extends Component {
         img: this.state.sheep,
         stroke: '#a9d751'
       }
+      ,
+      water: {
+        img: this.state.water,
+        stroke: '#062916'
+      }
     }
     const { x, y, resourceType } = this.props
+    let radius
+
+    if ( resourceType === 'water') { radius = 54 }
+    else ( radius = 50 )
+
     return (
       <RegularPolygon
         stroke={resources[resourceType]['stroke']}
-        strokeWidth={30}
+        strokeWidth={45}
         x={x}
         y={y}
         sides={6}
-        radius={50}
+        radius={radius}
         fillPatternImage={resources[resourceType]['img']}
         fillPatternScale={{ x: 0.07, y: 0.07 }}
         fillPatternOffset={{ x: -1020, y: -820 }}

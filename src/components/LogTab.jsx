@@ -1,26 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Segment } from 'semantic-ui-react';
+import React from 'react'
+import { Segment } from 'semantic-ui-react'
 
-const LogTab = (props) => {
+const LogTab = props => {
+  return (
+    <Segment style={{ height: '90%',backgroundColor: 'rgba(255, 255, 255, 0.7)'}}>
+      <h1>This is LogTab</h1>
+      {/* this segment usable for players and log */}
+    </Segment>
+  )
+}
 
-    return (
-        <Segment style={{ height: '90%' }}>
-            <h1>This is LogTab</h1>
-            {/* this segment usable for players and log */}
-        </Segment>
-    );
-};
-
-// const mapState = (state) => {
-//     return {
-//     };
-// };
-
-// const mapDispatch = (dispatch) => {
-//     return {
-//     };
-// };
-
-// export default connect(mapState, mapDispatch)(LogTab);
-export default (LogTab);
+export default LogTab

@@ -1,17 +1,20 @@
-import React, { Component } from "react";
-import { Circle } from "react-konva";
+import React, { Component } from 'react'
+import { Circle } from 'react-konva'
 import { buildCity, buildSettlement } from '../utils'
 
 class Intersection extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
-    const { id, x, y, color, type, currentGame, gameId } = this.props;
-    let stroke, strokeWidth, radius;
-    if (type === 'city') { radius = 14; stroke = 'black'; strokeWidth = '5' } else {
-      radius = 7; stroke = ''; strokeWidth = ''
+    const { id, x, y, color, type, currentGame, gameId } = this.props
+    let stroke, strokeWidth, radius
+    if (type === 'city') {
+      radius = 14
+      stroke = 'black'
+      strokeWidth = '5'
+    } else {
+      radius = 7
+      stroke = ''
+      strokeWidth = ''
     }
 
     return (
@@ -23,13 +26,20 @@ class Intersection extends Component {
         stroke={stroke}
         strokeWidth={strokeWidth}
         shadowBlur={5}
-        onClick={ e => {
-          (currentGame.intersectionNodes[id].settlement === true) ? buildCity(currentGame.game.currentPlayer, gameId, id) :
-            buildSettlement(currentGame.game.currentPlayer, gameId, id, currentGame.game.turn)}}
+        onClick={e => {
+          currentGame.intersectionNodes[id].settlement === true
+            ? buildCity(currentGame.game.currentPlayer, gameId, id)
+            : buildSettlement(
+                currentGame.game.currentPlayer,
+                gameId,
+                id,
+                currentGame.game.turn
+              )
+        }}
         listening={currentGame.intersectionNodes[id].active}
       />
-    );
+    )
   }
 }
 
-export default Intersection;
+export default Intersection

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Menu, Button } from 'semantic-ui-react'
+
 import { fetchSingleGame } from '../actions'
 
 import Board from '../components/Board'
@@ -12,7 +13,7 @@ import BuildBtnInit from '../components/BuildBtnInit'
 import DevCardBtn from '../components/DevCardBtn'
 import EndTurnBtn from '../components/EndTurnBtn'
 import TradeBtn from '../components/TradeBtn'
-
+import TradePrompt from '../components/TradePrompt'
 import PlayerTable from '../components/PlayerTable'
 import { connect } from 'react-redux'
 
@@ -25,8 +26,7 @@ class GamePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'players',
-      now: Date.now()
+      activeItem: 'players'
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
   }
@@ -36,11 +36,16 @@ class GamePage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSingleGame(this.props.gameId)
+    this.cancel = this.props.fetchSingleGame(this.props.gameId)
+  }
+
+  componentWillUnmount() {
+    this.cancel()
   }
 
   render() {
     //controls which panel tab appears based on menu selection
+
     let section
 
     if (this.state.activeItem === 'players') {
@@ -60,6 +65,7 @@ class GamePage extends Component {
         />
       )
     }
+
     if (this.state.activeItem === 'log') {
       section = <LogTab />
     }
@@ -67,6 +73,9 @@ class GamePage extends Component {
     //local state governing current panel selection
     const { activeItem } = this.state
     const { user, currentGame, gameId } = this.props
+
+    if (currentGame.game) {
+    }
 
     return (
       <Grid padded>
@@ -119,6 +128,7 @@ class GamePage extends Component {
               </Menu.Menu>
             </Menu>
 
+
             {/* section depends on menu selection */}
             {section}
           </Grid.Column>
@@ -127,7 +137,7 @@ class GamePage extends Component {
         {/* contains the players table and action buttons */}
         <Grid.Row
           style={{ height: '20vh' }}
-          // color={'yellow'}
+        // color={'yellow'}
         >
           {/* players table column */}
           <Grid.Column width={11}>
@@ -146,25 +156,45 @@ class GamePage extends Component {
                 (currentGame.game.turn >= 8 ? (
                   <BuildBtn gameId={gameId} currentGame={currentGame} />
                 ) : (
-                  <BuildBtnInit gameId={gameId} currentGame={currentGame} />
-                ))}
-              <TradeBtn />
+                    <BuildBtnInit gameId={gameId} currentGame={currentGame} />
+                  ))}
+              {currentGame &&
+                currentGame.game &&
+                <TradeBtn currentGame={currentGame} gameId={gameId} />
+              }
             </Grid.Row>
 
             <Grid.Row style={{ height: '50%' }}>
-              <DevCardBtn />
-              <EndTurnBtn gameId={gameId} />
               {currentGame &&
                 currentGame.game &&
-                currentGame.game.diceRoll === 7 && (
-                  <Robber currentGame={currentGame} user={user} />
+                localStorage.getItem(gameId) ===
+                currentGame.game.currentPlayer ? (
+                  <DevCardBtn currentGame={currentGame} />
+                ) : (
+                  <Button disabled style={{ width: '49%', height: '75%' }}>
+                    Dev Cards
+                </Button>
                 )}
                 {currentGame &&
               currentGame.game &&
               (checkForWinner(currentGame)[0] && <Winning winner={checkForWinner(currentGame)[1]} />)}
+
+              {currentGame &&
+                currentGame.game &&
+                <EndTurnBtn gameId={gameId} />
+              }
+              {currentGame &&
+                currentGame.game &&
+                currentGame.players[localStorage.getItem(gameId)]
+                  .modalOpen && <Robber currentGame={currentGame} />}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>
+        {currentGame &&
+          currentGame.players &&
+          currentGame.players[localStorage.getItem(gameId)].trade && (
+            <TradePrompt currentGame={currentGame} gameId={gameId} />
+          )}
       </Grid>
     )
   }

@@ -1,27 +1,24 @@
-import { BUILD_CITY, BUILD_SETTLEMENT, FETCH_ALL_GAMES, CREATE_GAME, END_GAME, SET_PLAYER, SET_USER, FETCH_ONE_GAME } from './types'
-import {db} from '../firebase'
-import dummyData from '../dummyData'
-
-const gamesRef = db.collection('games')
-
-// build
-export const buildSettlement = () => ({ type: BUILD_SETTLEMENT, p1_settlement: true })
-export const buildCity = () => ({ type: BUILD_CITY, p1_city: true })
+import {
+  FETCH_ALL_GAMES,
+  SET_PLAYER,
+  SET_USER,
+  FETCH_ONE_GAME
+} from './types'
+import { db } from '../firebase'
 
 // game
-export const fetchGames = () =>
-  dispatch =>
-  db.collection('games')
-  .onSnapshot(snap => {
+export const fetchGames = () => dispatch =>
+  db.collection('games').onSnapshot(snap => {
     dispatch({
       type: FETCH_ALL_GAMES,
-      payload: snap.docs.map(doc => ({id: doc.id, ...doc.data()}))
+      payload: snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
     })
   })
 
-export const fetchSingleGame = (id) =>
-  dispatch =>
-  db.collection('games').doc(`${id}`)
+export const fetchSingleGame = id => dispatch =>
+  db
+    .collection('games')
+    .doc(`${id}`)
     .onSnapshot(snap => {
       dispatch({
         type: FETCH_ONE_GAME,

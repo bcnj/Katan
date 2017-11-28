@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Container } from 'semantic-ui-react'
 
 import Welcome from './Welcome'
 import Lobby from './Lobby'
@@ -18,24 +17,29 @@ const auth = firebase.auth()
 auth.onAuthStateChanged(user => user || auth.signInAnonymously())
 
 export default () => (
-
   <Router>
-    <div style={{
-      width: '100vw',
-      height: '100vh',
-      backgroundImage: 'url(' + Background + ')',
-      backgroundSize: 'cover',
-      overflow: 'hidden',
-      position: 'absolute',
-      zIndex: '0'}}>
+    <div
+      style={{
+        minWidth: '1250px',
+        minHeight: '750px',        
+        textAlign: 'center',
+        width: '100vw',
+        height: '100vh',
+        backgroundImage: 'url(' + Background + ')',
+        backgroundSize: 'cover',
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        zIndex: '0'
+      }}
+    >
       <nav>
         <WhoAmI auth={auth} />
       </nav>
       <Switch>
-        <Route exact path='/' component={Welcome} />
-        <Route path='/lobby' component={Lobby} />
-        <Route path='/game/wait/:gameId' component={Wait} />
-        <Route path='/game/:gameId' component={GamePage} />
+        <Route exact path="/" component={Welcome} />
+        <Route path="/lobby" component={Lobby} />
+        <Route path="/game/wait/:gameId" component={Wait} />
+        <Route path="/game/:gameId" component={GamePage} />
       </Switch>
     </div>
   </Router>

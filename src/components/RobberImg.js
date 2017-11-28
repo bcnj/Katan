@@ -1,4 +1,4 @@
-import ReactKonva, { Image, Stage, Layer } from 'react-konva'
+import ReactKonva from 'react-konva'
 import Robber from '../images/robber.png'
 import React, { Component } from 'react'
 
@@ -21,8 +21,9 @@ class RobberPiece extends Component {
   }
 
   render() {
-    {/* draggable="true" definitely a stretch goal*/}
-    const { id, x, y } = this.props;
+
+    /* draggable="true" definitely a stretch goal*/
+    const { x, y } = this.props
     return (
       <ReactKonva.Image
         x={x}

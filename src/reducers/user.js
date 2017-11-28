@@ -1,6 +1,6 @@
-import {SET_USER, SET_PLAYER} from '../actions/types'
+import { SET_USER, SET_PLAYER } from '../actions/types'
 
-const initialState = {name: 'guest'}
+const initialState = { name: 'guest' }
 
 export default function(state = initialState, action) {
   switch (action.type) {

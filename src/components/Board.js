@@ -1,133 +1,241 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Tile from "./Tile";
-import Intersection from "./Intersection";
-import Road from "./Road";
-import Number from "./Number";
-import RobberPiece from "./RobberImg";
-import { Layer, Stage } from "react-konva";
+import Tile from './Tile'
+import Intersection from './Intersection'
+import Road from './Road'
+import Number from './Number'
+import RobberPiece from './RobberImg'
+import { Layer, Stage } from 'react-konva'
 
 class Board extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       tiles: [
         {
           id: 1,
           x: 250,
           y: 150,
-          resourceType: "ore"
+          resourceType: 'ore'
         },
         {
           id: 2,
           x: 350,
           y: 150,
-          resourceType: "sheep"
+          resourceType: 'sheep'
         },
         {
           id: 3,
           x: 450,
           y: 150,
-          resourceType: "wood"
+          resourceType: 'wood'
         },
         {
           id: 4,
           x: 200,
           y: 235,
-          resourceType: "wheat"
+          resourceType: 'wheat'
         },
 
         {
           id: 5,
           x: 300,
           y: 235,
-          resourceType: "brick"
+          resourceType: 'brick'
         },
         {
           id: 6,
           x: 400,
           y: 235,
-          resourceType: "sheep"
+          resourceType: 'sheep'
         },
         {
           id: 7,
           x: 500,
           y: 235,
-          resourceType: "brick"
+          resourceType: 'brick'
         },
         {
           id: 8,
           x: 150,
           y: 320,
-          resourceType: "wheat"
+          resourceType: 'wheat'
         },
         {
           id: 9,
           x: 250,
           y: 320,
-          resourceType: "wood"
+          resourceType: 'wood'
         },
 
         {
           id: 10,
           x: 350,
           y: 320,
-          resourceType: "desert"
+          resourceType: 'desert'
         },
         {
           id: 11,
           x: 450,
           y: 320,
-          resourceType: "wood"
+          resourceType: 'wood'
         },
         {
           id: 12,
           x: 550,
           y: 320,
-          resourceType: "ore"
+          resourceType: 'ore'
         },
         {
           id: 13,
           x: 200,
           y: 405,
-          resourceType: "wood"
+          resourceType: 'wood'
         },
         {
           id: 14,
           x: 300,
           y: 405,
-          resourceType: "ore"
+          resourceType: 'ore'
         },
 
         {
           id: 15,
           x: 400,
           y: 405,
-          resourceType: "wheat"
+          resourceType: 'wheat'
         },
         {
           id: 16,
           x: 500,
           y: 405,
-          resourceType: "sheep"
+          resourceType: 'sheep'
         },
         {
           id: 17,
           x: 250,
           y: 490,
-          resourceType: "brick"
+          resourceType: 'brick'
         },
         {
           id: 18,
           x: 350,
           y: 490,
-          resourceType: "wheat"
+          resourceType: 'wheat'
         },
         {
           id: 19,
           x: 450,
           y: 490,
-          resourceType: "sheep"
+          resourceType: 'sheep'
+        },
+        {
+          id: 20,
+          x: 200,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 21,
+          x: 300,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 22,
+          x: 400,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 23,
+          x: 500,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 24,
+          x: 150,
+          y: 150,
+          resourceType: 'water'
+        },
+        {
+          id: 25,
+          x: 550,
+          y: 150,
+          resourceType: 'water'
+        },
+        {
+          id: 26,
+          x: 100,
+          y: 235,
+          resourceType: 'water'
+        },
+        {
+          id: 27,
+          x: 600,
+          y: 235,
+          resourceType: 'water'
+        },
+        {
+          id: 28,
+          x: 50,
+          y: 320,
+          resourceType: 'water'
+        },
+        {
+          id: 29,
+          x: 650,
+          y: 320,
+          resourceType: 'water'
+        },
+        {
+          id: 30,
+          x: 100,
+          y: 405,
+          resourceType: 'water'
+        },
+        {
+          id: 31,
+          x: 600,
+          y: 405,
+          resourceType: 'water'
+        },
+        {
+          id: 32,
+          x: 150,
+          y: 490,
+          resourceType: 'water'
+        },
+        {
+          id: 33,
+          x: 550,
+          y: 490,
+          resourceType: 'water'
+        },
+        {
+          id: 34,
+          x: 200,
+          y: 575,
+          resourceType: 'water'
+        },
+        {
+          id: 35,
+          x: 300,
+          y: 575,
+          resourceType: 'water'
+        },
+        {
+          id: 36,
+          x: 400,
+          y: 575,
+          resourceType: 'water'
+        },
+        {
+          id: 37,
+          x: 500,
+          y: 575,
+          resourceType: 'water'
         }
       ],
       intersections: [
@@ -531,7 +639,6 @@ class Board extends Component {
           rotation: -60
         },
 
-
         {
           idx: 19,
           x: 150,
@@ -878,48 +985,48 @@ class Board extends Component {
         {
           id: 'A',
           x: 250,
-          y: 150,
+          y: 150
         },
         {
           id: 'B',
           x: 350,
-          y: 150,
+          y: 150
         },
         {
           id: 'C',
           x: 450,
-          y: 150,
+          y: 150
         },
         {
           id: 'D',
           x: 200,
-          y: 235,
+          y: 235
         },
 
         {
           id: 'E',
           x: 300,
-          y: 235,
+          y: 235
         },
         {
           id: 'F',
           x: 400,
-          y: 235,
+          y: 235
         },
         {
           id: 'G',
           x: 500,
-          y: 235,
+          y: 235
         },
         {
           id: 'H',
           x: 150,
-          y: 320,
+          y: 320
         },
         {
           id: 'I',
           x: 250,
-          y: 320,
+          y: 320
         },
         // this is the desert tile
         // {
@@ -931,176 +1038,248 @@ class Board extends Component {
         {
           id: 'J',
           x: 450,
-          y: 320,
+          y: 320
         },
         {
           id: 'K',
           x: 550,
-          y: 320,
+          y: 320
         },
         {
           id: 'L',
           x: 200,
-          y: 405,
+          y: 405
         },
         {
           id: 'M',
           x: 300,
-          y: 405,
+          y: 405
         },
 
         {
           id: 'N',
           x: 400,
-          y: 405,
+          y: 405
         },
         {
           id: 'O',
           x: 500,
-          y: 405,
+          y: 405
         },
         {
           id: 'P',
           x: 250,
-          y: 490,
+          y: 490
         },
         {
           id: 'Q',
           x: 350,
-          y: 490,
+          y: 490
         },
         {
           id: 'R',
           x: 450,
-          y: 490,
-        }],
+          y: 490
+        }
+      ],
       currentPlayer: null,
       players: [],
       active: true,
       diceRoll: null
-    };
+    }
     this.renderTiles = this.renderTiles.bind(this)
   }
 
-  endGame() { }
-  rollDice() { }
-  setCurrentPlayer() { }
-  getAllPlayers() { }
+  endGame() {}
+  rollDice() {}
+  setCurrentPlayer() {}
+  getAllPlayers() {}
 
   handleWheel(thisEvent, thisStage) {
-    let e = thisEvent.evt;
-    let stage = thisStage._stage;
-    var scaleBy = 1.03;
-    e.preventDefault();
+    let e = thisEvent.evt
+    let stage = thisStage._stage
+    var scaleBy = 1.03
+    e.preventDefault()
 
-    var oldScale = stage.scaleX();
+    var oldScale = stage.scaleX()
 
     var mousePointTo = {
       x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
       y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale
-    };
+    }
 
-    var newScale = e.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-    stage.scale({ x: newScale, y: newScale });
+    var newScale = e.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy
+    stage.scale({ x: newScale, y: newScale })
 
     var newPos = {
       x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
       y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale
-    };
-    stage.position(newPos);
-    stage.batchDraw();
+    }
+    stage.position(newPos)
+    stage.batchDraw()
   }
 
   renderTiles() {
-    return this.state.tiles.map(function (tile) {
-      const { id, x, y, resourceType } = tile;
-      return <Tile id={id} x={x} y={y} resourceType={resourceType} key={id} />;
-    });
+    return this.state.tiles.map(function(tile) {
+      const { id, x, y, resourceType } = tile
+      return <Tile id={id} x={x} y={y} resourceType={resourceType} key={id} />
+    })
   }
   renderIntersections(intersectionNodes, currentGame, gameId) {
-    return this.state.intersections.map(function (intersection) {
-      const { idx, x, y } = intersection;
-      let color;
-      let type;
+    return this.state.intersections.map(function(intersection) {
+      const { idx, x, y } = intersection
+      let color
+      let type
 
-      if (intersectionNodes[idx].player === '0') { color = 'transparent' };
+      if (intersectionNodes[idx].player === '0') {
+        color = 'transparent'
+      }
 
-      if (intersectionNodes[idx].player === 'player1' && intersectionNodes[idx].city === true) { color = 'red'; type = 'city' }
-      else if (intersectionNodes[idx].player === 'player1') { color = 'red'; type = 'settlement' }
+      if (
+        intersectionNodes[idx].player === 'player1' &&
+        intersectionNodes[idx].city === true
+      ) {
+        color = 'red'
+        type = 'city'
+      } else if (intersectionNodes[idx].player === 'player1') {
+        color = 'red'
+        type = 'settlement'
+      }
 
-      if (intersectionNodes[idx].player === 'player2' && intersectionNodes[idx].city === true) { color = 'white'; type = 'city' }
-      else if (intersectionNodes[idx].player === 'player2') { color = 'white'; type = 'settlement' }
+      if (
+        intersectionNodes[idx].player === 'player2' &&
+        intersectionNodes[idx].city === true
+      ) {
+        color = 'white'
+        type = 'city'
+      } else if (intersectionNodes[idx].player === 'player2') {
+        color = 'white'
+        type = 'settlement'
+      }
 
-      if (intersectionNodes[idx].player === 'player3' && intersectionNodes[idx].city === true) { color = 'green'; type = 'city' }
-      else if (intersectionNodes[idx].player === 'player3') { color = 'green'; type = 'settlement' }
+      if (
+        intersectionNodes[idx].player === 'player3' &&
+        intersectionNodes[idx].city === true
+      ) {
+        color = 'green'
+        type = 'city'
+      } else if (intersectionNodes[idx].player === 'player3') {
+        color = 'green'
+        type = 'settlement'
+      }
 
-      if (intersectionNodes[idx].player === 'player4' && intersectionNodes[idx].city === true) { color = 'blue'; type = 'city' }
-      else if (intersectionNodes[idx].player === 'player4') { color = 'blue'; type = 'settlement' }
+      if (
+        intersectionNodes[idx].player === 'player4' &&
+        intersectionNodes[idx].city === true
+      ) {
+        color = 'blue'
+        type = 'city'
+      } else if (intersectionNodes[idx].player === 'player4') {
+        color = 'blue'
+        type = 'settlement'
+      }
 
-      return <Intersection key={idx} x={x} y={y} id={idx} color={color} type={type} gameId={gameId} currentGame={currentGame} />;
-    });
+      return (
+        <Intersection
+          key={idx}
+          x={x}
+          y={y}
+          id={idx}
+          color={color}
+          type={type}
+          gameId={gameId}
+          currentGame={currentGame}
+        />
+      )
+    })
   }
   renderRoads(roadNodes, currentGame, gameId) {
+    return this.state.roads.map(function(roads) {
+      const { x, y, idx } = roads
+      let color
 
-    return this.state.roads.map(function (roads) {
+      if (roadNodes[idx].player === '0') {
+        color = 'transparent'
+      }
+      if (roadNodes[idx].player === 'player1') {
+        color = 'red'
+      }
+      if (roadNodes[idx].player === 'player2') {
+        color = 'white'
+      }
+      if (roadNodes[idx].player === 'player3') {
+        color = 'green'
+      }
+      if (roadNodes[idx].player === 'player4') {
+        color = 'blue'
+      }
 
-      const { x, y, idx } = roads;
-      let color;
-
-      if (roadNodes[idx].player === '0') { color = 'transparent' };
-      if (roadNodes[idx].player === 'player1') { color = 'red' };
-      if (roadNodes[idx].player === 'player2') { color = 'white' };
-      if (roadNodes[idx].player === 'player3') { color = 'green' };
-      if (roadNodes[idx].player === 'player4') { color = 'blue' };
-
-      const rotation = roads.rotation || "";
-      return <Road key={idx} x={x} y={y} rotation={rotation} id={idx} color={color} gameId={gameId} currentGame={currentGame} />;
-    });
+      const rotation = roads.rotation || ''
+      return (
+        <Road
+          key={idx}
+          x={x}
+          y={y}
+          rotation={rotation}
+          id={idx}
+          color={color}
+          gameId={gameId}
+          currentGame={currentGame}
+        />
+      )
+    })
   }
   renderNumbers() {
-    return this.state.numbers.map(function (number) {
-      const { id, x, y } = number;
-      return <Number key={id} id={id} x={x} y={y} />;
-    });
+    return this.state.numbers.map(function(number) {
+      const { id, x, y } = number
+      return <Number key={id} id={id} x={x} y={y} />
+    })
   }
   renderRobber() {
     let robberTileId = this.props.currentGame.game.robber
     let { x, y, id } = this.state.tiles[robberTileId - 1]
     let robberX = x + 10
     let robberY = y - 20
-    return <RobberPiece key={id} x={robberX} y={robberY} />;
+    return <RobberPiece key={id} x={robberX} y={robberY} />
   }
 
   render() {
-
     return (
       <Stage
         ref={thisStage => {
-          this.stage = thisStage;
+          this.stage = thisStage
         }}
         onWheel={e => {
-          this.handleWheel(e, this.stage);
+          this.handleWheel(e, this.stage)
         }}
-        width={700}
-        height={700}
+        width={3000}
+        height={3000}
         draggable={true}
       >
-        {this.props.currentGame.roadNodes && this.props.currentGame.intersectionNodes &&
-          <Layer>
-            {this.renderTiles()}
-            {this.renderRoads(this.props.currentGame.roadNodes, this.props.currentGame, this.props.gameId)}
-            {this.renderIntersections(this.props.currentGame.intersectionNodes, this.props.currentGame, this.props.gameId)}
-            {this.renderNumbers()}
-            {this.renderRobber()}
-          </Layer>
-        }
-
+        {this.props.currentGame.roadNodes &&
+          this.props.currentGame.intersectionNodes && (
+            <Layer>
+              {this.renderTiles()}
+              {this.renderRoads(
+                this.props.currentGame.roadNodes,
+                this.props.currentGame,
+                this.props.gameId
+              )}
+              {this.renderIntersections(
+                this.props.currentGame.intersectionNodes,
+                this.props.currentGame,
+                this.props.gameId
+              )}
+              {this.renderNumbers()}
+              {this.renderRobber()}
+            </Layer>
+          )}
       </Stage>
-    );
+    )
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     currentGame: state.currentGame
   }
@@ -1112,4 +1291,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+export default connect(mapStateToProps, mapDispatchToProps)(Board)
