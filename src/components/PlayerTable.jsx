@@ -54,4 +54,4 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
   )
 }
 
-export default connect()(PlayerTable)
+export default PlayerTable
