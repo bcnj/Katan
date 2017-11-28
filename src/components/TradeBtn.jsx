@@ -70,7 +70,7 @@ class TradeBtn extends Component {
 
   render() {
     return (
-      <Button onClick={this.handleOpen} style={{ width: '49%', height: '75%' }}>
+      <Button onClick={this.handleOpen} style={{ width: '49%', height: '75%' }} disabled={ this.props.currentGame.game.currentPlayer !== localStorage.getItem(this.props.gameId)}>
         Trade
         <Modal open={this.state.open} onClose={this.handleClose}>
           <h1 style={{ textAlign: 'center' }}> I am offering </h1>
@@ -122,4 +122,11 @@ class TradeBtn extends Component {
     )
   }
 }
-export default connect()(TradeBtn)
+
+const mapState = (state, ownProps) => {
+  return {
+    currentGame: state.currentGame,
+    gameId: ownProps.gameId
+  }
+}
+export default connect(mapState)(TradeBtn)

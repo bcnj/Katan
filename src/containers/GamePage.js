@@ -35,7 +35,7 @@ class GamePage extends Component {
     this.cancel = this.props.fetchSingleGame(this.props.gameId)
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.cancel()
   }
 
@@ -132,7 +132,7 @@ class GamePage extends Component {
         {/* contains the players table and action buttons */}
         <Grid.Row
           style={{ height: '20vh' }}
-          // color={'yellow'}
+        // color={'yellow'}
         >
           {/* players table column */}
           <Grid.Column width={11}>
@@ -151,23 +151,29 @@ class GamePage extends Component {
                 (currentGame.game.turn >= 8 ? (
                   <BuildBtn gameId={gameId} currentGame={currentGame} />
                 ) : (
-                  <BuildBtnInit gameId={gameId} currentGame={currentGame} />
-                ))}
-              <TradeBtn currentGame={currentGame} gameId={gameId} />
+                    <BuildBtnInit gameId={gameId} currentGame={currentGame} />
+                  ))}
+              {currentGame &&
+                currentGame.game &&
+                <TradeBtn currentGame={currentGame} gameId={gameId} />
+              }
             </Grid.Row>
 
             <Grid.Row style={{ height: '50%' }}>
               {currentGame &&
-              currentGame.game &&
-              localStorage.getItem(gameId) ===
+                currentGame.game &&
+                localStorage.getItem(gameId) ===
                 currentGame.game.currentPlayer ? (
-                <DevCardBtn currentGame={currentGame} />
-              ) : (
-                <Button disabled style={{ width: '49%', height: '75%' }}>
-                  Dev Cards
+                  <DevCardBtn currentGame={currentGame} />
+                ) : (
+                  <Button disabled style={{ width: '49%', height: '75%' }}>
+                    Dev Cards
                 </Button>
-              )}
-              <EndTurnBtn gameId={gameId} />
+                )}
+              {currentGame &&
+                currentGame.game &&
+                <EndTurnBtn gameId={gameId} />
+              }
               {currentGame &&
                 currentGame.game &&
                 currentGame.players[localStorage.getItem(gameId)]
