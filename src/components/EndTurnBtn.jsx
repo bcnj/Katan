@@ -4,6 +4,7 @@ import { Button } from 'semantic-ui-react'
 import { endTurn } from '../utils'
 
 const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
+
   return (
     <Button
       onClick={e => {
@@ -11,6 +12,9 @@ const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
         endTurn(currentGame.game.turn, currentGame.game.currentPlayer, gameId)
       }}
       style={{ width: '49%', height: '75%' }}
+      disabled={
+        currentGame.game.currentPlayer !== localStorage.getItem(gameId)
+      }
     >
       End Turn
     </Button>
