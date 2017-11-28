@@ -1,15 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Segment } from 'semantic-ui-react'
-import { Card } from 'semantic-ui-react'
+import { Segment, Card, Message, Icon } from 'semantic-ui-react'
 import Dice from '../components/Dice'
 
 const PlayerTab = ({ currentGame, gameId }) => {
 
   return (
+
     <Segment
       style={{ height: '90%', backgroundColor: 'rgba(255, 255, 255, 0.7)' }}
     >
+
+    { currentGame.game && currentGame.game.turn < 8 &&
+    <Segment inverted color='red' tertiary>
+      <Icon name='warning'/>
+      INITIAL SETUP PHASE
+    </Segment>}
+
       <Card.Group>
         {currentGame &&
           currentGame.game &&

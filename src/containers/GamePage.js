@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Menu, Button } from 'semantic-ui-react'
+import { Grid, Menu, Button} from 'semantic-ui-react'
 import { fetchSingleGame } from '../actions'
 
 import Board from '../components/Board'
@@ -123,6 +123,7 @@ class GamePage extends Component {
                 />
               </Menu.Menu>
             </Menu>
+
 
             {/* section depends on menu selection */}
             {section}

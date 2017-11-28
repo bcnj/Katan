@@ -500,6 +500,15 @@ export const turnTradeOff = gameId => {
     .update(tradeUpdate)
 }
 
+export const turnSingleTradeOff = (gameId, player) => {
+  const tradeUpdate = {}
+  tradeUpdate[`players.${player}.trade`] = false
+  db
+    .collection('games')
+    .doc(gameId)
+    .update(tradeUpdate)
+}
+
 export const tradeInfo = (offer, exchange, gameId) => {
   const tradeUpdate = {}
   tradeUpdate['trade'] = { offer, exchange }
