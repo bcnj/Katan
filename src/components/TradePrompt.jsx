@@ -38,7 +38,10 @@ class TradePrompt extends Component {
     return(
       <Modal
           open={this.state.open}
-          onClose={this.handleClose}>
+          onClose={this.handleClose}
+          closeOnEscape={false}
+          closeOnRootNodeClick={false}
+          >
           <h3 style={{ textAlign: 'center' }}> current player offering </h3>
           <Grid divided='vertically'>
             <Grid.Row columns={5}>
