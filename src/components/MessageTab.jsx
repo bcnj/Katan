@@ -59,12 +59,13 @@ class MessageTab extends Component {
           str = ''
         for (let message in messages) {
           let color = doc.data().players[messages[message].player].color
+          let name = doc.data().players[messages[message].player].name
           if (parseInt(message) < this.props.messageStart) {
           } else {
             str =
               messages[message].time +
               ':  ' +
-              messages[message].player +
+              name +
               ' - ' +
               messages[message].content
             mapMessagesObjToSegments.push(
