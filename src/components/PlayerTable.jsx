@@ -17,12 +17,10 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
     image = player1Image
   if (currentGame && gameId) {
     player = localStorage.getItem(`${gameId}`)
-    console.log(player)
     if (player === 'player1') image = player1Image
     if (player === 'player2') image = player2Image
     if (player === 'player3') image = player3Image
     if (player === 'player4') image = player4Image
-    console.log(player1Image)
   }
 
   return (
