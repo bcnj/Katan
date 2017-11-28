@@ -119,7 +119,7 @@ class MessageTab extends Component {
   render() {
     const { message, text } = this.state
     return (
-      <Container style={{ height: '90%' }}>
+      <Container style={{ height: '90%'}}>
         <Segment.Group>{text}</Segment.Group>
         <Form
           style={{ height: '20%' }}
