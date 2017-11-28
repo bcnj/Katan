@@ -442,7 +442,7 @@ class DevCardBtn extends Component {
             </Button.Group>
             <Button.Group size="medium">
               <Button color="blue" disabled>
-                +++
+                1VP
               </Button>
               <Button color="blue" disabled>
                 {this.state.vPoint}
