@@ -51,7 +51,7 @@ class TradePrompt extends Component {
               ))}
             </Grid.Row>
             <div style={{ width: '100%' }}>
-              <h1 style={{ textAlign: 'center' }} width={'100%'}> In exchange for </h1>
+              <h3 style={{ textAlign: 'center' }} width={'100%'}> In exchange for </h3>
             </div>
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
