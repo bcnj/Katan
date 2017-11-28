@@ -16,7 +16,7 @@ const PlayerTab = ({ currentGame, gameId }) => {
               style={{
                 backgroundColor:
                   currentGame.game.currentPlayer === `player${num}`
-                    ? currentGame.players[`player${num}`].color
+                    ? 'rgba(0, 0, 0, 0.2)'
                     : ''
               }}
               fluid

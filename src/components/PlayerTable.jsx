@@ -20,7 +20,6 @@ const PlayerTable = ({ user, currentGame, gameId }) => {
                   <Card.Header>{user.name}</Card.Header>
                   <Card.Description>
                     VP: {currentGame.players[player].score}
-                    <div><strong>{currentGame.game.currentPlayer === player ? 'playing...': ''}</strong></div>
                   </Card.Description>
                 </Card.Content>
               </Card>
