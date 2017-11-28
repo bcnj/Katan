@@ -7,7 +7,9 @@ import Dice from '../components/Dice'
 const PlayerTab = ({ currentGame, gameId }) => {
 
   return (
-    <Segment style={{ height: '90%' }}>
+    <Segment
+      style={{ height: '90%', backgroundColor: 'rgba(255, 255, 255, 0.7)' }}
+    >
       <Card.Group>
         {currentGame &&
           currentGame.game &&
@@ -22,11 +24,16 @@ const PlayerTab = ({ currentGame, gameId }) => {
               fluid
               key={num}
               header={currentGame.players[`player${num}`].name}
-              meta={<div><strong>
-                {currentGame.game.currentPlayer === `player${num}`
-                  ? 'playing'
-                  : 'waiting'}
-              </strong></div>}
+              meta={
+                <div>
+                  <strong>
+                    {currentGame.game.currentPlayer === `player${num}`
+                      ? 'playing'
+                      : 'waiting'}
+                  </strong>
+                </div>
+              }
+
               description={`${
                 currentGame.players[`player${num}`].score
                 } VP Points`}
