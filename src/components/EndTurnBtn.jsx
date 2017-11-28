@@ -13,7 +13,7 @@ const EndTurnBtn = ({ handleEnd, currentGame, gameId }) => {
       }}
       style={{ width: '49%', height: '75%' }}
       disabled={
-        currentGame.game.currentPlayer !== localStorage.getItem(gameId)
+        (currentGame.game.currentPlayer !== localStorage.getItem(gameId)) || (currentGame.game.turn < 8)
       }
     >
       End Turn
