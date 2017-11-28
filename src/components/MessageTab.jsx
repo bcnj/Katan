@@ -50,16 +50,6 @@ class MessageTab extends Component {
     const gameId = window.location.href.slice(-20)
     const game = db.collection('games').doc(gameId)
 
-    //when users works properly color can easily be extracted
-    // let userName = this.props.user.name
-    // let colorFilter = '',
-    //  players = this.props.players
-    // for(var player in players) {
-    //     if(players[player].name === userName) {
-    //         colorFilter = players[player].color
-    //     }
-    // }
-
     //basically tried to make it all a string but realized that semantics wasn't being friendly in that regard so I made a bunch of Segments
     game
       .get()
@@ -68,6 +58,7 @@ class MessageTab extends Component {
         let mapMessagesObjToSegments = [],
           str = ''
         for (let message in messages) {
+          let color = doc.data().players[messages[message].player].color
           if (parseInt(message) < this.props.messageStart) {
           } else {
             str =
@@ -77,7 +68,7 @@ class MessageTab extends Component {
               ' - ' +
               messages[message].content
             mapMessagesObjToSegments.push(
-              <Segment style={{ color: 'black', height: '5.33%' }}>
+              <Segment color={color} style={{ height: '5.33%' }}>
                 {str}
               </Segment>
             )
