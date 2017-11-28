@@ -482,4 +482,4 @@ class Robber extends Component {
   }
 }
 
-export default connect()(Robber)
+export default Robber
