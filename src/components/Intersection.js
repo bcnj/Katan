@@ -4,6 +4,19 @@ import { buildCity, buildSettlement } from '../utils'
 
 class Intersection extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      intersectionOn: true
+    }
+    this.turnIntersectionOff = this.turnIntersectionOff.bind(this)
+  }
+
+  turnIntersectionOff(){
+    this.setState({intersectionOn: false})
+    setTimeout(() => this.setState({intersectionOn: true}), 2000)
+  }
+
   render() {
     const { id, x, y, color, type, currentGame, gameId } = this.props
     let stroke, strokeWidth, radius
@@ -35,8 +48,9 @@ class Intersection extends Component {
                 id,
                 currentGame.game.turn
               )
+            this.turnIntersectionOff()
         }}
-        listening={currentGame.intersectionNodes[id].active}
+        listening={this.state.intersectionOn && currentGame.intersectionNodes[id].active && (currentGame.game.currentPlayer === localStorage.getItem(gameId))}
       />
     )
   }

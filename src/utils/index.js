@@ -60,6 +60,7 @@ export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame) => {
     .collection('games')
     .doc(`${gameId}`)
     .update(roadUpdate)
+  turnRoadsOff(gameId)
   if (turn >= 8) {
     buildRoadResource(currentPlayer, gameId)
   } else {
@@ -73,7 +74,6 @@ export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame) => {
       )
     }
   }
-  turnRoadsOff(gameId)
 }
 
 export const turnIntersectionOff = gameId => {
@@ -166,6 +166,7 @@ export const buildSettlement = (
     .collection('games')
     .doc(`${gameId}`)
     .update(settlementUpdate)
+  turnIntersectionOff(gameId)
   if (turn >= 8) {
     buildSettlementResource(currentPlayer, gameId)
     //trigger nextTurn button
@@ -184,7 +185,6 @@ export const buildSettlement = (
         game.update(updatedPlayerData)
       })
   }
-  turnIntersectionOff(gameId)
 }
 
 export const buildCity = (currentPlayer, gameId, intersectionId) => {
@@ -194,8 +194,8 @@ export const buildCity = (currentPlayer, gameId, intersectionId) => {
     .collection('games')
     .doc(`${gameId}`)
     .update(cityUpdate)
-  buildCityResource(currentPlayer, gameId)
   turnIntersectionOff(gameId)
+  buildCityResource(currentPlayer, gameId)
 }
 
 export const rollDice = (diceSum, gameId) => {
