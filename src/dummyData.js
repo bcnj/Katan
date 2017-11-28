@@ -1,6 +1,6 @@
 const dummyData = {
   game: {
-    diceRoll: 2,
+    diceRoll: 'Initial Setup Phase',
     currentPlayer: 'player1',
     diceRollCount: 0,
     active: false,
