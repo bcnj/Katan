@@ -128,6 +128,114 @@ class Board extends Component {
           x: 450,
           y: 490,
           resourceType: 'sheep'
+        },
+        {
+          id: 20,
+          x: 200,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 21,
+          x: 300,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 22,
+          x: 400,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 23,
+          x: 500,
+          y: 65,
+          resourceType: 'water'
+        },
+        {
+          id: 24,
+          x: 150,
+          y: 150,
+          resourceType: 'water'
+        },
+        {
+          id: 25,
+          x: 550,
+          y: 150,
+          resourceType: 'water'
+        },
+        {
+          id: 26,
+          x: 100,
+          y: 235,
+          resourceType: 'water'
+        },
+        {
+          id: 27,
+          x: 600,
+          y: 235,
+          resourceType: 'water'
+        },
+        {
+          id: 28,
+          x: 50,
+          y: 320,
+          resourceType: 'water'
+        },
+        {
+          id: 29,
+          x: 650,
+          y: 320,
+          resourceType: 'water'
+        },
+        {
+          id: 30,
+          x: 100,
+          y: 405,
+          resourceType: 'water'
+        },
+        {
+          id: 31,
+          x: 600,
+          y: 405,
+          resourceType: 'water'
+        },
+        {
+          id: 32,
+          x: 150,
+          y: 490,
+          resourceType: 'water'
+        },
+        {
+          id: 33,
+          x: 550,
+          y: 490,
+          resourceType: 'water'
+        },
+        {
+          id: 34,
+          x: 200,
+          y: 575,
+          resourceType: 'water'
+        },
+        {
+          id: 35,
+          x: 300,
+          y: 575,
+          resourceType: 'water'
+        },
+        {
+          id: 36,
+          x: 400,
+          y: 575,
+          resourceType: 'water'
+        },
+        {
+          id: 37,
+          x: 500,
+          y: 575,
+          resourceType: 'water'
         }
       ],
       intersections: [
