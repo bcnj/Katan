@@ -4,7 +4,6 @@ import { Segment, Card, Message, Icon } from 'semantic-ui-react'
 import Dice from '../components/Dice'
 
 const PlayerTab = ({ currentGame, gameId }) => {
-
   return (
 
     <Segment
@@ -34,16 +33,18 @@ const PlayerTab = ({ currentGame, gameId }) => {
               meta={
                 <div>
                   <strong>
-                    {currentGame.game.currentPlayer === `player${num}`
-                      ? 'playing'
-                      : 'waiting'}
+                    {currentGame.game.currentPlayer === `player${num}` ? (
+                      <Message positive>
+                        <Message.Header>It's your turn to go!</Message.Header>
+                      </Message>
+                    ) : ''
+                    }
                   </strong>
                 </div>
               }
-
               description={`${
                 currentGame.players[`player${num}`].score
-                } VP Points`}
+              } VP Points`}
               color={currentGame.players[`player${num}`].color}
             />
           ))}
