@@ -6,7 +6,7 @@ export default ({ allGames, handleJoin, handleWatch, user }) => {
     <Card.Group>
       {allGames.length &&
         allGames.map(game => (
-          <Card key={game.id}>
+          <Card style={{backgroundColor: 'rgba(255,255,255,0.7)'}} key={game.id}>
             <Card.Content>
               <Card.Header>Game {game.id.slice(0, 2)}</Card.Header>
               <Card.Description>

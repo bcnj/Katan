@@ -196,7 +196,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
     // playerNum: state.user.playerNum,
-    gameId: ownProps.match.params.gameId,
+    gameId: ownProps.gameId,
     currentGame: state.currentGame
   }
 }
