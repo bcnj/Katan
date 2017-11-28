@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Grid, Menu, Button} from 'semantic-ui-react'
+import { Grid, Menu, Button } from 'semantic-ui-react'
+
 import { fetchSingleGame } from '../actions'
 
 import Board from '../components/Board'
@@ -17,6 +18,9 @@ import PlayerTable from '../components/PlayerTable'
 import { connect } from 'react-redux'
 
 import Robber from '../components/Robber.jsx'
+
+import Winning from '../components/Winning.js'
+import { checkForWinner } from '../utils/index'
 
 class GamePage extends Component {
   constructor(props) {
@@ -171,6 +175,10 @@ class GamePage extends Component {
                     Dev Cards
                 </Button>
                 )}
+                {currentGame &&
+              currentGame.game &&
+              (checkForWinner(currentGame)[0] && <Winning winner={checkForWinner(currentGame)[1]} />)}
+
               {currentGame &&
                 currentGame.game &&
                 <EndTurnBtn gameId={gameId} />

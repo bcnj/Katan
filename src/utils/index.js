@@ -707,6 +707,49 @@ export const getOptions = (game, currentPlayerId) => {
   }
   return options
 }
+export const checkForWinner = currentGame => {
+  console.log(currentGame)
+  let score1 = currentGame.players.player1.score,
+    score2 = currentGame.players.player2.score,
+    score3 = currentGame.players.player3.score
+  //should check if 3 or four players
+  // score4 = currentGame.players.player4.score
+  //should be name rather then player1 or player2 but not important
+  // let name1 = currentGame.players.player1.name,
+  //  name2 = currentGame.players.player2.name,
+  //  name3 = currentGame.players.player3.name,
+  //  name4 = currentGame.players.player4.name
+  if (score1 >= 10) {
+    return [true, '1']
+  }
+  if (score2 >= 10) {
+    return [true, '2']
+  }
+  if (score3 >= 10) {
+    return [true, '3']
+  }
+  // if(score4>=10) {
+  //   return [true, '4']
+  // }
+  return [false]
+}
+
+export const updateScoreToCloseModal = (e, winner) => {
+  e.preventDefault()
+  let currentGameId = window.location.href.slice(27) //or -20
+  const game = db.collection('games').doc(currentGameId)
+  let player = 'player' + winner
+
+  game.get().then(() => {
+    let updateGameToInactive = {}
+    let updateScoreToCloseModal = {}
+    updateGameToInactive[`game.active`] = false
+    updateScoreToCloseModal[`players.${player}.score`] = 0
+    game.update(updateScoreToCloseModal)
+    game.update(updateGameToInactive)
+  })
+}
+
 export const setRobberBuild = (currentGameId, setTrueFalse) => {
   if (setTrueFalse === true) {
     let robberBuildUpdate = {}
