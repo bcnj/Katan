@@ -6,7 +6,7 @@ import brick from '../images/brick.jpg'
 import sheep from '../images/sheep.jpg'
 import wood from '../images/wood.jpg'
 import ore from '../images/ore.jpg'
-import { initiateTrade } from '../utils'
+import { initiateTrade, turnSingleTradeOff } from '../utils'
 
 const images = [wheat, brick, sheep, wood, ore]
 
@@ -39,7 +39,7 @@ class TradePrompt extends Component {
       <Modal
           open={this.state.open}
           onClose={this.handleClose}>
-          <h1 style={{ textAlign: 'center' }}> I am offering </h1>
+          <h3 style={{ textAlign: 'center' }}> current player offering </h3>
           <Grid divided='vertically'>
             <Grid.Row columns={5}>
               {['wheat', 'brick', 'sheep', 'wood', 'ore'].map((resource, idx) => (
@@ -72,7 +72,9 @@ class TradePrompt extends Component {
             }>
               Accept
         </Button>
-            <Button color='blue' inverted onClick={this.handleClose}>
+            <Button color='blue' inverted onClick={() => {
+              turnSingleTradeOff(gameId, localStorage.getItem(gameId))
+              this.handleClose()}}>
               Cancel
         </Button>
           </Modal.Actions>
