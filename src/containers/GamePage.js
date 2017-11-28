@@ -168,7 +168,8 @@ class GamePage extends Component {
               {currentGame &&
                 currentGame.game &&
                 localStorage.getItem(gameId) ===
-                currentGame.game.currentPlayer ? (
+                currentGame.game.currentPlayer &&
+                !currentGame.players[localStorage.getItem(gameId)].trade ? (
                   <DevCardBtn currentGame={currentGame} />
                 ) : (
                   <Button disabled style={{ width: '49%', height: '75%' }}>
@@ -183,6 +184,7 @@ class GamePage extends Component {
                 currentGame.game &&
                 <EndTurnBtn gameId={gameId} />
               }
+
               {currentGame &&
                 currentGame.game &&
                 currentGame.players[localStorage.getItem(gameId)]

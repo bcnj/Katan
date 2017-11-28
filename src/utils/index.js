@@ -482,6 +482,7 @@ export const turnTradeOn = (currentPlayer, gameId) => {
   playerArr.filter(player => player !== currentPlayer).forEach(player => {
     tradeUpdate[`players.${player}.trade`] = true
   })
+
   db
     .collection('games')
     .doc(gameId)
@@ -494,6 +495,7 @@ export const turnTradeOff = gameId => {
   playerArr.forEach(player => {
     tradeUpdate[`players.${player}.trade`] = false
   })
+
   db
     .collection('games')
     .doc(gameId)
@@ -712,8 +714,8 @@ export const getOptions = (game, currentPlayerId) => {
   }
   return options
 }
+
 export const checkForWinner = currentGame => {
-  console.log(currentGame)
   let score1 = currentGame.players.player1.score,
     score2 = currentGame.players.player2.score,
     score3 = currentGame.players.player3.score

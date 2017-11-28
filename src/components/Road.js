@@ -7,7 +7,7 @@ class Road extends Component {
   render() {
     const { x, y, rotation, id, color, currentGame, gameId } = this.props
 
-    console.log(currentGame.roadNodes[id].active && (currentGame.game.currentPlayer === localStorage.getItem(gameId)))
+    // console.log(currentGame.roadNodes[id].active && (currentGame.game.currentPlayer === localStorage.getItem(gameId)))
 
     return (
       <Ellipse
