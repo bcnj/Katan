@@ -5,6 +5,7 @@ import { Card } from 'semantic-ui-react'
 import Dice from '../components/Dice'
 
 const PlayerTab = ({ currentGame, gameId }) => {
+
   return (
     <Segment style={{ height: '90%' }}>
       <Card.Group>
@@ -12,6 +13,12 @@ const PlayerTab = ({ currentGame, gameId }) => {
           currentGame.game &&
           [1, 2, 3, 4].map(num => (
             <Card
+              style={{
+                backgroundColor:
+                  currentGame.game.currentPlayer === `player${num}`
+                    ? currentGame.players[`player${num}`].color
+                    : ''
+              }}
               fluid
               key={num}
               header={currentGame.players[`player${num}`].name}
@@ -19,10 +26,10 @@ const PlayerTab = ({ currentGame, gameId }) => {
                 {currentGame.game.currentPlayer === `player${num}`
                   ? 'playing'
                   : 'waiting'}
-                  </strong></div>}
+              </strong></div>}
               description={`${
                 currentGame.players[`player${num}`].score
-              } VP Points`}
+                } VP Points`}
               color={currentGame.players[`player${num}`].color}
             />
           ))}
