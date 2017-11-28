@@ -15,9 +15,10 @@ import {
   useKnightTakeCard,
   monopolize,
   addTwoSelectedResources,
-  victoryPointCard
+  victoryPointCard,
+  setRobberOnTile,
+  buildRoad
 } from '../utils/index.js'
-//setRobberOnTile will be imported
 
 class DevCardBtn extends Component {
   constructor(props) {
@@ -34,6 +35,10 @@ class DevCardBtn extends Component {
       plenty: 0,
       monopoly: 0,
       roadBuild: 0,
+      tempRoadChosen: 0,
+      roadsChosen: 0,
+      roadOptions: [],
+      roadMode: false,
       canOrCannotBuyCard: false,
       knightMode: false,
       options: [],
@@ -57,13 +62,18 @@ class DevCardBtn extends Component {
     this.handleMonopolyChange = this.handleMonopolyChange.bind(this)
     this.handleMonopolySubmit = this.handleMonopolySubmit.bind(this)
     this.handlePlentyChange = this.handlePlentyChange.bind(this)
-    this.handlePlentySubmit = this.handlePlentySubmit.bind(this)
     this.handlePlentyAdd = this.handlePlentyAdd.bind(this)
+    this.handlePlentySubmit = this.handlePlentySubmit.bind(this)
+    this.handleRoadAdd = this.handleRoadAdd.bind(this)
+    this.handleRoadChange = this.handleRoadChange.bind(this)
+    this.handleRoadSubmit = this.handleRoadSubmit.bind(this)
   }
 
   componentDidMount() {
     //grab all resources and dev cards to display in component
-    let currentPlayerData = this.props.currentGame.players.player1,
+    let gameId = window.location.href.slice(-20),
+      player = window.localStorage.getItem(gameId),
+      currentPlayerData = this.props.currentGame.players[player],
       brick = currentPlayerData.brick,
       ore = currentPlayerData.ore,
       sheep = currentPlayerData.sheep,
@@ -76,7 +86,7 @@ class DevCardBtn extends Component {
       plenty = 0,
       monopoly = 0,
       knight = 0,
-      options = getOptions(this.props.currentGame, '1')
+      options = getOptions(this.props.currentGame, player)
     if (sheep >= 1 && ore >= 1 && wheat >= 1) {
       canOrCannotBuyCard = true
     }
@@ -108,7 +118,8 @@ class DevCardBtn extends Component {
 
   handleBuyClick(e) {
     e.preventDefault()
-    let gameId = window.location.href.slice(-20)
+    let gameId = window.location.href.slice(-20),
+      player = window.localStorage.getItem(gameId)
     //check if there is one of the needed cards, if only one, next time button is disabled
     let sheep = this.state.sheep,
       ore = this.state.ore,
@@ -130,8 +141,7 @@ class DevCardBtn extends Component {
     }
     //player + String(this.props.user.playerNum) for user
     //num is what is returned from the firebase function, so I know what to increment in state, so that the page reRenders correctly
-    let num = purchaseDevCard('player1', gameId)
-    console.log(num)
+    let num = purchaseDevCard(player, gameId)
     if (num === 1) {
       this.setState({
         knight: this.state.knight + 1
@@ -155,7 +165,7 @@ class DevCardBtn extends Component {
     if (num === 5) {
       //do this automatically, as no need to be able to click a vPoint card, solely need to add 1 to score
       //...user not '1'
-      victoryPointCard('1', gameId)
+      victoryPointCard(player, gameId)
       this.setState({
         vPoint: this.state.vPoint + 1
       })
@@ -164,8 +174,8 @@ class DevCardBtn extends Component {
 
   handleCardClick(e, num) {
     e.preventDefault()
-    //player + String(this.props.user.playerNum)
     let gameId = window.location.href.slice(-20)
+    let player = window.localStorage.getItem(gameId)
     if (num === 1) {
       this.setState({
         knightMode: true,
@@ -178,9 +188,27 @@ class DevCardBtn extends Component {
         monopoly: this.state.monopoly - 1
       })
     }
+    //option.text is a string that is seen
+    //option.value is whatever I want to extract, the road number in this case
     if (num === 3) {
+      let roadNodes = this.props.currentGame.roadNodes
+      let roadOptions = [],
+        option = {}
+      for (let i = 1; i <= 72; i++) {
+        if (roadNodes[i].player === player) {
+          roadNodes[i].roadNeighbors.forEach(int => {
+            option = {}
+            option.value = int
+            option.text = 'Road: ' + int
+            roadOptions.push(option)
+          })
+        }
+      }
+      console.log(roadOptions, roadNodes)
       this.setState({
-        roadBuild: this.state.roadBuild - 1
+        roadBuild: this.state.roadBuild - 1,
+        roadOptions,
+        roadMode: true
       })
     }
     if (num === 4) {
@@ -189,14 +217,14 @@ class DevCardBtn extends Component {
         plenty: this.state.plenty - 1
       })
     }
-    deleteSpecificDevCard(num, 'player1', gameId)
+    deleteSpecificDevCard(num, player, gameId)
   }
 
   handleKnightChange(e, data) {
     e.preventDefault()
+    let gameId = window.location.href.slice(-20)
+    let knightValuePlayer = window.localStorage.getItem(gameId)
     let knightValueTile = parseInt(data.value.tile)
-    //user...
-    let knightValuePlayer = '1'
     //to check if possible players to take card from are connected to tile
     let knightValuePosPlayers = data.value.players
     this.setState({
@@ -215,8 +243,10 @@ class DevCardBtn extends Component {
     let count = 0
     let gameId = window.location.href.slice(-20)
     if (this.state.knightValuePosPlayers.length === 0) {
-      // when robber is merged
-      // setRobberOnTile(this.state.knightValueTile)
+      setRobberOnTile(gameId, this.state.knightValueTile)
+      this.setState({
+        knightMode: false
+      })
     } else {
       this.state.knightValuePosPlayers.forEach(player => {
         //only want the key, that is the player, this is to check if the player that user wants to take card from is connected to tile
@@ -229,14 +259,12 @@ class DevCardBtn extends Component {
       if (count === 0) alert('Enter a correct player')
       else {
         //switch card, random card from victims hand given to player, no interaction, simply increment and decrement of resource
-        console.log(this.state.knightValuePlayer,this.state.knightValueVictim)
         useKnightTakeCard(
           gameId,
           this.state.knightValuePlayer,
           this.state.knightValueVictim
         )
-        //...robber
-        // setRobberOnTile(this.state.knightValueTile)
+        setRobberOnTile(gameId, this.state.knightValueTile)
         this.setState({
           knightMode: false
         })
@@ -246,10 +274,9 @@ class DevCardBtn extends Component {
 
   handleMonopolyChange(e, data) {
     e.preventDefault()
+    let gameId = window.location.href.slice(-20)
     let monopolyResource = data.value
-    //user...
-    console.log(data.value)
-    let monopolyPlayer = '1'
+    let monopolyPlayer = window.localStorage.getItem(gameId)
     this.setState({
       monopolyResource,
       monopolyPlayer
@@ -265,21 +292,47 @@ class DevCardBtn extends Component {
     monopolize(gameId, this.state.monopolyResource, this.state.monopolyPlayer)
   }
 
-  handleRoadBuildChange(e, data) {
+  handleRoadChange(e, data) {
     e.preventDefault()
+    let tempRoadChosen = data.value
+    this.setState({
+      tempRoadChosen
+    })
   }
 
-  // handleRoadBuildSubmit(e, data) {
-  //   let gameId = window.location.href.slice(-20)
-  //   this one i leave for later
-  // }
+  handleRoadAdd(e, data) {
+    e.preventDefault()
+    console.log(data)
+    let gameId = window.location.href.slice(-20)
+    let roadPlayer = window.localStorage.getItem(gameId)
+    let roadChosen = data.value
+    this.setState({
+      roadsChosen: [
+        ...this.state.roadsChosen,
+        roadChosen
+      ]
+    })
+  }
+
+  handleRoadSubmit(e, data) {
+    let gameId = window.location.href.slice(-20)
+    //(currentPlayer, gameId, roadId, turn, currentGame)
+    let player = window.localStorage.getItem(gameId)
+    console.log(this.state.roadsChosen)
+    this.state.roadsChosen.forEach(road => {
+      buildRoad(player, gameId, road, 10)
+    })
+    this.setState({
+      roadMode:false
+    })
+  }
 
   handlePlentyChange(e, data) {
     e.preventDefault()
-    console.log(data.value)
     let plentyResource = data.value
-    //user...
-    let plentyPlayer = '1'
+    console.log(plentyResource, this.state.plentyResource)
+    let gameId = window.location.href.slice(-20)
+    let plentyPlayer = window.localStorage.getItem(gameId)
     this.setState({
       plentyResource,
       plentyPlayer
@@ -287,6 +340,7 @@ class DevCardBtn extends Component {
   }
 
   handlePlentyAdd(e, data) {
+    console.log(this.state)
     let resourceChoice = this.state.plentyResource
     //get added resources
     this.setState({
@@ -338,7 +392,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
-              alt=''
+              alt=""
             />
             <img
               src={MonopolyImg}
@@ -346,7 +400,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
-              alt=''
+              alt=""
             />
             <img
               src={RoadBuildingImg}
@@ -354,7 +408,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
-              alt=''
+              alt=""
             />
             <img
               src={YearOfPlentyImg}
@@ -362,7 +416,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
-              alt=''
+              alt=""
             />
             <img
               src={VictoryPointImg}
@@ -370,7 +424,7 @@ class DevCardBtn extends Component {
                 height: '15%',
                 width: '15%'
               }}
-              alt=''
+              alt=""
             />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -465,7 +519,35 @@ class DevCardBtn extends Component {
                 placeholder="Which player?"
                 onChange={this.handleKnightInputChange}
               />
-              <Button onClick={this.handleKnightSubmit}>Submit</Button>
+              {this.state.knightValueTile > 0 ? (
+                <Button onClick={this.handleKnightSubmit}>Submit</Button>
+              ) : (
+                <Button disabled>Submit</Button>
+              )}
+            </Menu>
+          )}
+          {this.state.roadMode && (
+            <Menu vertical>
+              <Menu.Item header>Select Two Roads</Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  options={this.state.roadOptions}
+                  placeholder="Pick Road"
+                  fluid
+                  selection
+                  onChange={this.handleRoadChange}
+                />
+              </Menu.Item>
+              {this.state.roadsChosen.length === 2 ? (
+                <Button disabled>Add</Button>
+              ) : (
+                <Button onClick={this.handleRoadAdd}>Add</Button>
+              )}
+              {this.state.roadsChosen.length === 2 ? (
+                <Button onClick={this.handleRoadSubmit}>Submit</Button>
+              ) : (
+                <Button disabled>Submit</Button>
+              )}
             </Menu>
           )}
           {this.state.monopolyMode && (
@@ -487,7 +569,11 @@ class DevCardBtn extends Component {
                   onChange={this.handleMonopolyChange}
                 />
               </Menu.Item>
-              <Button onClick={this.handleMonopolySubmit}>Submit</Button>
+              {this.state.monopolyResource ? (
+                <Button onClick={this.handleMonopolySubmit}>Submit</Button>
+              ) : (
+                <Button disabled>Submit</Button>
+              )}
             </Menu>
           )}
           {this.state.plentyMode && (

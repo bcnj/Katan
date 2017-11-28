@@ -569,6 +569,7 @@ export const initiateTrade = (
 export const purchaseDevCard = (player, gameId) => {
   const game = db.collection('games').doc(gameId)
   let resourceUpdate = {}
+  console.log(player)
 
   let devCards = createDevCards(),
     shuffledDevCards = shuffle(devCards)
@@ -617,7 +618,7 @@ export const useKnightTakeCard = (gameId, taker, victim) => {
       check = true,
       i = 0
     while (check) {
-      if (doc.data().players[`player${victim}`][cards[i]] > 0) {
+      if (doc.data().players[`${victim}`][cards[i]] > 0) {
         check = false
       } else {
         i++
@@ -625,14 +626,14 @@ export const useKnightTakeCard = (gameId, taker, victim) => {
       if (i === shuffled.length) check = false
     }
     if (i !== shuffled.length) {
-      let victimLoseCard = doc.data().players[`player${victim}`][cards[i]] - 1,
-        takerGetCard = doc.data().players[`player${taker}`][cards[i]] + 1,
+      let victimLoseCard = doc.data().players[`${victim}`][cards[i]] - 1,
+        takerGetCard = doc.data().players[`${taker}`][cards[i]] + 1,
         victimLoseCardUpdate = {}
       victimLoseCardUpdate[
-        `players.player${victim}.${cards[i]}`
+        `players.${victim}.${cards[i]}`
       ] = victimLoseCard
       let takerGetCardUpdate = {}
-      takerGetCardUpdate[`players.player${taker}.${cards[i]}`] = takerGetCard
+      takerGetCardUpdate[`players.${taker}.${cards[i]}`] = takerGetCard
       game.update(victimLoseCardUpdate)
       game.update(takerGetCardUpdate)
     }
@@ -640,9 +641,13 @@ export const useKnightTakeCard = (gameId, taker, victim) => {
 }
 
 export const getOptions = (game, currentPlayerId) => {
-  var intersections = game.intersectionNodes
+  var intersectionWithExtra = game.intersectionNodes
   var tiles = game.tileNodes
   var intersectionKeyPlayerValue = {}
+  let intersections = {}
+  for(let i = 1; i < 55; i++) {
+    intersections[String(i)]= intersectionWithExtra[String(i)]
+  }
   for (let intersection in intersections) {
     if (intersections[intersection].player !== '0') {
       intersectionKeyPlayerValue[intersection] =
@@ -798,25 +803,25 @@ export const monopolize = (gameId, resource, player) => {
       player2Resource = doc.data().players.player2[resource],
       player3Resource = doc.data().players.player3[resource],
       player4Resource = doc.data().players.player4[resource]
-    if (player === '1') {
+    if (player === 'player1') {
       player1Resource += player2Resource + player3Resource + player4Resource
       player2Resource = 0
       player3Resource = 0
       player4Resource = 0
     }
-    if (player === '2') {
+    if (player === 'player2') {
       player2Resource += player1Resource + player3Resource + player4Resource
       player1Resource = 0
       player3Resource = 0
       player4Resource = 0
     }
-    if (player === '3') {
+    if (player === 'player3') {
       player3Resource += player2Resource + player1Resource + player4Resource
       player2Resource = 0
       player1Resource = 0
       player4Resource = 0
     }
-    if (player === '4') {
+    if (player === 'player4') {
       player4Resource += player2Resource + player3Resource + player1Resource
       player2Resource = 0
       player3Resource = 0
@@ -842,29 +847,29 @@ export const addTwoSelectedResources = (gameId, resources, player) => {
   const game = db.collection('games').doc(gameId)
   game.get().then(doc => {
     let firstResource = resources[0]
-    let currentFirstResource = doc.data().players[`player${player}`][
+    let currentFirstResource = doc.data().players[`${player}`][
       firstResource
     ]
 
     if (resources[0] === resources[1]) {
       let firstResourceUpdate = {}
-      firstResourceUpdate[`players.player${player}.${firstResource}`] =
+      firstResourceUpdate[`players.${player}.${firstResource}`] =
         currentFirstResource + 2
 
       game.update(firstResourceUpdate)
     } else {
       let firstResourceUpdate = {}
-      firstResourceUpdate[`players.player${player}.${firstResource}`] =
+      firstResourceUpdate[`players.${player}.${firstResource}`] =
         currentFirstResource + 1
 
       game.update(firstResourceUpdate)
 
       let secondResource = resources[1],
-        currentSecondResource = doc.data().players[`player${player}`][
+        currentSecondResource = doc.data().players[`${player}`][
           secondResource
         ],
         secondResourceUpdate = {}
-      secondResourceUpdate[`players.player${player}.${secondResource}`] =
+      secondResourceUpdate[`players.${player}.${secondResource}`] =
         currentSecondResource + 1
 
       game.update(secondResourceUpdate)
@@ -875,9 +880,9 @@ export const addTwoSelectedResources = (gameId, resources, player) => {
 export const victoryPointCard = (player, gameId) => {
   const game = db.collection('games').doc(gameId)
   game.get().then(doc => {
-    let incrementedPlayerScore = doc.data().players[`player${player}`].score + 1
+    let incrementedPlayerScore = doc.data().players[`${player}`].score + 1
     let updateScore = {}
-    updateScore[`players.player${player}.score`] = incrementedPlayerScore
+    updateScore[`players.${player}.score`] = incrementedPlayerScore
     game.update(updateScore)
   })
 }
@@ -892,11 +897,11 @@ export const robberDivideCardsInHalf = (gameId, player, resources) => {
       updateOre = {},
       updateWheat = {}
 
-    updateBrick[`players.player${player}.brick`] = resources.brick
-    updateWood[`players.player${player}.wood`] = resources.wood
-    updateOre[`players.player${player}.ore`] = resources.ore
-    updateSheep[`players.player${player}.sheep`] = resources.sheep
-    updateWheat[`players.player${player}.wheat`] = resources.wheat
+    updateBrick[`players.${player}.brick`] = resources.brick
+    updateWood[`players.${player}.wood`] = resources.wood
+    updateOre[`players.${player}.ore`] = resources.ore
+    updateSheep[`players.${player}.sheep`] = resources.sheep
+    updateWheat[`players.${player}.wheat`] = resources.wheat
 
     game.update(updateBrick)
     game.update(updateOre)
