@@ -24,9 +24,13 @@ class TradePrompt extends Component {
   componentDidMount(){
     let localPlayer = this.props.currentGame.players[localStorage.getItem(this.props.gameId)]
     let exchangeResource = this.props.currentGame.trade.exchange
-    let reKey = Object.keys(exchangeResource)
-    if (!reKey.find(key => exchangeResource[key] > localPlayer[key])) {
-       this.setState({ acceptDisabled: false })}
+    // let reKey = Object.keys(exchangeResource)
+    let bool = false
+    for (let resource in exchangeResource){
+      if (+exchangeResource[resource] > +localPlayer[resource]){
+        bool = true
+      }
+    this.setState({ acceptDisabled: bool })}
   }
 
   handleOpen(){this.setState({ open: true })}
@@ -34,6 +38,7 @@ class TradePrompt extends Component {
 
   render(){
     const { currentGame, gameId } = this.props
+    const { acceptDisabled } = this.state
 
     return(
       <Modal
@@ -68,7 +73,7 @@ class TradePrompt extends Component {
             </Grid.Row>
           </Grid>
           <Modal.Actions>
-            <Button color='blue' disabled={this.state.acceptDisabled} inverted onClick={() => {
+            <Button color='blue' disabled={acceptDisabled} inverted onClick={() => {
               initiateTrade(currentGame.game.currentPlayer, localStorage.getItem(gameId), currentGame.trade.offer, currentGame.trade.exchange, gameId)
               this.handleClose()
               }
