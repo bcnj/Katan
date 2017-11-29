@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Grid } from 'semantic-ui-react'
+import { Button, Modal, Grid, Message } from 'semantic-ui-react'
 import wheat from '../images/wheat.jpg'
 import brick from '../images/brick.jpg'
 import sheep from '../images/sheep.jpg'
@@ -73,6 +73,10 @@ class TradePrompt extends Component {
             </Grid.Row>
           </Grid>
           <Modal.Actions>
+          {acceptDisabled &&
+          <Message color='red'>
+            You do not have enough resources for this trade!
+          </Message> }
             <Button color='blue' disabled={acceptDisabled} inverted onClick={() => {
               initiateTrade(currentGame.game.currentPlayer, localStorage.getItem(gameId), currentGame.trade.offer, currentGame.trade.exchange, gameId)
               this.handleClose()
