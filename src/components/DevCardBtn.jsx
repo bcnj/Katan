@@ -17,7 +17,8 @@ import {
   addTwoSelectedResources,
   victoryPointCard,
   setRobberOnTile,
-  buildRoad
+  turnRoadsOn,
+  roadDevCard
 } from '../utils/index.js'
 
 class DevCardBtn extends Component {
@@ -35,9 +36,6 @@ class DevCardBtn extends Component {
       plenty: 0,
       monopoly: 0,
       roadBuild: 0,
-      tempRoadChosen: 0,
-      roadsChosen: 0,
-      roadOptions: [],
       roadMode: false,
       canOrCannotBuyCard: false,
       knightMode: false,
@@ -64,8 +62,6 @@ class DevCardBtn extends Component {
     this.handlePlentyChange = this.handlePlentyChange.bind(this)
     this.handlePlentyAdd = this.handlePlentyAdd.bind(this)
     this.handlePlentySubmit = this.handlePlentySubmit.bind(this)
-    this.handleRoadAdd = this.handleRoadAdd.bind(this)
-    this.handleRoadChange = this.handleRoadChange.bind(this)
     this.handleRoadSubmit = this.handleRoadSubmit.bind(this)
   }
 
@@ -191,23 +187,8 @@ class DevCardBtn extends Component {
     //option.text is a string that is seen
     //option.value is whatever I want to extract, the road number in this case
     if (num === 3) {
-      let roadNodes = this.props.currentGame.roadNodes
-      let roadOptions = [],
-        option = {}
-      for (let i = 1; i <= 72; i++) {
-        if (roadNodes[i].player === player) {
-          roadNodes[i].roadNeighbors.forEach(int => {
-            option = {}
-            option.value = int
-            option.text = 'Road: ' + int
-            roadOptions.push(option)
-          })
-        }
-      }
-      console.log(roadOptions, roadNodes)
       this.setState({
         roadBuild: this.state.roadBuild - 1,
-        roadOptions,
         roadMode: true
       })
     }
@@ -292,37 +273,14 @@ class DevCardBtn extends Component {
     monopolize(gameId, this.state.monopolyResource, this.state.monopolyPlayer)
   }
 
-  handleRoadChange(e, data) {
-    e.preventDefault()
-    let tempRoadChosen = data.value
-    this.setState({
-      tempRoadChosen
-    })
-  }
-
-  handleRoadAdd(e, data) {
-    e.preventDefault()
-    console.log(data)
-    let roadChosen = this.state.tempRoadChosen
-    this.setState({
-      roadsChosen: [
-        ...this.state.roadsChosen,
-        roadChosen
-      ]
-    })
-  }
-
   handleRoadSubmit(e, data) {
     let gameId = window.location.href.slice(-20)
     //(currentPlayer, gameId, roadId, turn, currentGame)
     let player = window.localStorage.getItem(gameId)
-    console.log(this.state.roadsChosen)
-    this.state.roadsChosen.forEach(road => {
-      buildRoad(player, gameId, road, 10)
-    })
+    roadDevCard(gameId, true)
+    turnRoadsOn(player, gameId, this.props.currentGame.roadNodes)
     this.setState({
-      roadMode:false,
-      roadsChosen: []
+      roadMode: false
     })
   }
 
@@ -502,7 +460,7 @@ class DevCardBtn extends Component {
             </Button.Group>
           </div>
           {this.state.knightMode && (
-            <Menu vertical>
+            <Menu fluid vertical>
               <Menu.Item header>Select Tile and Player</Menu.Item>
               <Menu.Item>
                 <Dropdown
@@ -525,31 +483,10 @@ class DevCardBtn extends Component {
             </Menu>
           )}
           {this.state.roadMode && (
-            <Menu vertical>
-              <Menu.Item header>Select Two Roads</Menu.Item>
-              <Menu.Item>
-                <Dropdown
-                  options={this.state.roadOptions}
-                  placeholder="Pick Road"
-                  fluid
-                  selection
-                  onChange={this.handleRoadChange}
-                />
-              </Menu.Item>
-              {this.state.roadsChosen.length === 2 ? (
-                <Button disabled>Add</Button>
-              ) : (
-                <Button onClick={this.handleRoadAdd}>Add</Button>
-              )}
-              {this.state.roadsChosen.length === 2 ? (
-                <Button onClick={this.handleRoadSubmit}>Submit</Button>
-              ) : (
-                <Button disabled>Submit</Button>
-              )}
-            </Menu>
+            <Button fluid onClick={this.handleRoadSubmit}>Submit</Button>
           )}
           {this.state.monopolyMode && (
-            <Menu vertical>
+            <Menu fluid vertical>
               <Menu.Item header>Select a resource</Menu.Item>
               <Menu.Item>
                 <Dropdown
@@ -575,7 +512,7 @@ class DevCardBtn extends Component {
             </Menu>
           )}
           {this.state.plentyMode && (
-            <Menu vertical>
+            <Menu fluid vertical>
               <Menu.Item header>Select a resource</Menu.Item>
               <Menu.Item>
                 <Dropdown
