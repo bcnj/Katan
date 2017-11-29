@@ -30,10 +30,6 @@ class Intersection extends Component {
       strokeWidth = ''
     }
 
-    console.log(this.state.intersectionOn)
-    console.log(currentGame.intersectionNodes[id].active)
-    console.log(currentGame.game.currentPlayer === localStorage.getItem(gameId))
-
     return (
       <Circle
         x={x}

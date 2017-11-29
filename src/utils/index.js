@@ -281,7 +281,6 @@ export const distributeResourcesInit = (
   intersectionNodes,
   players
 ) => {
-  console.log(intersectionNodes)
   let resourceUpdate = {}
   // let game = db.collection('games').doc(gameId)
   for (let i = 1; i <= 19; i++) {
@@ -497,13 +496,16 @@ export const turnSingleTradeOff = (gameId, player) => {
     .update(tradeUpdate)
 }
 
-export const tradeInfo = (offer, exchange, gameId) => {
+export const tradeInfo = (offer, exchange, gameId, currentPlayer) => {
   const tradeUpdate = {}
   tradeUpdate['trade'] = { offer, exchange }
   db
     .collection('games')
     .doc(gameId)
     .update(tradeUpdate)
+    .then(() => {
+      turnTradeOn(currentPlayer, gameId)
+    })
 }
 
 /* INITIATE TRADE
