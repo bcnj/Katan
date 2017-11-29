@@ -12,9 +12,14 @@ const PlayerTab = ({ currentGame, gameId, counter}) => {
     >
 
     { currentGame.game && currentGame.game.turn < 8 &&
+    <Segment inverted color='green' tertiary>
+      INITIAL SETUP PHASE
+    </Segment>}
+
+    { currentGame.game && currentGame.game.currentPlayer === localStorage.getItem(gameId) &&
     <Segment inverted color='red' tertiary>
       <Icon name='warning'/>
-      INITIAL SETUP PHASE
+      Your turn ends in {counter}
     </Segment>}
 
       <Card.Group>
@@ -38,8 +43,7 @@ const PlayerTab = ({ currentGame, gameId, counter}) => {
                       ? 'playing'
                       : 'waiting'}
                   </strong>
-                  { currentGame.game.currentPlayer === localStorage.getItem(gameId) &&  localStorage.getItem(gameId) === `player${num}` &&
-                  <div> Your turn ends in {counter}</div>}
+
                 </div>
               }
 
