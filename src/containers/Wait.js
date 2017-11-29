@@ -77,6 +77,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     handleLeave: (e, gameId, playerCount, history) => {
       history.push(`/lobby`)
+      if (localStorage.getItem(gameId) !== 'player90'){
       let playerUpdate = {}
       playerUpdate[`players.${localStorage.getItem(gameId)}.name`] = '0'
       playerUpdate['game.playerCount'] = playerCount - 1
@@ -85,7 +86,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         .doc(`${gameId}`)
         .update(playerUpdate)
         .catch(err=>console.log('error in allowing a player to leave a game: ', err))
-      localStorage.removeItem(gameId)
+      localStorage.removeItem(gameId)}
     },
   }
 }

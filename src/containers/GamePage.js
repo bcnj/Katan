@@ -78,7 +78,8 @@ class GamePage extends Component {
         />
       )
     }
-    if (this.state.activeItem === 'messages') {
+    if (this.state.activeItem === 'messages' &&
+    localStorage.getItem(this.props.gameId) !== 'player90') {
       section = (
         <MessageTab
           players={this.props.currentGame.players}
@@ -97,7 +98,6 @@ class GamePage extends Component {
 
     return (
       <Grid padded>
-
         {/* this row contains game map, players, chat */}
         <Grid.Row style={{ height: '80vh' }}>
           {/* Konva map column */}
@@ -155,11 +155,13 @@ class GamePage extends Component {
         >
           {/* players table column */}
           <Grid.Column width={11}>
+
+          { localStorage.getItem(gameId) !== 'player90' &&
             <PlayerTable
               user={user}
               currentGame={currentGame}
               gameId={gameId}
-            />
+            />}
           </Grid.Column>
 
           {/* action buttons column */}
@@ -183,6 +185,7 @@ class GamePage extends Component {
                 currentGame.game &&
                 localStorage.getItem(gameId) ===
                 currentGame.game.currentPlayer &&
+                localStorage.getItem(gameId) !== 'player90' &&
                 !currentGame.players[localStorage.getItem(gameId)].trade ? (
                   <DevCardBtn currentGame={currentGame} />
                 ) : (
@@ -201,13 +204,17 @@ class GamePage extends Component {
 
               {currentGame &&
                 currentGame.game &&
+                localStorage.getItem(gameId) !== 'player90' &&
                 currentGame.players[localStorage.getItem(gameId)]
-                  .modalOpen && <Robber currentGame={currentGame} />}
+                  .modalOpen &&
+
+                  <Robber currentGame={currentGame} />}
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>
         {currentGame &&
           currentGame.players &&
+          localStorage.getItem(gameId) !== 'player90' &&
           currentGame.players[localStorage.getItem(gameId)].trade && (
             <TradePrompt currentGame={currentGame} gameId={gameId} />
           )}

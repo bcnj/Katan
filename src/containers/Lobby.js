@@ -54,6 +54,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       ownProps.history.push(`/game/${gameId}`)
     },
     handleWatch: gameId => {
+      localStorage.setItem(`${gameId}`, `player90`)
       ownProps.history.push(`/game/${gameId}`)
     }
   }
