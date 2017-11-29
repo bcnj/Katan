@@ -17,7 +17,7 @@ class MessageTab extends Component {
 
   handleMessageChange = (e, { message, value }) => {
     this.setState({ [message]: value })
-    this.renderChat()
+    this.renderChat(false)
   }
 
   handleMessageSubmit = () => {
@@ -42,11 +42,11 @@ class MessageTab extends Component {
       game.update(messageUpdate)
       game.update(messageCountUpdate)
       this.setState({ message: '' })
-      this.renderChat()
+      this.renderChat(true)
     })
   }
 
-  renderChat = () => {
+  renderChat = (shouldUpdateMessageStart) => {
     const gameId = window.location.href.slice(-20)
     const game = db.collection('games').doc(gameId)
 
@@ -56,10 +56,17 @@ class MessageTab extends Component {
       .then(doc => {
         let messages = doc.data().messages
         let mapMessagesObjToSegments = [],
-          str = ''
-        for (let message in messages) {
-          let color = doc.data().players[messages[message].player].color
-          let name = doc.data().players[messages[message].player].name
+          str = '',
+          color='olive'
+          for (let message in messages) {
+            let name = messages[message].player
+            if(name !== 'admin') {
+              name = doc.data().players[messages[message].player].name
+              color = doc.data().players[messages[message].player].color
+              if(color === 'white') {
+                color = 'black'
+              }
+            }
           if (parseInt(message) < this.props.messageStart) {
           } else {
             str =
@@ -69,15 +76,17 @@ class MessageTab extends Component {
               ' - ' +
               messages[message].content
             mapMessagesObjToSegments.push(
-              <Segment color={color} style={{ height: '5.33%' }}>
+              <Segment textAlign="left" color={color} style={{ height: '5.33%' }}>
                 {str}
               </Segment>
             )
           }
         }
         //this is used to be sure to only display 13 messages at a time
-        if (mapMessagesObjToSegments.length >= 13) {
-          updateMessageStart()
+        if(shouldUpdateMessageStart) {
+          if (mapMessagesObjToSegments.length >= 13) {
+            updateMessageStart()
+          }
         }
         return mapMessagesObjToSegments
       })
@@ -94,7 +103,7 @@ class MessageTab extends Component {
     let chat = db.collection('games').doc(gameId)
     console.log('chat', chat)
     chat.onSnapshot(snap => {
-      this.renderChat()
+      this.renderChat(false)
     })
   }
 
