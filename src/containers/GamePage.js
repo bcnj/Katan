@@ -7,7 +7,6 @@ import Board from '../components/Board'
 
 import PlayerTab from '../components/PlayerTab'
 import MessageTab from '../components/MessageTab'
-import LogTab from '../components/LogTab'
 import BuildBtn from '../components/BuildBtn'
 import BuildBtnInit from '../components/BuildBtnInit'
 import DevCardBtn from '../components/DevCardBtn'
@@ -89,10 +88,6 @@ class GamePage extends Component {
       )
     }
 
-    if (this.state.activeItem === 'log') {
-      section = <LogTab />
-    }
-
     //local state governing current panel selection
     const { activeItem } = this.state
     const { user, currentGame, gameId } = this.props
@@ -102,8 +97,8 @@ class GamePage extends Component {
 
     return (
       <Grid padded>
-
-        {/* this row contains game map, players, chat, log */}
+       
+        {/* this row contains game map, players, chat */}
         <Grid.Row style={{ height: '80vh' }}>
           {/* Konva map column */}
           <Grid.Column
@@ -136,11 +131,6 @@ class GamePage extends Component {
               <Menu.Item
                 name="messages"
                 active={activeItem === 'messages'}
-                onClick={this.handlePanelClick}
-              />
-              <Menu.Item
-                name="log"
-                active={activeItem === 'log'}
                 onClick={this.handlePanelClick}
               />
               <Menu.Menu position="right">
