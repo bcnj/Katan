@@ -301,9 +301,8 @@ class DevCardBtn extends Component {
 
   handleRoadAdd(e, data) {
     e.preventDefault()
-    let gameId = window.location.href.slice(-20)
-    let roadPlayer = window.localStorage.getItem(gameId)
-    let roadChosen = data.value
+    console.log(data)
+    let roadChosen = this.state.tempRoadChosen
     this.setState({
       roadsChosen: [
         ...this.state.roadsChosen,
@@ -320,7 +319,8 @@ class DevCardBtn extends Component {
       buildRoad(player, gameId, road, 10)
     })
     this.setState({
-      roadMode:false
+      roadMode:false,
+      roadsChosen: []
     })
   }
 

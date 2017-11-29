@@ -1,5 +1,6 @@
 import { db } from '../firebase'
 import { createDevCards, shuffle } from '../helpers.js'
+import _ from 'lodash'
 
 export const turnRoadsOff = gameId => {
   const roadUpdate = {}
@@ -242,55 +243,47 @@ export const distributeResources = (
   diceCount,
   gameId,
   tileNodes,
-  intersectionNodes
+  intersectionNodes,
+  players
 ) => {
   // const resourceUpdate = {}
-  let playerData
+  let playersArr = ['player1', 'player2', 'player3', 'player4']
+  let counter = {'player1': {}, 'player2': {}, 'player3': {}, 'player4': {}}
+  let updateResource = {}
   for (let i = 1; i <= 19; i++) {
     if (
       tileNodes[i].rollNumber === diceCount &&
-      tileNodes[i].resource !== 'dessert'
+      tileNodes[i].resource !== 'desert'
     ) {
       tileNodes[i].children.forEach(n => {
         let intersection = intersectionNodes[n]
         let currentTile = tileNodes[i]
+        let currentPlayer = counter[intersectionNodes[n].player]
+        let currentResource = currentTile.resource
         // has a city
         if (intersection.city) {
-          let game = db.collection('games').doc(gameId)
-          game
-            .get()
-            .then(doc => {
-              playerData = doc.data().players[intersection.player]
-            })
-            .then(() => {
-              let updateResourceForCity = {}
-              updateResourceForCity[
-                `players.${intersection.player}.${currentTile.resource}`
-              ] =
-                playerData[`${currentTile.resource}`] + 2 // Add 2 resources
-              game.update(updateResourceForCity).catch(err=>console.log('Player did not recieve the two resources specified', 'resource: ', currentTile.resource, 'intersection.player: ', intersection.player, err))
-            })
+          if ( currentPlayer[currentResource]) {
+            currentPlayer[currentResource] += 2
+          } else {
+            currentPlayer[currentResource] = 2
+          }
         } else if (intersection.settlement) {
-          // has a settlement
-          let game = db.collection('games').doc(gameId)
-          game
-            .get()
-            .then(doc => {
-              playerData = doc.data().players[intersection.player]
-            })
-            .then(() => {
-              let updateResourceForSet = {}
-              updateResourceForSet[
-                `players.${intersection.player}.${currentTile.resource}`
-              ] =
-                playerData[currentTile.resource] + 1 // Add 1 resource
-              game.update(updateResourceForSet)
-              .catch(err=>console.log('Player did not recieve the two resources specified', 'resource: ', currentTile.resource, 'intersection.player: ', intersection.player, err))
-            })
+          if ( currentPlayer[currentResource]) {
+            currentPlayer[currentResource] += 1
+          } else {
+            currentPlayer[currentResource] = 1
+          }
+        }
+      })}}
+      playersArr.map((value, idx) => {
+        if(!_.isEmpty(counter[value])){
+          for (let resourceKey in counter[value]){
+            updateResource[`players.${value}.${resourceKey}`] = players[value][resourceKey] + counter[value][resourceKey]
+          }
         }
       })
-    }
-  }
+      let game = db.collection('games').doc(gameId)
+      game.update(updateResource).catch(err=>console.log('distributing resoures: error in passing correct resources to user: ', err))
 }
 
 export const distributeResourcesInit = (
@@ -307,18 +300,11 @@ export const distributeResourcesInit = (
       let currentTile = tileNodes[i]
       if (intersection.settlement && currentTile.resource !== 'desert') {
         if (
-          resourceUpdate[
-            `players.${intersection.player}.${currentTile.resource}`
-          ]
+          resourceUpdate[`players.${intersection.player}.${currentTile.resource}`]
         ) {
-          resourceUpdate[
-            `players.${intersection.player}.${currentTile.resource}`
-          ]++
+          resourceUpdate[`players.${intersection.player}.${currentTile.resource}`]++
         } else {
-          resourceUpdate[
-            `players.${intersection.player}.${currentTile.resource}`
-          ] =
-            +players[intersection.player][currentTile.resource] + 1
+          resourceUpdate[`players.${intersection.player}.${currentTile.resource}`] = +players[intersection.player][currentTile.resource] + 1
         }
       }
     })
@@ -525,13 +511,16 @@ export const turnSingleTradeOff = (gameId, player) => {
     .catch(err=>console.log('error in turning single trade off for: ', player, err))
 }
 
-export const tradeInfo = (offer, exchange, gameId) => {
+export const tradeInfo = (offer, exchange, gameId, currentPlayer) => {
   const tradeUpdate = {}
   tradeUpdate['trade'] = { offer, exchange }
   db
     .collection('games')
     .doc(gameId)
     .update(tradeUpdate)
+    .then(() => {
+      turnTradeOn(currentPlayer, gameId)
+    })
     .catch(err=>console.log('error in getting trade info for: offer',offer,'exchange: ',exchange, err))
 }
 

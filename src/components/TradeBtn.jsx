@@ -19,8 +19,8 @@ class TradeBtn extends Component {
     super(props)
     this.state = {
       open: false,
-      offer: {},
-      exchange: {},
+      offer: {'wheat': 0, 'ore': 0, 'wood': 0, 'sheep':0, 'brick':0},
+      exchange: {'wheat': 0, 'ore': 0, 'wood': 0, 'sheep':0, 'brick':0},
       submitDisabled: false // diable submit if currentPlayer don't have enough resources
     }
     this.handleClose = this.handleClose.bind(this)
@@ -30,18 +30,14 @@ class TradeBtn extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleOpen(){this.setState({ open: true })}
+  handleOpen(){this.setState({ open: true , offer: {'wheat': 0, 'ore': 0, 'wood': 0, 'sheep':0, 'brick':0}, exchange: {'wheat': 0, 'ore': 0, 'wood': 0, 'sheep':0, 'brick':0} })}
 
-  handleClose(){this.setState({ open: false, submitDisabled: false })}
+  handleClose(){this.setState({ open: false, submitDisabled: false, offer: {'wheat': 0, 'ore': 0, 'wood': 0, 'sheep':0, 'brick':0}, exchange: {'wheat': 0, 'ore': 0, 'wood': 0, 'sheep':0, 'brick':0} })}
 
   handleOfferChange(e, {value}, resource){
-    if (!this.state.offer){
-      this.setState({ offer: {[resource]: value} })
-    } else {
-      let currentOffer = {...this.state.offer}
-      currentOffer[resource] = value
-      this.setState({ offer: {...currentOffer} })
-    }
+    let currentOffer = {...this.state.offer}
+    currentOffer[resource] = value
+    this.setState({ offer: {...currentOffer} })
     // check if current player has enough resources
     let reKey = Object.keys(this.state.offer)
     if(reKey.find(key => this.state.offer[key] > this.props.currentGame.players[this.props.currentGame.game.currentPlayer][resource]) || value > this.props.currentGame.players[this.props.currentGame.game.currentPlayer][resource]){
@@ -52,19 +48,14 @@ class TradeBtn extends Component {
   }
 
   handleExChange(e, {value}, resource){
-    if (!this.state.offer){
-      this.setState({ exchange: {[resource]: value} })
-    } else {
-      let currentOffer = {...this.state.exchange}
-      currentOffer[resource] = value
-      this.setState({ exchange: {...currentOffer} })
-    }
+    let currentEx = {...this.state.exchange}
+    currentEx[resource] = value
+    this.setState({ exchange: {...currentEx} })
   }
 
   handleSubmit(currentPlayer, gameId){
     //check if i have enough resources before send this to other players
-    turnTradeOn(currentPlayer, gameId)
-    tradeInfo(this.state.offer, this.state.exchange, gameId)
+    tradeInfo(this.state.offer, this.state.exchange, gameId, currentPlayer)
     this.handleClose()
   }
 
@@ -84,8 +75,8 @@ class TradeBtn extends Component {
                   <img src={images[idx]} style={{ width: '70%' }} alt='' />
                   <Dropdown
                     fluid
-                    placeholder='0'
                     selection
+                    value={this.state.offer[resource]}
                     options={qtyOptions}
                     onChange={(e, {value}) => this.handleOfferChange(e, {value}, resource)}/>
                 </Grid.Column>
@@ -104,8 +95,8 @@ class TradeBtn extends Component {
                   <br/>
                   <Dropdown
                     fluid
-                    placeholder='0'
                     selection
+                    value={this.state.exchange[resource]}
                     options={qtyOptions}
                     onChange={(e, {value}) => this.handleExChange(e, {value}, resource)}/>
                 </Grid.Column>

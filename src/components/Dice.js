@@ -32,7 +32,8 @@ class DiceRoll extends React.Component {
                     num,
                     gameId,
                     currentGame.tileNodes,
-                    currentGame.intersectionNodes
+                    currentGame.intersectionNodes,
+                    currentGame.players
                   )
                 }
                 ref={dice => (this.reactDice = dice)}
@@ -77,10 +78,10 @@ class DiceRoll extends React.Component {
       .catch(err=>console.log('error in updating dice roll count: ', err))
   }
 
-  rollDoneCallback(num, gameId, tileNodes, intersectionNodes) {
+  rollDoneCallback(num, gameId, tileNodes, intersectionNodes, players) {
     if (this.state.rollAll) {
       rollDice(num, gameId)
-      distributeResources(num, gameId, tileNodes, intersectionNodes)
+      distributeResources(num, gameId, tileNodes, intersectionNodes, players)
       this.setState({ rollAll: false })
     }
   }
