@@ -296,7 +296,6 @@ class DevCardBtn extends Component {
   }
 
   handlePlentyAdd(e, data) {
-    console.log(this.state)
     let resourceChoice = this.state.plentyResource
     //get added resources
     this.setState({

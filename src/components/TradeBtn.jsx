@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Grid, Dropdown} from 'semantic-ui-react'
+import { Button, Modal, Grid, Dropdown, Segment, Icon, Message} from 'semantic-ui-react'
 import wheat from '../images/wheat.jpg'
 import brick from '../images/brick.jpg'
 import sheep from '../images/sheep.jpg'
@@ -104,6 +104,10 @@ class TradeBtn extends Component {
             </Grid.Row>
           </Grid>
           <Modal.Actions>
+          {this.state.submitDisabled &&
+          <Message color='red'>
+            You do not have enough resources for this trade!
+          </Message> }
             <Button color='blue' disabled={this.state.submitDisabled} inverted onClick={() => this.handleSubmit(this.props.currentGame.game.currentPlayer, this.props.gameId)}>
               Submit
             </Button>

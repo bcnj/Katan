@@ -50,6 +50,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           .collection('games')
           .doc(`${game.id}`)
           .update(playerUpdate)
+          .catch(err=>console.log('create game: error in adding a player to be able to join a game: ',err))
         localStorage.setItem(`${game.id}`, 'player1')
         ownProps.history.push(`/game/${game.id}`)
       })

@@ -72,6 +72,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         .collection('games')
         .doc(`${gameId}`)
         .update(gameStatusUpdate)
+        .catch(err=>console.log('error in updating the game status to active: ', err))
       // ownProps.history.push(`/game/${gameId}`)
     },
     handleLeave: (e, gameId, playerCount, history) => {
@@ -83,6 +84,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         .collection('games')
         .doc(`${gameId}`)
         .update(playerUpdate)
+        .catch(err=>console.log('error in allowing a player to leave a game: ', err))
       localStorage.removeItem(gameId)
     },
   }

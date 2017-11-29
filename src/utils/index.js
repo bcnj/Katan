@@ -54,15 +54,17 @@ export const turnRoadsOnInit = (
     .update(roadUpdate)
 }
 
-export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame) => {
+export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame, shouldDeleteResources, devCardOn) => {
   const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
   db
     .collection('games')
     .doc(`${gameId}`)
     .update(roadUpdate)
-  turnRoadsOff(gameId)
-  if (turn >= 8) {
+  if(!devCardOn) {
+    turnRoadsOff(gameId)
+  }
+  if (turn >= 8 && shouldDeleteResources) {
     buildRoadResource(currentPlayer, gameId)
   } else {
     endTurn(turn, currentPlayer, gameId)
