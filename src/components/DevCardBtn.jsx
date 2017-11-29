@@ -277,7 +277,7 @@ class DevCardBtn extends Component {
     let gameId = window.location.href.slice(-20)
     //(currentPlayer, gameId, roadId, turn, currentGame)
     let player = window.localStorage.getItem(gameId)
-    roadDevCard(gameId, true)
+    roadDevCard(gameId, 2)
     turnRoadsOn(player, gameId, this.props.currentGame.roadNodes)
     this.setState({
       roadMode: false

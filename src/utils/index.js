@@ -11,7 +11,7 @@ export const turnRoadsOff = gameId => {
     .collection('games')
     .doc(`${gameId}`)
     .update(roadUpdate)
-    .catch(err=>console.log('Did not turn roads off', err))
+    .catch(err => console.log('Did not turn roads off', err))
 }
 
 export const turnRoadsOn = (currentPlayer, gameId, roadNodes) => {
@@ -29,7 +29,7 @@ export const turnRoadsOn = (currentPlayer, gameId, roadNodes) => {
     .collection('games')
     .doc(`${gameId}`)
     .update(roadUpdate)
-    .catch(err=>console.log('Did not turn roads on', err))
+    .catch(err => console.log('Did not turn roads on', err))
 }
 
 export const turnRoadsOnInit = (
@@ -54,18 +54,31 @@ export const turnRoadsOnInit = (
     .collection('games')
     .doc(`${gameId}`)
     .update(roadUpdate)
-    .catch(err=>console.log('Did not turn roads on in initial phase', err))
+    .catch(err => console.log('Did not turn roads on in initial phase', err))
 }
 
-export const buildRoad = (currentPlayer, gameId, roadId, turn, currentGame, shouldDeleteResources, devCardOn) => {
+export const buildRoad = (
+  currentPlayer,
+  gameId,
+  roadId,
+  turn,
+  currentGame,
+  shouldDeleteResources,
+  devCardValue
+) => {
   const roadUpdate = {}
   roadUpdate[`roadNodes.${roadId}.player`] = currentPlayer
   db
     .collection('games')
     .doc(`${gameId}`)
     .update(roadUpdate)
-    .catch(err=>console.log('Road was not build', err))
-  if(!devCardOn) {
+    .catch(err => console.log('Road was not build', err))
+  if (devCardValue === 1) {
+    roadDevCard(gameId, devCardValue)
+  } else if (devCardValue === 0) {
+    roadDevCard(gameId, devCardValue)
+    turnRoadsOff(gameId)
+  } else {
     turnRoadsOff(gameId)
   }
   if (turn >= 8 && shouldDeleteResources) {
@@ -92,7 +105,7 @@ export const turnIntersectionOff = gameId => {
     .collection('games')
     .doc(`${gameId}`)
     .update(intersectionUpdate)
-    .catch(err=>console.log('Intersections were not turned off', err))
+    .catch(err => console.log('Intersections were not turned off', err))
 }
 
 export const turnSettlementOn = (
@@ -119,7 +132,7 @@ export const turnSettlementOn = (
     .collection('games')
     .doc(`${gameId}`)
     .update(settlementUpdate)
-    .catch(err=>console.log('Settlements were not turned on', err))
+    .catch(err => console.log('Settlements were not turned on', err))
 }
 
 export const turnSettlementOnInit = (
@@ -143,7 +156,7 @@ export const turnSettlementOnInit = (
     .collection('games')
     .doc(`${gameId}`)
     .update(settlementUpdate)
-    .catch(err=>console.log('Initial settlement was not built', err))
+    .catch(err => console.log('Initial settlement was not built', err))
 }
 
 export const turnCityOn = (currentPlayer, gameId, intersectionNodes) => {
@@ -161,7 +174,7 @@ export const turnCityOn = (currentPlayer, gameId, intersectionNodes) => {
     .collection('games')
     .doc(`${gameId}`)
     .update(cityUpdate)
-    .catch(err=>console.log('City was not turned on', err))
+    .catch(err => console.log('City was not turned on', err))
 }
 
 export const buildSettlement = (
@@ -177,7 +190,7 @@ export const buildSettlement = (
     .collection('games')
     .doc(`${gameId}`)
     .update(settlementUpdate)
-    .catch(err=>console.log('Did not build settlement', err))
+    .catch(err => console.log('Did not build settlement', err))
   turnIntersectionOff(gameId)
   if (turn >= 8) {
     buildSettlementResource(currentPlayer, gameId)
@@ -194,8 +207,9 @@ export const buildSettlement = (
         let updatedPlayerData = {}
         updatedPlayerData[`players.${currentPlayer}.score`] =
           playerData.score + 1
-        game.update(updatedPlayerData)
-        .catch(err=>console.log('Did not build settlement', err))
+        game
+          .update(updatedPlayerData)
+          .catch(err => console.log('Did not build settlement', err))
       })
   }
 }
@@ -207,7 +221,7 @@ export const buildCity = (currentPlayer, gameId, intersectionId) => {
     .collection('games')
     .doc(`${gameId}`)
     .update(cityUpdate)
-    .catch(err=>console.log('City not built', err))
+    .catch(err => console.log('City not built', err))
   turnIntersectionOff(gameId)
   buildCityResource(currentPlayer, gameId)
 }
@@ -234,10 +248,18 @@ export const rollDice = (diceSum, gameId) => {
     player2UpdateModalOpen[`players.player2.modalOpen`] = true
     player3UpdateModalOpen[`players.player3.modalOpen`] = true
     player4UpdateModalOpen[`players.player4.modalOpen`] = true
-    game.update(player1UpdateModalOpen).catch(err=>console.log('Modal close error, robber', err))
-    game.update(player2UpdateModalOpen).catch(err=>console.log('Modal close error, robber', err))
-    game.update(player3UpdateModalOpen).catch(err=>console.log('Modal close error, robber', err))
-    game.update(player4UpdateModalOpen).catch(err=>console.log('Modal close error, robber', err))
+    game
+      .update(player1UpdateModalOpen)
+      .catch(err => console.log('Modal close error, robber', err))
+    game
+      .update(player2UpdateModalOpen)
+      .catch(err => console.log('Modal close error, robber', err))
+    game
+      .update(player3UpdateModalOpen)
+      .catch(err => console.log('Modal close error, robber', err))
+    game
+      .update(player4UpdateModalOpen)
+      .catch(err => console.log('Modal close error, robber', err))
   }
 }
 
@@ -250,7 +272,7 @@ export const distributeResources = (
 ) => {
   // const resourceUpdate = {}
   let playersArr = ['player1', 'player2', 'player3', 'player4']
-  let counter = {'player1': {}, 'player2': {}, 'player3': {}, 'player4': {}}
+  let counter = { player1: {}, player2: {}, player3: {}, player4: {} }
   let updateResource = {}
   for (let i = 1; i <= 19; i++) {
     if (
@@ -264,28 +286,38 @@ export const distributeResources = (
         let currentResource = currentTile.resource
         // has a city
         if (intersection.city) {
-          if ( currentPlayer[currentResource]) {
+          if (currentPlayer[currentResource]) {
             currentPlayer[currentResource] += 2
           } else {
             currentPlayer[currentResource] = 2
           }
         } else if (intersection.settlement) {
-          if ( currentPlayer[currentResource]) {
+          if (currentPlayer[currentResource]) {
             currentPlayer[currentResource] += 1
           } else {
             currentPlayer[currentResource] = 1
           }
         }
-      })}}
-      playersArr.map((value, idx) => {
-        if(!_.isEmpty(counter[value])){
-          for (let resourceKey in counter[value]){
-            updateResource[`players.${value}.${resourceKey}`] = players[value][resourceKey] + counter[value][resourceKey]
-          }
-        }
       })
-      let game = db.collection('games').doc(gameId)
-      game.update(updateResource).catch(err=>console.log('distributing resoures: error in passing correct resources to user: ', err))
+    }
+  }
+  playersArr.map((value, idx) => {
+    if (!_.isEmpty(counter[value])) {
+      for (let resourceKey in counter[value]) {
+        updateResource[`players.${value}.${resourceKey}`] =
+          players[value][resourceKey] + counter[value][resourceKey]
+      }
+    }
+  })
+  let game = db.collection('games').doc(gameId)
+  game
+    .update(updateResource)
+    .catch(err =>
+      console.log(
+        'distributing resoures: error in passing correct resources to user: ',
+        err
+      )
+    )
 }
 
 export const distributeResourcesInit = (
@@ -302,11 +334,18 @@ export const distributeResourcesInit = (
       let currentTile = tileNodes[i]
       if (intersection.settlement && currentTile.resource !== 'desert') {
         if (
-          resourceUpdate[`players.${intersection.player}.${currentTile.resource}`]
+          resourceUpdate[
+            `players.${intersection.player}.${currentTile.resource}`
+          ]
         ) {
-          resourceUpdate[`players.${intersection.player}.${currentTile.resource}`]++
+          resourceUpdate[
+            `players.${intersection.player}.${currentTile.resource}`
+          ]++
         } else {
-          resourceUpdate[`players.${intersection.player}.${currentTile.resource}`] = +players[intersection.player][currentTile.resource] + 1
+          resourceUpdate[
+            `players.${intersection.player}.${currentTile.resource}`
+          ] =
+            +players[intersection.player][currentTile.resource] + 1
         }
       }
     })
@@ -315,7 +354,9 @@ export const distributeResourcesInit = (
     .collection('games')
     .doc(gameId)
     .update(resourceUpdate)
-    .catch(err=>console.log('Player did not recieve correct initial resources', err))
+    .catch(err =>
+      console.log('Player did not recieve correct initial resources', err)
+    )
 }
 
 export const endTurn = (currentTurn, currentPlayer, gameId) => {
@@ -343,9 +384,8 @@ export const endTurn = (currentTurn, currentPlayer, gameId) => {
     .collection('games')
     .doc(`${gameId}`)
     .update(endTurn)
-    .catch(err=>console.log('error in endTurn', err))
+    .catch(err => console.log('error in endTurn', err))
 }
-
 
 // /* END TURN
 //   Player ends turn, switches to next player
@@ -432,7 +472,14 @@ export const buildRoadResource = (currentPlayer, gameId) => {
       // Reduce player resources
       updatedPlayerData[`players.${currentPlayer}.brick`] = playerData.brick - 1 // Reduce 1 brick
       updatedPlayerData[`players.${currentPlayer}.wood`] = playerData.wood - 1 // Reduce 1 brick
-      game.update(updatedPlayerData).catch(err=>console.log('error in decrementing resources in creation of road: ', err))
+      game
+        .update(updatedPlayerData)
+        .catch(err =>
+          console.log(
+            'error in decrementing resources in creation of road: ',
+            err
+          )
+        )
     })
 }
 
@@ -454,7 +501,14 @@ export const buildSettlementResource = (currentPlayer, gameId) => {
       updatedPlayerData[`players.${currentPlayer}.wheat`] = playerData.wheat - 1
       updatedPlayerData[`players.${currentPlayer}.sheep`] = playerData.sheep - 1
       updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
-      game.update(updatedPlayerData).catch(err=>console.log('error in decrementing resources in creation of settlment: ', err))
+      game
+        .update(updatedPlayerData)
+        .catch(err =>
+          console.log(
+            'error in decrementing resources in creation of settlment: ',
+            err
+          )
+        )
     })
 }
 
@@ -474,7 +528,14 @@ export const buildCityResource = (currentPlayer, gameId) => {
       updatedPlayerData[`players.${currentPlayer}.ore`] = playerData.ore - 3
       updatedPlayerData[`players.${currentPlayer}.score`] = playerData.score + 1
       // Update Firebase
-      game.update(updatedPlayerData).catch(err=>console.log('error in decrementing resources in creation of city: ', err))
+      game
+        .update(updatedPlayerData)
+        .catch(err =>
+          console.log(
+            'error in decrementing resources in creation of city: ',
+            err
+          )
+        )
     })
 }
 
@@ -488,7 +549,10 @@ export const turnTradeOn = (currentPlayer, gameId) => {
   db
     .collection('games')
     .doc(gameId)
-    .update(tradeUpdate).catch(err=>console.log('error in turning trade on for all players: ', err))
+    .update(tradeUpdate)
+    .catch(err =>
+      console.log('error in turning trade on for all players: ', err)
+    )
 }
 
 export const turnTradeOff = gameId => {
@@ -502,7 +566,9 @@ export const turnTradeOff = gameId => {
     .collection('games')
     .doc(gameId)
     .update(tradeUpdate)
-    .catch(err=>console.log('error in turning trade off for all players: ', err))
+    .catch(err =>
+      console.log('error in turning trade off for all players: ', err)
+    )
 }
 
 export const turnSingleTradeOff = (gameId, player) => {
@@ -512,7 +578,9 @@ export const turnSingleTradeOff = (gameId, player) => {
     .collection('games')
     .doc(gameId)
     .update(tradeUpdate)
-    .catch(err=>console.log('error in turning single trade off for: ', player, err))
+    .catch(err =>
+      console.log('error in turning single trade off for: ', player, err)
+    )
 }
 
 export const tradeInfo = (offer, exchange, gameId, currentPlayer) => {
@@ -525,7 +593,15 @@ export const tradeInfo = (offer, exchange, gameId, currentPlayer) => {
     .then(() => {
       turnTradeOn(currentPlayer, gameId)
     })
-    .catch(err=>console.log('error in getting trade info for: offer',offer,'exchange: ',exchange, err))
+    .catch(err =>
+      console.log(
+        'error in getting trade info for: offer',
+        offer,
+        'exchange: ',
+        exchange,
+        err
+      )
+    )
 }
 
 /* INITIATE TRADE
@@ -571,8 +647,20 @@ export const initiateTrade = (
       })
     })
     .then(() => {
-      game.update(updatedInitiatorData).catch(err=>console.log('error in updating initiator data: ', initiatorPlayer, err))
-      game.update(updatedReceiverData).catch(err=>console.log('error in updating receiver data: ', receiverPlayer, err))
+      game
+        .update(updatedInitiatorData)
+        .catch(err =>
+          console.log(
+            'error in updating initiator data: ',
+            initiatorPlayer,
+            err
+          )
+        )
+      game
+        .update(updatedReceiverData)
+        .catch(err =>
+          console.log('error in updating receiver data: ', receiverPlayer, err)
+        )
     })
 }
 
@@ -590,14 +678,22 @@ export const purchaseDevCard = (player, gameId) => {
     resourceUpdate[`players.${player}.ore`] = prevOre - 1
     resourceUpdate[`players.${player}.sheep`] = prevSheep - 1
     resourceUpdate[`players.${player}.wheat`] = prevWheat - 1
-    game.update(resourceUpdate).catch(err=>console.log('error resource update, player: ', player, 'error: ', err))
+    game
+      .update(resourceUpdate)
+      .catch(err =>
+        console.log('error resource update, player: ', player, 'error: ', err)
+      )
 
     let prevDevCards = doc.data().players[player].devCards,
       newDevCards = [shuffledDevCards[0], ...prevDevCards]
 
     let devCardUpdate = {}
     devCardUpdate[`players.${player}.devCards`] = newDevCards
-    game.update(devCardUpdate).catch(err=>console.log('error in adding dev card, player: ', player, 'err: ', err))
+    game
+      .update(devCardUpdate)
+      .catch(err =>
+        console.log('error in adding dev card, player: ', player, 'err: ', err)
+      )
   })
   return shuffledDevCards[0]
 }
@@ -615,7 +711,16 @@ export const deleteSpecificDevCard = (cardId, player, gameId) => {
       } else newDevCards.push(card)
     })
     deleteDevCard[`players.${player}.devCards`] = newDevCards
-    game.update(deleteDevCard).catch(err=>console.log('error in decrementing dev card, player: ', player, 'err: ', err))
+    game
+      .update(deleteDevCard)
+      .catch(err =>
+        console.log(
+          'error in decrementing dev card, player: ',
+          player,
+          'err: ',
+          err
+        )
+      )
   })
 }
 
@@ -638,13 +743,29 @@ export const useKnightTakeCard = (gameId, taker, victim) => {
       let victimLoseCard = doc.data().players[`${victim}`][cards[i]] - 1,
         takerGetCard = doc.data().players[`${taker}`][cards[i]] + 1,
         victimLoseCardUpdate = {}
-      victimLoseCardUpdate[
-        `players.${victim}.${cards[i]}`
-      ] = victimLoseCard
+      victimLoseCardUpdate[`players.${victim}.${cards[i]}`] = victimLoseCard
       let takerGetCardUpdate = {}
       takerGetCardUpdate[`players.${taker}.${cards[i]}`] = takerGetCard
-      game.update(victimLoseCardUpdate).catch(err=>console.log('knight dev card: error in deleting card in player who loses card: ', victim, 'err: ', err))
-      game.update(takerGetCardUpdate).catch(err=>console.log('knight dev card: error in deleting card in player who gains card: ', taker, 'err: ', err))
+      game
+        .update(victimLoseCardUpdate)
+        .catch(err =>
+          console.log(
+            'knight dev card: error in deleting card in player who loses card: ',
+            victim,
+            'err: ',
+            err
+          )
+        )
+      game
+        .update(takerGetCardUpdate)
+        .catch(err =>
+          console.log(
+            'knight dev card: error in deleting card in player who gains card: ',
+            taker,
+            'err: ',
+            err
+          )
+        )
     }
   })
 }
@@ -654,8 +775,8 @@ export const getOptions = (game, currentPlayerId) => {
   var tiles = game.tileNodes
   var intersectionKeyPlayerValue = {}
   let intersections = {}
-  for(let i = 1; i < 55; i++) {
-    intersections[String(i)]= intersectionWithExtra[String(i)]
+  for (let i = 1; i < 55; i++) {
+    intersections[String(i)] = intersectionWithExtra[String(i)]
   }
   for (let intersection in intersections) {
     if (intersections[intersection].player !== '0') {
@@ -728,9 +849,9 @@ export const checkForWinner = currentGame => {
     score3 = currentGame.players.player3.score,
     score4 = currentGame.players.player4.score
   let name1 = currentGame.players.player1.name,
-   name2 = currentGame.players.player2.name,
-   name3 = currentGame.players.player3.name,
-   name4 = currentGame.players.player4.name
+    name2 = currentGame.players.player2.name,
+    name3 = currentGame.players.player3.name,
+    name4 = currentGame.players.player4.name
   if (score1 >= 10) {
     return [true, name1]
   }
@@ -740,7 +861,7 @@ export const checkForWinner = currentGame => {
   if (score3 >= 10) {
     return [true, name3]
   }
-  if(score4>=10) {
+  if (score4 >= 10) {
     return [true, name4]
   }
   return [false]
@@ -757,8 +878,22 @@ export const updateScoreToCloseModal = (e, winner) => {
     let updateScoreToCloseModal = {}
     updateGameToInactive[`game.active`] = false
     updateScoreToCloseModal[`players.${player}.score`] = 0
-    game.update(updateScoreToCloseModal).catch((err) => console.log('winning component: error in updating score to close end game modal: ', err))
-    game.update(updateGameToInactive).catch((err) => console.log('winning component: error in updating game to inactive: ', err))
+    game
+      .update(updateScoreToCloseModal)
+      .catch(err =>
+        console.log(
+          'winning component: error in updating score to close end game modal: ',
+          err
+        )
+      )
+    game
+      .update(updateGameToInactive)
+      .catch(err =>
+        console.log(
+          'winning component: error in updating game to inactive: ',
+          err
+        )
+      )
   })
 }
 
@@ -777,7 +912,9 @@ export const setRobberBuild = (currentGameId, setTrueFalse) => {
       .collection('games')
       .doc(currentGameId)
       .update(robberBuildUpdate)
-      .catch((err) => console.log('set robber: error in setting robber to build: ', err))
+      .catch(err =>
+        console.log('set robber: error in setting robber to build: ', err)
+      )
   }
 }
 
@@ -788,7 +925,9 @@ export const setRobberOnTile = (currentGame, tileId) => {
     .collection('games')
     .doc(currentGame)
     .update(setRobberOnTileUpdate)
-    .catch((err) => console.log('set robber: error in setting robber on tile: ', err))
+    .catch(err =>
+      console.log('set robber: error in setting robber on tile: ', err)
+    )
 }
 
 //updates message start property - used so as to have only 13 messages at a time
@@ -800,7 +939,11 @@ export const updateMessageStart = () => {
     let messageStart = doc.data().game.messageStart
     messageStart = messageStart + 1
     updateMessageStartData[`game.messageStart`] = messageStart
-    game.update(updateMessageStartData).catch((err) => console.log('messages: error in incrementing message start: ', err))
+    game
+      .update(updateMessageStartData)
+      .catch(err =>
+        console.log('messages: error in incrementing message start: ', err)
+      )
   })
 }
 
@@ -845,10 +988,26 @@ export const monopolize = (gameId, resource, player) => {
     player2Update[`players.player2.${resource}`] = player2Resource
     player3Update[`players.player3.${resource}`] = player3Resource
     player4Update[`players.player4.${resource}`] = player4Resource
-    game.update(player1Update).catch((err) => console.log('monopoly card: error in updating player 1 resource ', err))
-    game.update(player2Update).catch((err) => console.log('monopoly card: error in updating player 2 resource: ', err))
-    game.update(player3Update).catch((err) => console.log('monopoly card: error in updating player 3 resource: ', err))
-    game.update(player4Update).catch((err) => console.log('monopoly card: error in updating player 4 resource: ', err))
+    game
+      .update(player1Update)
+      .catch(err =>
+        console.log('monopoly card: error in updating player 1 resource ', err)
+      )
+    game
+      .update(player2Update)
+      .catch(err =>
+        console.log('monopoly card: error in updating player 2 resource: ', err)
+      )
+    game
+      .update(player3Update)
+      .catch(err =>
+        console.log('monopoly card: error in updating player 3 resource: ', err)
+      )
+    game
+      .update(player4Update)
+      .catch(err =>
+        console.log('monopoly card: error in updating player 4 resource: ', err)
+      )
   })
 }
 
@@ -856,32 +1015,52 @@ export const addTwoSelectedResources = (gameId, resources, player) => {
   const game = db.collection('games').doc(gameId)
   game.get().then(doc => {
     let firstResource = resources[0]
-    let currentFirstResource = doc.data().players[`${player}`][
-      firstResource
-    ]
+    let currentFirstResource = doc.data().players[`${player}`][firstResource]
 
     if (resources[0] === resources[1]) {
       let firstResourceUpdate = {}
       firstResourceUpdate[`players.${player}.${firstResource}`] =
         currentFirstResource + 2
 
-      game.update(firstResourceUpdate).catch(err=>console.log('land of plenty card: error in updating the first resource: ', firstResource, err))
+      game
+        .update(firstResourceUpdate)
+        .catch(err =>
+          console.log(
+            'land of plenty card: error in updating the first resource: ',
+            firstResource,
+            err
+          )
+        )
     } else {
       let firstResourceUpdate = {}
       firstResourceUpdate[`players.${player}.${firstResource}`] =
         currentFirstResource + 1
 
-      game.update(firstResourceUpdate).catch(err=>console.log('land of plenty card: error in updating the first resource: ', firstResource, err))
+      game
+        .update(firstResourceUpdate)
+        .catch(err =>
+          console.log(
+            'land of plenty card: error in updating the first resource: ',
+            firstResource,
+            err
+          )
+        )
 
       let secondResource = resources[1],
-        currentSecondResource = doc.data().players[`${player}`][
-          secondResource
-        ],
+        currentSecondResource = doc.data().players[`${player}`][secondResource],
         secondResourceUpdate = {}
       secondResourceUpdate[`players.${player}.${secondResource}`] =
         currentSecondResource + 1
 
-      game.update(secondResourceUpdate).catch(err=>console.log('land of plenty card: error in updating the second resource: ', secondResource, err))
+      game
+        .update(secondResourceUpdate)
+        .catch(err =>
+          console.log(
+            'land of plenty card: error in updating the second resource: ',
+            secondResource,
+            err
+          )
+        )
     }
   })
 }
@@ -892,7 +1071,14 @@ export const victoryPointCard = (player, gameId) => {
     let incrementedPlayerScore = doc.data().players[`${player}`].score + 1
     let updateScore = {}
     updateScore[`players.${player}.score`] = incrementedPlayerScore
-    game.update(updateScore).catch(err=> console.log('victory point card: error in incrementing player score: ', err))
+    game
+      .update(updateScore)
+      .catch(err =>
+        console.log(
+          'victory point card: error in incrementing player score: ',
+          err
+        )
+      )
   })
 }
 
@@ -912,11 +1098,56 @@ export const robberDivideCardsInHalf = (gameId, player, resources) => {
     updateSheep[`players.${player}.sheep`] = resources.sheep
     updateWheat[`players.${player}.wheat`] = resources.wheat
 
-    game.update(updateBrick).catch(err=>console.log('robber: error in updating brick for player: ', player, 'error: ', err))
-    game.update(updateOre).catch(err=>console.log('robber: error in updating ore for player: ', player, 'error: ', err))
-    game.update(updateSheep).catch(err=>console.log('robber: error in updating sheep for player: ', player, 'error: ', err))
-    game.update(updateWheat).catch(err=>console.log('robber: error in updating wheat for player: ', player, 'error: ', err))
-    game.update(updateWood).catch(err=>console.log('robber: error in updating wood for player: ', player, 'error: ', err))
+    game
+      .update(updateBrick)
+      .catch(err =>
+        console.log(
+          'robber: error in updating brick for player: ',
+          player,
+          'error: ',
+          err
+        )
+      )
+    game
+      .update(updateOre)
+      .catch(err =>
+        console.log(
+          'robber: error in updating ore for player: ',
+          player,
+          'error: ',
+          err
+        )
+      )
+    game
+      .update(updateSheep)
+      .catch(err =>
+        console.log(
+          'robber: error in updating sheep for player: ',
+          player,
+          'error: ',
+          err
+        )
+      )
+    game
+      .update(updateWheat)
+      .catch(err =>
+        console.log(
+          'robber: error in updating wheat for player: ',
+          player,
+          'error: ',
+          err
+        )
+      )
+    game
+      .update(updateWood)
+      .catch(err =>
+        console.log(
+          'robber: error in updating wood for player: ',
+          player,
+          'error: ',
+          err
+        )
+      )
   })
 }
 
@@ -924,5 +1155,38 @@ export const updateCloseModalForPlayer = (gameId, player) => {
   const game = db.collection('games').doc(gameId)
   let updatePlayerCloseModal = {}
   updatePlayerCloseModal[`players.${player}.modalOpen`] = false
-  game.update(updatePlayerCloseModal).catch(err=>console.log('robber: error in closing modal: ', player, 'error: ', err))
+  game
+    .update(updatePlayerCloseModal)
+    .catch(err =>
+      console.log('robber: error in closing modal: ', player, 'error: ', err)
+    )
+}
+
+export const roadDevCard = (gameId, amountOfRoads) => {
+  const game = db.collection('games').doc(gameId)
+  if (amountOfRoads === 2) {
+    let updateRoadDevCard = {}
+    updateRoadDevCard[`game.roadDevCard`] = 2
+    game
+      .update(updateRoadDevCard)
+      .catch(err =>
+        console.log('error when updating road dev card status: ', err)
+      )
+  } else if (amountOfRoads === 1) {
+    let updateRoadDevCard = {}
+    updateRoadDevCard[`game.roadDevCard`] = 1
+    game
+      .update(updateRoadDevCard)
+      .catch(err =>
+        console.log('error when updating road dev card status: ', err)
+      )
+  } else {
+    let updateRoadDevCard = {}
+    updateRoadDevCard[`game.roadDevCard`] = 0
+    game
+      .update(updateRoadDevCard)
+      .catch(err =>
+        console.log('error when updating road dev card status: ', err)
+      )
+  }
 }

@@ -191,9 +191,9 @@ class GamePage extends Component {
             <Grid.Row style={{ height: '50%' }}>
               {currentGame &&
                 currentGame.game &&
-                localStorage.getItem(gameId) ===
+                {/* localStorage.getItem(gameId) ===
                 currentGame.game.currentPlayer &&
-                !currentGame.players[localStorage.getItem(gameId)].trade ? (
+                !currentGame.players[localStorage.getItem(gameId)].trade*/} ? (
                   <DevCardBtn currentGame={currentGame} />
                 ) : (
                   <Button disabled style={{ width: '49%', height: '75%' }}>
