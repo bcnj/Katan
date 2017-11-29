@@ -19,7 +19,7 @@ const PlayerTab = ({ currentGame, gameId, counter}) => {
     { currentGame.game && currentGame.game.currentPlayer === localStorage.getItem(gameId) &&
     <Segment inverted color='red' tertiary>
       <Icon name='warning'/>
-      Your turn ends in {counter}
+      Your turn now
     </Segment>}
 
       <Card.Group>
