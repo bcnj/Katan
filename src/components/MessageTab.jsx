@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Segment, Form, Container } from 'semantic-ui-react'
 import { db } from '../firebase'
 import { updateMessageStart } from '../utils/index'
@@ -107,16 +106,6 @@ class MessageTab extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   console.log('Component did mount')
-  //   const gameId = window.location.href.slice(-20)
-  //   let chat = db.collection('games').doc(gameId)
-  //   console.log('chat', chat)
-  //   chat.onSnapshot(snap => {
-  //     this.renderChat()
-  //   })
-  // }
-
   render() {
     const { message, text } = this.state
     return (
@@ -143,10 +132,4 @@ class MessageTab extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-      currentGame: state.currentGame,
-  }
-}
-
-export default connect(mapStateToProps)(MessageTab)
+export default MessageTab
