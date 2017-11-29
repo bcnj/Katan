@@ -27,7 +27,7 @@ class GamePage extends Component {
     this.state = {
       activeItem: 'players',
       timer: null,
-      counter: 60
+      counter: 300
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
     this.tick = this.tick.bind(this)
@@ -60,7 +60,7 @@ class GamePage extends Component {
       this.setState({ counter: this.state.counter - 1})
     } else {
       endTurn(currentGame.game.turn, currentGame.game.currentPlayer, gameId)
-      this.setState({ counter: 60})
+      this.setState({ counter: 300})
     }
   }
 
@@ -97,7 +97,7 @@ class GamePage extends Component {
 
     return (
       <Grid padded>
-       
+
         {/* this row contains game map, players, chat */}
         <Grid.Row style={{ height: '80vh' }}>
           {/* Konva map column */}
