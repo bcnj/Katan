@@ -4,10 +4,21 @@ import { buildRoad } from '../utils'
 
 class Road extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      roadOn: true
+    }
+    this.turnRoadOff = this.turnRoadOff.bind(this)
+  }
+
+  turnRoadOff(){
+    this.setState({roadOn: false})
+    setTimeout(() => this.setState({roadOn: true}), 2000)
+  }
+
   render() {
     const { x, y, rotation, id, color, currentGame, gameId } = this.props
-
-    // console.log(currentGame.roadNodes[id].active && (currentGame.game.currentPlayer === localStorage.getItem(gameId)))
 
     return (
       <Ellipse
@@ -27,7 +38,7 @@ class Road extends Component {
             currentGame
           )
         }
-        listening={currentGame.roadNodes[id].active && (currentGame.game.currentPlayer === localStorage.getItem(gameId))}
+        listening={this.state.roadOn && currentGame.roadNodes[id].active && (currentGame.game.currentPlayer === localStorage.getItem(gameId))}
 
       />
     )
