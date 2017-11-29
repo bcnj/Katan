@@ -204,7 +204,6 @@ class DevCardBtn extends Component {
           })
         }
       }
-      console.log(roadOptions, roadNodes)
       this.setState({
         roadBuild: this.state.roadBuild - 1,
         roadOptions,
@@ -316,7 +315,6 @@ class DevCardBtn extends Component {
     let gameId = window.location.href.slice(-20)
     //(currentPlayer, gameId, roadId, turn, currentGame)
     let player = window.localStorage.getItem(gameId)
-    console.log(this.state.roadsChosen)
     this.state.roadsChosen.forEach(road => {
       buildRoad(player, gameId, road, 10)
     })
@@ -338,7 +336,6 @@ class DevCardBtn extends Component {
   }
 
   handlePlentyAdd(e, data) {
-    console.log(this.state)
     let resourceChoice = this.state.plentyResource
     //get added resources
     this.setState({

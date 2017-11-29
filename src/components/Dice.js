@@ -75,6 +75,7 @@ class DiceRoll extends React.Component {
       .collection('games')
       .doc(`${gameId}`)
       .update(diceRollCountUpdate)
+      .catch(err=>console.log('error in updating dice roll count: ', err))
   }
 
   rollDoneCallback(num, gameId, tileNodes, intersectionNodes, players) {
