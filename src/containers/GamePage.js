@@ -19,15 +19,18 @@ import { connect } from 'react-redux'
 import Robber from '../components/Robber.jsx'
 
 import Winning from '../components/Winning.js'
-import { checkForWinner } from '../utils/index'
+import { checkForWinner, endTurn } from '../utils/index'
 
 class GamePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'players'
+      activeItem: 'players',
+      timer: null,
+      counter: 60
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
+    this.tick = this.tick.bind(this)
   }
 
   handlePanelClick(e, { name }) {
@@ -35,11 +38,30 @@ class GamePage extends Component {
   }
 
   componentDidMount() {
+    const { currentGame, gameId } = this.props
     this.cancel = this.props.fetchSingleGame(this.props.gameId)
+    if (currentGame.game.currentPlayer === localStorage.getItem(gameId)){
+      let timer = setInterval(this.tick, 1000)
+      this.setState({timer})
+    } else {
+      clearInterval(this.state.timer)
+    }
   }
 
   componentWillUnmount() {
     this.cancel()
+    clearInterval(this.state.timer)
+  }
+
+  tick(){
+    const { currentGame, gameId } = this.props
+
+    if (this.state.counter > 0){
+      this.setState({ counter: this.state.counter - 1})
+    } else {
+      endTurn(currentGame.game.currentTurn, currentGame.game.currentPlayer, gameId)
+      this.setState({ counter: 60})
+    }
   }
 
   render() {
@@ -52,6 +74,7 @@ class GamePage extends Component {
         <PlayerTab
           currentGame={this.props.currentGame}
           gameId={this.props.gameId}
+          counter={this.state.counter}
         />
       )
     }
@@ -74,6 +97,7 @@ class GamePage extends Component {
 
     return (
       <Grid padded>
+       
         {/* this row contains game map, players, chat */}
         <Grid.Row style={{ height: '80vh' }}>
           {/* Konva map column */}
@@ -158,7 +182,8 @@ class GamePage extends Component {
               {currentGame &&
                 currentGame.game &&
                 localStorage.getItem(gameId) ===
-                currentGame.game.currentPlayer ? (
+                currentGame.game.currentPlayer &&
+                !currentGame.players[localStorage.getItem(gameId)].trade ? (
                   <DevCardBtn currentGame={currentGame} />
                 ) : (
                   <Button disabled style={{ width: '49%', height: '75%' }}>
@@ -173,6 +198,7 @@ class GamePage extends Component {
                 currentGame.game &&
                 <EndTurnBtn gameId={gameId} />
               }
+
               {currentGame &&
                 currentGame.game &&
                 currentGame.players[localStorage.getItem(gameId)]
