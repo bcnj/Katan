@@ -60,7 +60,7 @@ class GamePage extends Component {
     if (this.state.counter > 0){
       this.setState({ counter: this.state.counter - 1})
     } else {
-      endTurn(currentGame.game.currentTurn, currentGame.game.currentPlayer, gameId)
+      endTurn(currentGame.game.turn, currentGame.game.currentPlayer, gameId)
       this.setState({ counter: 60})
     }
   }
