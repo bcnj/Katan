@@ -325,12 +325,12 @@ export const endTurn = (currentTurn, currentPlayer, gameId) => {
     endTurn[`game.currentPlayer`] =
       playerNum < 4 ? `player${playerNum + 1}` : `player${playerNum - 3}`
   }
-
   db
     .collection('games')
     .doc(`${gameId}`)
     .update(endTurn)
 }
+
 
 // /* END TURN
 //   Player ends turn, switches to next player

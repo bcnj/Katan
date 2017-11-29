@@ -28,7 +28,7 @@ class GamePage extends Component {
     this.state = {
       activeItem: 'players',
       timer: null,
-      counter: 10
+      counter: 60
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
     this.tick = this.tick.bind(this)
@@ -45,13 +45,13 @@ class GamePage extends Component {
       let timer = setInterval(this.tick, 1000)
       this.setState({timer})
     } else {
-      this.clearInterval(this.state.timer)
+      clearInterval(this.state.timer)
     }
   }
 
   componentWillUnmount() {
     this.cancel()
-    this.clearInterval(this.state.timer)
+    clearInterval(this.state.timer)
   }
 
   tick(){
@@ -75,6 +75,7 @@ class GamePage extends Component {
         <PlayerTab
           currentGame={this.props.currentGame}
           gameId={this.props.gameId}
+          counter={this.state.counter}
         />
       )
     }
@@ -101,7 +102,7 @@ class GamePage extends Component {
 
     return (
       <Grid padded>
-      <div> Current turn ends in {this.state.counter} s</div>
+
         {/* this row contains game map, players, chat, log */}
         <Grid.Row style={{ height: '80vh' }}>
           {/* Konva map column */}

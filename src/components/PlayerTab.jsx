@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Segment, Card, Message, Icon } from 'semantic-ui-react'
 import Dice from '../components/Dice'
 
-const PlayerTab = ({ currentGame, gameId }) => {
+const PlayerTab = ({ currentGame, gameId, counter}) => {
 
   return (
 
@@ -38,6 +38,8 @@ const PlayerTab = ({ currentGame, gameId }) => {
                       ? 'playing'
                       : 'waiting'}
                   </strong>
+                  { currentGame.game.currentPlayer === localStorage.getItem(gameId) &&  localStorage.getItem(gameId) === `player${num}` &&
+                  <div> Your turn ends in {counter}</div>}
                 </div>
               }
 
