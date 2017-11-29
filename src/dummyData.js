@@ -10,6 +10,7 @@ const dummyData = {
     messageStart: 1,
     turn: 0, // Add for each turn
     robber: '10',
+    timer: 60,
     robberBuild: false
   },
   trade: {

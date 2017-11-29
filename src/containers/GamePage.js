@@ -20,15 +20,18 @@ import { connect } from 'react-redux'
 import Robber from '../components/Robber.jsx'
 
 import Winning from '../components/Winning.js'
-import { checkForWinner } from '../utils/index'
+import { checkForWinner, endTurn } from '../utils/index'
 
 class GamePage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeItem: 'players'
+      activeItem: 'players',
+      timer: null,
+      counter: 10
     }
     this.handlePanelClick = this.handlePanelClick.bind(this)
+    this.tick = this.tick.bind(this)
   }
 
   handlePanelClick(e, { name }) {
@@ -36,11 +39,30 @@ class GamePage extends Component {
   }
 
   componentDidMount() {
+    const { currentGame, gameId } = this.props
     this.cancel = this.props.fetchSingleGame(this.props.gameId)
+    if (currentGame.game.currentPlayer === localStorage.getItem(gameId)){
+      let timer = setInterval(this.tick, 1000)
+      this.setState({timer})
+    } else {
+      this.clearInterval(this.state.timer)
+    }
   }
 
   componentWillUnmount() {
     this.cancel()
+    this.clearInterval(this.state.timer)
+  }
+
+  tick(){
+    const { currentGame, gameId } = this.props
+
+    if (this.state.counter > 0){
+      this.setState({ counter: this.state.counter - 1})
+    } else {
+      endTurn(currentGame.game.currentTurn, currentGame.game.currentPlayer, gameId)
+      this.setState({ counter: 60})
+    }
   }
 
   render() {
@@ -79,6 +101,7 @@ class GamePage extends Component {
 
     return (
       <Grid padded>
+      <div> Current turn ends in {this.state.counter} s</div>
         {/* this row contains game map, players, chat, log */}
         <Grid.Row style={{ height: '80vh' }}>
           {/* Konva map column */}
