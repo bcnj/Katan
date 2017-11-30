@@ -150,18 +150,12 @@ class Robber extends Component {
     e.preventDefault()
     let gameId = window.location.href.slice(-20),
       player = localStorage.getItem(gameId),
-      brick = this.state.brickStart - this.state.brick,
-      wheat = this.state.wheatStart - this.state.wheat,
-      sheep = this.state.sheepStart - this.state.sheep,
-      ore = this.state.oreStart - this.state.ore,
-      wood = this.state.woodStart - this.state.wood,
       resources = {}
-
-    resources.brick = brick
-    resources.wheat = wheat
-    resources.sheep = sheep
-    resources.ore = ore
-    resources.wood = wood
+    resources.brick = this.state.brick
+    resources.wheat = this.state.wheat
+    resources.sheep = this.state.sheep
+    resources.ore = this.state.ore
+    resources.wood = this.state.wood
 
     robberDivideCardsInHalf(gameId, player, resources)
   }

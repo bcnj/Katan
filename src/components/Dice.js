@@ -45,12 +45,7 @@ class DiceRoll extends React.Component {
                 onClick={e =>
                   this.rollAll(gameId, currentGame.game.diceRollCount)
                 }
-                disabled={
-                  currentGame.game.turn < 8 ||
-                  currentGame.game.diceRollCount > currentGame.game.turn ||
-                  localStorage.getItem(`${gameId}`) !==
-                    currentGame.game.currentPlayer
-                }
+
               >
                 {' '}
                 RollDice{' '}
@@ -88,3 +83,10 @@ class DiceRoll extends React.Component {
 }
 
 export default connect()(DiceRoll)
+
+             {/* disabled={
+                  currentGame.game.turn < 8 ||
+                  currentGame.game.diceRollCount > currentGame.game.turn ||
+                  localStorage.getItem(`${gameId}`) !==
+                    currentGame.game.currentPlayer
+                } */}
