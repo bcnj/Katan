@@ -45,7 +45,12 @@ class DiceRoll extends React.Component {
                 onClick={e =>
                   this.rollAll(gameId, currentGame.game.diceRollCount)
                 }
-
+                disabled={
+                  currentGame.game.turn < 8 ||
+                  currentGame.game.diceRollCount > currentGame.game.turn ||
+                  localStorage.getItem(`${gameId}`) !==
+                    currentGame.game.currentPlayer
+                }
               >
                 {' '}
                 RollDice{' '}
@@ -70,7 +75,7 @@ class DiceRoll extends React.Component {
       .collection('games')
       .doc(`${gameId}`)
       .update(diceRollCountUpdate)
-      .catch(err=>console.log('error in updating dice roll count: ', err))
+      .catch(err => console.log('error in updating dice roll count: ', err))
   }
 
   rollDoneCallback(num, gameId, tileNodes, intersectionNodes, players) {
@@ -83,10 +88,3 @@ class DiceRoll extends React.Component {
 }
 
 export default connect()(DiceRoll)
-
-             {/* disabled={
-                  currentGame.game.turn < 8 ||
-                  currentGame.game.diceRollCount > currentGame.game.turn ||
-                  localStorage.getItem(`${gameId}`) !==
-                    currentGame.game.currentPlayer
-                } */}
