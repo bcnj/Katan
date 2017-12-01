@@ -224,7 +224,6 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt="brick"
                   />
                   <img
                     src={wheatImage}
@@ -233,7 +232,6 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt="wheat"
                   />
                   <img
                     src={woodImage}
@@ -242,7 +240,6 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt="wood"
                   />
                   <img
                     src={oreImage}
@@ -251,7 +248,6 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt="ore"
                   />
                   <img
                     src={sheepImage}
@@ -260,7 +256,6 @@ class Robber extends Component {
                       height: '15%',
                       width: '15%'
                     }}
-                    alt="sheep"
                   />
                 </div>
                 <div

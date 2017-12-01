@@ -223,7 +223,7 @@ class DevCardBtn extends Component {
     e.preventDefault()
     let gameId = window.location.href.slice(-20)
     let knightValuePlayer = window.localStorage.getItem(gameId)
-    let knightValueTile = parseInt(data.value.tile)
+    let knightValueTile = parseInt(data.value.tile, 10)
     //to check if possible players to take card from are connected to tile
     let knightValuePosPlayers = data.value.players
     this.setState({

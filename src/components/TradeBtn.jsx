@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Modal, Grid, Dropdown, Segment, Icon, Message} from 'semantic-ui-react'
+import { Button, Modal, Grid, Dropdown, Message} from 'semantic-ui-react'
 import wheat from '../images/wheat.jpg'
 import brick from '../images/brick.jpg'
 import sheep from '../images/sheep.jpg'
 import wood from '../images/wood.jpg'
 import ore from '../images/ore.jpg'
-import { turnTradeOn, tradeInfo } from '../utils'
+import { tradeInfo } from '../utils'
 
 const images = [wheat, brick, sheep, wood, ore]
 const qtyOptions = []
