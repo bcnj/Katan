@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'semantic-ui-react'
-import { db } from '../firebase'
 import { Modal } from 'semantic-ui-react'
 
 import { updateScoreToCloseModal } from '../utils/index.js'

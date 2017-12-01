@@ -24,7 +24,7 @@ class Tile extends Component {
     const ore = new window.Image()
     const sheep = new window.Image()
     const water = new window.Image()
-    
+
     wheat.src = Wheat
     desert.src = Desert
     wood.src = Wood
@@ -32,7 +32,7 @@ class Tile extends Component {
     ore.src = Ore
     sheep.src = Sheep
     water.src = Water
-    
+
     wheat.onload = () => {
       this.setState({
         wheat,
@@ -46,7 +46,9 @@ class Tile extends Component {
     }
   }
 
-  handleClick(event) {}
+  handleClick(event) {
+    console.log(this.props.id)
+  }
 
   render() {
     const resources = {

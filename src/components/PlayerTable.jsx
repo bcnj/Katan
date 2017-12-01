@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Card, Segment, Label, Image, Icon } from 'semantic-ui-react'
+import { Grid, Card, Segment, Label, Image } from 'semantic-ui-react'
 
 import brickImage from '../images/brick.jpg'
 import wheatImage from '../images/wheat.jpg'

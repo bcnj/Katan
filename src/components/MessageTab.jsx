@@ -66,7 +66,7 @@ class MessageTab extends Component {
                 color = 'black'
               }
             }
-          if (parseInt(message) < this.props.messageStart) {
+          if (parseInt(message, 10) < this.props.messageStart) {
           } else {
             str =
               messages[message].time +

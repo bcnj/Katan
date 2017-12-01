@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Segment, Card, Message, Icon } from 'semantic-ui-react'
+import { Segment, Card, Icon } from 'semantic-ui-react'
 import Dice from '../components/Dice'
 
 const PlayerTab = ({ currentGame, gameId, counter}) => {
