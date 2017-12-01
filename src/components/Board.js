@@ -4,6 +4,7 @@ import Tile from './Tile'
 import Intersection from './Intersection'
 import Road from './Road'
 import Number from './Number'
+import Port from './Ports'
 import RobberPiece from './RobberImg'
 import { Layer, Stage } from 'react-konva'
 
@@ -981,6 +982,68 @@ class Board extends Component {
           rotation: 60
         }
       ],
+      //20 25 29 34 ?
+      //22 sheep 2 for 1
+      //33 brick 2 for 1
+      //37 wood 2 for 1
+      //30 wheat 2 for 1
+      //26 ore 2 for 1
+      ports: [
+        { key: 1,
+          id: 'threeForOne',
+          x: 180,
+          y: 75,
+          rotation: 330
+        },
+        { key: 2,
+          id: 'threeForOne',
+          x: 532,
+          y: 138,
+          rotation: 35
+        },
+        { key: 3,
+          id: 'threeForOne',
+          x: 605,
+          y: 299,
+          rotation: 0
+        },
+        { key: 4,
+          id: 'threeForOne',
+          x: 205,
+          y: 520,
+          rotation: 32
+        },
+        { key: 5,
+          id: 'sheep',
+          x: 380,
+          y: 77,
+          rotation: 330
+        },
+        { key: 6,
+          id: 'brick',
+          x: 503,
+          y: 469,
+          rotation: 0
+        },
+        { key: 7,
+          id: 'wood',
+          x: 458,
+          y: 546,
+          rotation: 330
+        },
+        { key: 8,
+          id: 'wheat',
+          x: 102,
+          y: 382,
+          rotation: 0
+        },
+        { key: 9,
+          id: 'ore',
+          x: 102,
+          y: 212,
+          rotation: 0
+        }
+      ],
       numbers: [
         {
           id: 'A',
@@ -1243,6 +1306,13 @@ class Board extends Component {
     return <RobberPiece key={id} x={robberX} y={robberY} />
   }
 
+  renderPorts() {
+    return this.state.ports.map(function(port) {
+      const { key, id, x, y, rotation } = port
+      return <Port key={key} id={id} x={x} y={y} rotation={rotation}/>
+    })
+  }
+
   render() {
     return (
       <Stage
@@ -1272,6 +1342,7 @@ class Board extends Component {
               )}
               {this.renderNumbers()}
               {this.renderRobber()}
+              {this.renderPorts()}
             </Layer>
           )}
       </Stage>
